@@ -42,7 +42,7 @@ Eri vaiheet:
 - $n$-aikaisemman vaiheen muistaminen eli jonon 1. alkion poistaminen ja alkion lisääminen perään, $O(1)$.
 - $n$-aikaisemman askeletta vastaavan tapauksen laskureiden ja todennäköisyyksien päivittäminen sanakirjassa, noin $O(1)$
 
-### Frekvenssiin perustuva tekoäly, O(1)
+### Frekvenssiin perustuva tekoäly, $O(1)$
 
 Eri syötteiden laskurien päivittäminen ja frekvenssien laskeminen, O(1). Eri syötteitä on vakio määrä (3 kpl).
 
@@ -51,7 +51,7 @@ Eri syötteiden laskurien päivittäminen ja frekvenssien laskeminen, O(1). Eri 
 Käydään joka kierroksen alussa läpi kaikki tekoälyt ja valitaan se, jolla on parhaat pisteet.
 Tämä onnistuu ajassa $O(k)$, missä $k$ on yksittäisten tekoälyjen määrä.
 
-### Tilavaativuus
+## Tilavaativuus
 
 ### Markovin ketjuun perustuva tekoäly, $O(3^n)$
 
@@ -59,7 +59,7 @@ Ylläpidetään eri $n$-pituisten tapauksien, joita on $3^n$ kpl, todennäköisy
 Lisätään sanakirjaan sitä mukaan, kun tapauksia esiintyy.
 Pelkkä $n$-vaiheen jono vie tilaa $O(n)$ ja on selvästi pienempi kuin $O(3^n)$.
 
-### Frekvenssiin perustuva tekoäly, O(1)
+### Frekvenssiin perustuva tekoäly, $O(1)$
 
 Eniten tilaa vie kolmen parin (syöte, todennäköisyys) sanakirja eli vakiomäärä tilaa tarvitaan.
 
@@ -67,6 +67,11 @@ Eniten tilaa vie kolmen parin (syöte, todennäköisyys) sanakirja eli vakiomä�
 
 Voidaan arvioida jokaisen tekoälyn tilavaativuutta ylöspäin tilavaativuuteen $O(3^n)$.
 Koska tekoälyjä on $k$ kpl, niin yhteensä tarvitaan tilaa $O(k\cdot 3^n)$.
+
+## Jatkokehitysideoita
+
+- Aiheideoissa mainitut Lisko ja Spock mukaan kivi-sakset-paperi-peliin.
+  Jos teen tekoälyt ja varsinaisen pelin eri luokkiin, niin tämän pitäisi onnistua helposti.
 
 ## Lähteet
 
