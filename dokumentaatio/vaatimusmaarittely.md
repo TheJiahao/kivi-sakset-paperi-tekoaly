@@ -6,14 +6,14 @@ Tietojenkäsittelytieteiden kandiohjelma
 
 ## Kieli
 
-Ohjelma toteutetaan Pythonilla. Osaan myös Javaa.
-Dokumentaatio ja muuttujat ovat suomeksi.
+Ohjelma toteutetaan Pythonilla, mutta osaan myös Javaa.
+Dokumentaatio ja muuttujan nimeäminen tehdään suomeksi.
 
 ## Käytettävät algoritmit ja tietorakenteet
 
-Sovelluksessa käytetään useaa algoritmia pelaajan syötteen ennustamiseen [(Wang, Huang, et al. 2020)](https://doi.org/10.1038/s41598-020-70544-7).
-Ideana käyttää Markovin ketjuun, frekvenssiin sekä mahdollisesti jotain muihin tapoihin perustuvia ennustusta.
-Lisäksi käytetään tietorakenteina ainakin:
+Sovelluksessa käytetään eri pituisia Markovin ketjuja pelaajan syötteen ennustamiseen [^multiAi].
+
+Sovelluksessa käytetään ainakin seuraavia tietorakenteita:
 
 - taulukkoa/listaa
   - tekoälyjen muistaminen
@@ -27,52 +27,41 @@ Lisäksi käytetään tietorakenteina ainakin:
 
 ## Sovelluksen tarkoitus
 
-Ideana on toteuttaa komentoriviohjelma, jolla voidaan pelata kivi-sakset-paperia tietokonetta vastaan tai antaa tekoälyn pelata itseään vastaan.
+Ideana on toteuttaa komentoriviohjelma, jolla voidaan pelata kivi-sakset-paperia tietokonetta vastaan tai antaa tekoälyn pelata itseään vastaan ja tutkia mitä tapahtuu.
 
 ## Syötteet
 
 Ohjelma ottaa syötteeksi merkin `k` (kivi), `s` (sakset) tai `p` (paperi).
 
-## Aikavaativuus
+## Aika- ja tilavaativuus
 
-### Markovin ketjuun perustuva tekoäly, $O(1)$
+### Markovin ketjuun perustuva tekoäly
 
 Eri vaiheet:
 
 - $n$-aikaisemman vaiheen muistaminen eli jonon 1. alkion poistaminen ja alkion lisääminen perään, $O(1)$.
 - $n$-aikaisemman askeletta vastaavan tapauksen laskureiden ja todennäköisyyksien päivittäminen sanakirjassa, noin $O(1)$
 
-### Frekvenssiin perustuva tekoäly, $O(1)$
+Näin ollen aikavaativuus on $O(1)$.
 
-Eri syötteiden laskurien päivittäminen ja frekvenssien laskeminen, O(1). Eri syötteitä on vakio määrä (3 kpl).
+Lisäksi muistetaan todennäköisyyksiä eri $n$-pituisille tapauksille, joita on enintään $3^n$ kpl (lisätään sanakirjaan sitä mukaan, kun tapauksia esiintyy).
+Pelkkä $n$-vaiheen muistamiseen tarvittava jono vie tilaa $O(n)$ ja on selvästi pienempi kuin $O(3^n)$.
+Täten tilavaativuus on $O(3^n)$.
 
-### Yhdistelmätekoäly, $O(k)$
+### Yhdistelmätekoäly
 
 Käydään joka kierroksen alussa läpi kaikki tekoälyt ja valitaan se, jolla on parhaat pisteet.
 Tämä onnistuu ajassa $O(k)$, missä $k$ on yksittäisten tekoälyjen määrä.
 
-## Tilavaativuus
-
-### Markovin ketjuun perustuva tekoäly, $O(3^n)$
-
-Ylläpidetään eri $n$-pituisten tapauksien, joita on $3^n$ kpl, todennäköisyyksiä.
-Lisätään sanakirjaan sitä mukaan, kun tapauksia esiintyy.
-Pelkkä $n$-vaiheen jono vie tilaa $O(n)$ ja on selvästi pienempi kuin $O(3^n)$.
-
-### Frekvenssiin perustuva tekoäly, $O(1)$
-
-Eniten tilaa vie kolmen parin (syöte, todennäköisyys) sanakirja eli vakiomäärä tilaa tarvitaan.
-
-### Yhdistelmätekoäly, $O(k\cdot 3^n)$
-
-Voidaan arvioida jokaisen tekoälyn tilavaativuutta ylöspäin tilavaativuuteen $O(3^n)$.
+Lisäksi voidaan arvioida jokaisen tekoälyn tilavaativuutta ylöspäin tilavaativuuteen $O(3^n)$.
 Koska tekoälyjä on $k$ kpl, niin yhteensä tarvitaan tilaa $O(k\cdot 3^n)$.
 
 ## Jatkokehitysideoita
 
 - Aiheideoissa mainitut Lisko ja Spock mukaan kivi-sakset-paperi-peliin.
-  Jos teen tekoälyt ja varsinaisen pelin eri luokkiin, niin tämän pitäisi onnistua helposti.
+  Jos tekoälyt ja varsinainen peli toteutetaan toisistaan riippumattomasti (eli tekoäly ottaa vain pelaajan syöte sekä pelin tulos ja peliluokka laskee kumpi voittaa), niin tämän pitäisi onnistua helposti.
+- Muita tapoja ennustamiseen, esimerkiksi voidaan kokeilla sovittaa tulokset diskreetteihin jakaumiin tai muistetaan eri syötteiden suhteelliset frekvenssit aiemmilla $n$-askeleella.
 
 ## Lähteet
 
-- Wang, L., Huang, W., Li, Y. et al. Multi-AI competing and winning against humans in iterated Rock-Paper-Scissors game. Sci Rep 10, 13873 (2020). <https://doi.org/10.1038/s41598-020-70544-7>
+[^multiAi]:<https://doi.org/10.1038/s41598-020-70544-7> "Wang, L., Huang, W., Li, Y. et al. Multi-AI competing and winning against humans in iterated Rock-Paper-Scissors game. Sci Rep 10, 13873 (2020)"
