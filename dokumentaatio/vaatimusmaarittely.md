@@ -64,4 +64,4 @@ Koska tekoälyjä on $k$ kpl, niin yhteensä tarvitaan tilaa $O(k\cdot 3^n)$.
 
 ## Lähteet
 
-[^multiAi]:<https://doi.org/10.1038/s41598-020-70544-7> "Wang, L., Huang, W., Li, Y. et al. Multi-AI competing and winning against humans in iterated Rock-Paper-Scissors game. Sci Rep 10, 13873 (2020)"
+[^multiAi]: Wang, L., Huang, W., Li, Y. et al. Multi-AI competing and winning against humans in iterated Rock-Paper-Scissors game. Sci Rep 10, 13873 (2020). <https://doi.org/10.1038/s41598-020-70544-7>
