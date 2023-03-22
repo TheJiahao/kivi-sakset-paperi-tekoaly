@@ -1,7 +1,6 @@
 class Peli:
-    """Luokka, joka kuvaa kivi-sakset-paperi-peliä.
-    """
-    
+    """Luokka, joka kuvaa kivi-sakset-paperi-peliä."""
+
     def __init__(self, syotteet: dict[str, int] | None = None) -> None:
         """Luokan konstruktori.
 
@@ -61,6 +60,6 @@ class Peli:
         """
 
         if merkki not in self.__syotteet:
-            raise ValueError("Virhellinen merkki")
+            raise ValueError(f"Virheellinen merkki '{merkki}'.")
 
         return self.__syotteet[merkki]

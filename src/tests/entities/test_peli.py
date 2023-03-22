@@ -20,3 +20,9 @@ class TestPeli(unittest.TestCase):
         self.assertEqual(self.peli.paata_voittaja("k", "p"), -1)
         self.assertEqual(self.peli.paata_voittaja("s", "k"), -1)
         self.assertEqual(self.peli.paata_voittaja("p", "s"), -1)
+
+    def test_virheellinen_merkki(self):
+        with self.assertRaises(ValueError):
+            self.peli.paata_voittaja("a", "p")
+            self.peli.paata_voittaja("a", "b")
+            self.peli.paata_voittaja("k", "b")
