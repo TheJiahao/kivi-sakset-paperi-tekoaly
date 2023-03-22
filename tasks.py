@@ -13,5 +13,4 @@ def test(ctx):
 
 @task
 def coverage_report(ctx):
-    ctx.run("coverage run --branch -m pytest src", pty=True)
-    ctx.run("coverage html", pty=True)
+    ctx.run("pytest --cov --cov-branch --cov-report html", pty=True)
