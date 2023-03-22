@@ -1,4 +1,4 @@
-# Kivi-paperit-sakset-tekoäly, tiralabra
+# Kivi-sakset-paperi-tekoäly, tiralabra
 
 ## Dokumentaatio
 
