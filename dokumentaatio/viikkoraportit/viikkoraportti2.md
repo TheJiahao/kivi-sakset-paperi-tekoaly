@@ -4,10 +4,10 @@
 
 |Päivämäärä|Aika|
 |----------|----|
-|22.3.|3,5 tuntia|
+|22.3.|5 tuntia|
 
 ## Mitä tehty?
 
-- Yritetty asettaa codecov kuntoon
-- Toteutettu kivi-sakset-paperi-pelialusta
+- Asetettu codecov ja pylint
+- Toteutettu kivi-sakset-paperi-pelialusta ja lisätty testit
 - Aloitettu Markovin ketjun toteuttaminen
