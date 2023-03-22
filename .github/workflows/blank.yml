@@ -18,3 +18,6 @@ jobs:
           run: poetry run coverage run --branch -m pytest src
         - name: Upload coverage reports to Codecov
           uses: codecov/codecov-action@v3
+          with:
+            verbose: true
+            directory: ./
