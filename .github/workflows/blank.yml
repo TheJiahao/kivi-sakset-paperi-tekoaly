@@ -16,8 +16,9 @@ jobs:
           run: poetry install --no-root
         - name: Run tests
           run: poetry run coverage run --branch -m pytest src
+        - name: Generate xml coverage report
+          run: poetry run coverage xml
         - name: Upload coverage reports to Codecov
           uses: codecov/codecov-action@v3
           with:
             verbose: true
-            directory: ./
