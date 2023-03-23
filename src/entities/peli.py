@@ -1,5 +1,9 @@
 class Peli:
-    """Luokka, joka kuvaa kivi-sakset-paperi-peliä."""
+    """Luokka, joka kuvaa kivi-sakset-paperi-peliä.
+
+    Attributes:
+        __syotteet (set[str]): Joukko, joka sisältää kaikki sallitut syötteet.
+    """
 
     def __init__(self, syotteet: set[str] | None = None) -> None:
         """Luokan konstruktori.
