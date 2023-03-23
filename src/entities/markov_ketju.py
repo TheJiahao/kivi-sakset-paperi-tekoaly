@@ -2,6 +2,34 @@ from collections import deque
 import random
 
 
+def muodosta_osajonot(
+    osajonot: set[str], vaihtoehdot: set[str], n: int, k: int = 1
+) -> set[str]:
+    """Muodostaa kaikki n-pituiset osajonot O(m^n) ajassa,
+    missä m on jonon jäsenen vaihtoehtojen määrä.
+
+    Args:
+        osajonot (set[str]): Joukko, joka sisältää kaikki k-pituiset osajonot.
+        vaihtoehdot (set[str]): Joukko, joka sisältää kaikki jonon jäsenten vaihtoehdot.
+        k (int): Vapaaehtoinen, oletukseltaan 1. Kuvaa osajonojen pituutta.
+        n (int): Kuvaa osajonojen suurinta pituutta.
+
+    Returns:
+        set[str]: Joukko, joka sisätää osajonot merkkijonoina.
+    """
+
+    if k == n:
+        return osajonot
+
+    uudet_osajonot = set()
+
+    for jono in osajonot:
+        for vaihtoehto in vaihtoehdot:
+            uudet_osajonot.add(jono + vaihtoehto)
+
+    return muodosta_osajonot(uudet_osajonot, vaihtoehdot, n, k + 1)
+
+
 class MarkovKetju:
     def __init__(self, pituus: int, vaihtoehdot: list[str]) -> None:
         self.__muisti: deque[str] = deque(maxlen=pituus)
