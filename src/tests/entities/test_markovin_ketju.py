@@ -1,5 +1,5 @@
 import unittest
-from entities.markov_ketju import MarkovKetju, muodosta_osajonot
+from entities.markovin_ketju import MarkovinKetju, muodosta_osajonot
 
 
 class TestMarkovKetju(unittest.TestCase):
