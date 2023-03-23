@@ -14,3 +14,7 @@ def test(ctx):
 @task
 def coverage_report(ctx):
     ctx.run("pytest --cov --cov-branch --cov-report html", pty=True)
+
+@task
+def format(ctx):
+    ctx.run("black src", pty=True)
