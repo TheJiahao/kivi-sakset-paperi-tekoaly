@@ -5,7 +5,7 @@
 |Päivämäärä|Aika|
 |----------|----|
 |22.3.|5 tuntia|
-|23.3.|30 min|
+|23.3.|1 tunti 40 min|
 
 ## Mitä tehty?
 
