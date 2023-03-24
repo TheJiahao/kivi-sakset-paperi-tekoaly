@@ -1,7 +1,8 @@
 from collections import deque
+from typing import Any, Hashable
 
 
-def muodosta_osajonot(
+def muodosta_jonot(
     vaihtoehdot: set, n: int, osajonot: set[tuple] | None = None, k: int = 1
 ) -> set[tuple]:
     """Muodostaa vaihtoehdoista kaikki n-pituiset osajonot O(m^n) ajassa,
@@ -30,60 +31,99 @@ def muodosta_osajonot(
             uusi_jono = jono + (vaihtoehto,)
             uudet_osajonot.add(uusi_jono)
 
-    return muodosta_osajonot(vaihtoehdot, n, uudet_osajonot, k + 1)
+    return muodosta_jonot(vaihtoehdot, n, uudet_osajonot, k + 1)
 
 
 class MarkovinKetju:
     """Luokka, joka kuvaa Markovin ketjua."""
 
-    def __init__(self, n: int, vaihtoehdot: list[str]) -> None:
-        self.__muisti: deque[str] = deque(maxlen=n)
+    def __init__(self, n: int, vaihtoehdot: set[Hashable]) -> None:
+        self.__muisti: deque[Hashable] = deque(maxlen=n)
         self.__n: int = n
-        self.__vaihtoehtot: list[str] = vaihtoehdot
-        self.__havaintoja: int = 0
-        self.__frekvenssit: dict[str, int] = {}
-        self.__siirtymamatriisi: dict[str, dict[str, float]] = {}
+        self.__vaihtoehdot: set[Hashable] = vaihtoehdot
+        self.__havainnot: dict[tuple, int] = {}
+        self.__frekvenssit: dict[Hashable, dict[tuple, int]] = {}
+        self.__siirtymamatriisi: dict[Hashable, dict[tuple, float]] = {}
 
-        self.__alusta_siirtymamatriisi()
+        self.__alusta_siirtymamatriisi_ja_laskurit()
 
-    def __alusta_siirtymamatriisi(self) -> None:
+    def __alusta_siirtymamatriisi_ja_laskurit(self) -> None:
         """Alustaa siirtymämatriisin."""
-        for vaihtoehto in self.__vaihtoehtot:
-            for jono in muodosta_osajonot(
-                set(self.__vaihtoehtot), set(self.__vaihtoehtot), self.__n
-            ):
-                self.__siirtymamatriisi[vaihtoehto][jono] = 1 / (
-                    len(self.__vaihtoehtot) ** self.__n
-                )
+        for vaihtoehto in self.__vaihtoehdot:
+            self.__siirtymamatriisi[vaihtoehto] = {}
+            self.__frekvenssit[vaihtoehto] = {}
 
-    def lisaa(self, syote: str) -> None:
+            for jono in muodosta_jonot(self.__vaihtoehdot, self.__n):
+                self.__siirtymamatriisi[vaihtoehto][jono] = 0
+                self.__frekvenssit[vaihtoehto][jono] = 0
+
+    def lisaa(self, syote: Hashable) -> None:
         """Lisää Markovin ketjuun alkion ja päivittää todennäköisyyden.
 
         Args:
-            syote (str): Lisättävä alkio.
+            syote (Hashable): Lisättävä alkio.
+
+        Raises:
+            ValueError: Syote ei kelpaa.
         """
 
-        if len(self.__muisti) < self.__n:
-            self.__muisti.append(syote)
-            self.__havaintoja += 1
-            return
+        if syote not in self.__vaihtoehdot:
+            raise ValueError(f"Syote '{syote}' ei kelpaa.")
 
-        jono = str(self.__muisti)
+        if len(self.__muisti) == self.__n:
+            jono = tuple(self.__muisti)
+            self.__frekvenssit[syote][jono] = self.__frekvenssit[syote].get(jono, 0) + 1
+            self.__havainnot[jono] = self.__havainnot.get(jono, 0) + 1
 
-        self.__frekvenssit[jono] = self.__frekvenssit[jono] + 1 or 1
-        self.__siirtymamatriisi[syote][jono] = (
-            self.__frekvenssit[jono] / self.__havaintoja
-        )
+            self.__paivita_todennaikoisyydet(jono)
 
         self.__muisti.append(syote)
 
-    def ennusta(self) -> str:
-        """Palauttaa todennäköisimmän vaihtoehdon.
+    def __paivita_todennaikoisyydet(self, jono) -> None:
+        for vaihtoehto in self.vaihtoehdot:
+            self.__siirtymamatriisi[vaihtoehto][jono] = (
+                self.__frekvenssit[vaihtoehto][jono] / self.__havainnot[jono]
+            )
+
+    def ennusta(self) -> Any:
+        """Palauttaa todennäköisimmän seuraavan vaihtoehdon.
+        Alussa kaikkien vaihtoehtojen todennäköisyys on nolla,
+        jolloin palautetaan satunnaisesti jokin vaihtoehto.
 
         Returns:
-            str: Todennäköisin vaihtoehto.
+            Any: Todennäköisin seuraava vaihtoehto.
         """
         return max(
-            self.__vaihtoehtot,
-            key=lambda x: self.__siirtymamatriisi[x][str(self.__muisti)],
+            self.__vaihtoehdot,
+            key=lambda x: self.__siirtymamatriisi[x][self.muisti],
         )
+
+    @property
+    def muisti(self) -> tuple:
+        """Palauttaa muistin tuplena.
+        Tuple helpottaa käsittelyä.
+
+        Returns:
+            tuple: Muisti tuplena.
+        """
+        return tuple(self.__muisti)
+
+    @property
+    def n(self) -> int:
+        return self.__n
+
+    @property
+    def vaihtoehdot(self) -> set[Hashable]:
+        return self.__vaihtoehdot
+
+    @property
+    def havainnot(self) -> dict[tuple, int]:
+        return self.__havainnot
+
+    @property
+    def frekvenssit(self) -> dict[Hashable, dict[tuple, int]]:
+        return self.__frekvenssit
+
+    @property
+    def siirtymamatriisi(self) -> dict[Hashable, dict[tuple, float]]:
+        return self.__siirtymamatriisi
