@@ -2,20 +2,23 @@ from collections import deque
 
 
 def muodosta_osajonot(
-    osajonot: set[str], vaihtoehdot: set[str], n: int, k: int = 1
-) -> set[str]:
-    """Muodostaa kaikki n-pituiset osajonot O(m^n) ajassa,
-    missä m on jonon jäsenen vaihtoehtojen määrä.
+    vaihtoehdot: set, n: int, osajonot: set[tuple] | None = None, k: int = 1
+) -> set[tuple]:
+    """Muodostaa vaihtoehdoista kaikki n-pituiset osajonot O(m^n) ajassa,
+    missä m on osajonon alkioiden vaihtoehtojen määrä.
 
     Args:
-        osajonot (set[str]): Joukko, joka sisältää kaikki k-pituiset osajonot.
-        vaihtoehdot (set[str]): Joukko, joka sisältää kaikki jonon jäsenten vaihtoehdot.
-        k (int): Vapaaehtoinen, oletukseltaan 1. Kuvaa osajonojen pituutta.
-        n (int): Kuvaa osajonojen suurinta pituutta.
+        vaihtoehdot (set): Osajonon alkioiden vaihtoehtojen joukko.
+        n (int): Haluttu osajonojen pituus.
+        osajonot (set[tuple] | None, optional): k-pituisten osajonojen joukko. Oletukseltaan None.
+        k (int, optional): osajonot-joukon pituus. Oletukseltaan 1.
 
     Returns:
-        set[str]: Joukko, joka sisätää osajonot merkkijonoina.
+        set[tuple]: n-pituisten osajonojen joukko.
     """
+
+    if osajonot is None:
+        osajonot = {(vaihtoehto,) for vaihtoehto in vaihtoehdot}
 
     if k == n:
         return osajonot
@@ -24,9 +27,10 @@ def muodosta_osajonot(
 
     for jono in osajonot:
         for vaihtoehto in vaihtoehdot:
-            uudet_osajonot.add(jono + vaihtoehto)
+            uusi_jono = jono + (vaihtoehto,)
+            uudet_osajonot.add(uusi_jono)
 
-    return muodosta_osajonot(uudet_osajonot, vaihtoehdot, n, k + 1)
+    return muodosta_osajonot(vaihtoehdot, n, uudet_osajonot, k + 1)
 
 
 class MarkovinKetju:
