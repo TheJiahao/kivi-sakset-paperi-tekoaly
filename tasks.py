@@ -12,8 +12,14 @@ def test(ctx):
 
 
 @task
+def coverage(ctx):
+    ctx.run("pytest --cov --cov-branch --cov-report xml", pty=True)
+
+
+@task
 def coverage_report(ctx):
     ctx.run("pytest --cov --cov-branch --cov-report html", pty=True)
+
 
 @task
 def format(ctx):
