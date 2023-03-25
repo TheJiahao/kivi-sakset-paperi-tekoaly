@@ -20,6 +20,7 @@
     Tallennetaan ainoastaan erilaisia jonoja seuraavien syotteiden frekvenssit.
     Todennäköisyydet voidaan laskea tästä suoraan.
   - Lisätty testit MarkovinKetju-luokalle
+- Refaktoroitu koodia useasti.
 
 ## Mitä seuraavaksi?
 
