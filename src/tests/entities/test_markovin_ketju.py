@@ -189,17 +189,18 @@ class TestMarkovKetju(unittest.TestCase):
     def test_ennusta_valitsee_todennakoisimman_vaihtoehdon_kun_muisti_on_taynna(self):
         self.tayta_muisti()
         self.markov.lisaa("a")
+        self.tayta_muisti()
 
         # a:n todennäköisyys on 1 eli todennäköisin
         self.assertEqual(self.markov.ennusta(), "a")
 
-        # Muisti on nyt (b, c, a)
         self.tayta_muisti()
-        # Nyt (a, b, c) jonon jälkeen havaittiin b, frekvenssi 1
         self.markov.lisaa("b")
         self.tayta_muisti()
-        # Nyt (a, b, c) jonon jälkeen havaittiin b, frekvenssi 2
         self.markov.lisaa("b")
+        self.tayta_muisti()
+        self.markov.lisaa("b")
+        self.tayta_muisti()
 
-        # Nyt b:n todennäköisyys on 2/3 eli todennäköisin
+        # Nyt b:n todennäköisyys on 3/5 eli todennäköisin
         self.assertEqual(self.markov.ennusta(), "b")
