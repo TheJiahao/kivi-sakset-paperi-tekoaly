@@ -5,15 +5,21 @@ class Peli:
         __syotteet (set[str]): Joukko, joka sisältää kaikki sallitut syötteet.
     """
 
-    def __init__(self, syotteet: set[str] | None = None) -> None:
+    def __init__(
+        self, syotteet: set[str] | None = None, voittotapaukset: set[str] | None = None
+    ) -> None:
         """Luokan konstruktori.
 
         Args:
             syotteet (set[str] | None, optional):
-                Vapaaehtoinen, oletusarvoltaan None.
                 Kuvaa merkkijonosyötteitä vastaavia lukuja.
+                Oletusarvoltaan None.
+            voittotapaukset (set[str] | None, optional):
+                Joukko, joka sisältää voittoa vastaavat tapaukset merkkijonoina.
+                Oletusarvoltaan None.
         """
         self.__syotteet: set[str] = syotteet or {"k", "s", "p"}
+        self.__voittotapaukset = voittotapaukset or {"ks", "sp", "pk"}
 
     def paata_voittaja(self, pelaaja1: str, pelaaja2: str) -> int:
         """Päättää kivi-sakset-paperi-pelin voittajan.
@@ -36,9 +42,8 @@ class Peli:
 
         if pelaaja1 != pelaaja2:
             tulos = -1
-            voittotapaukset = {"ks", "sp", "pk"}
 
-            if pelaaja1 + pelaaja2 in voittotapaukset:
+            if pelaaja1 + pelaaja2 in self.__voittotapaukset:
                 tulos = 1
 
         return tulos
