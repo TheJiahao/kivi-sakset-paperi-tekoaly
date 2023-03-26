@@ -24,3 +24,8 @@ def coverage_report(ctx):
 @task
 def format(ctx):
     ctx.run("black src", pty=True)
+
+
+@task
+def lint(ctx):
+    ctx.run("pylint src", pty=True)
