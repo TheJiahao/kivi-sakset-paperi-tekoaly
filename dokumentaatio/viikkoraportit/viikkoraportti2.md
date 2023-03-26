@@ -8,18 +8,18 @@
 |23.3.|1 tunti 40 min|
 |24.3.|3 tuntia|
 |25.3.|2 tuntia|
+|26.3.|20 min|
 
 ## Mitä tehty?
 
 - Lisätty ja konfiguroitu pylint, black, invoke
 - Konfiguroitu codecov
 - Toteutettu kivi-sakset-paperi-pelialusta ja lisätty testit
-- Toteutettu Markovin ketju
+- Toteutettu Markovin ketju ja testit
   - Tehty metodi luomaan kaikki n-pituiset jonot, joissa jokainen jäsen voidaan valita m-tavalla.
   - ~~Muutettu todennäköisyyksien tallennustavaksi siirtymämatriisi [^stochasticMatrix]~~.
     Tallennetaan ainoastaan erilaisia jonoja seuraavien syotteiden frekvenssit.
     Todennäköisyydet voidaan laskea tästä suoraan.
-  - Lisätty testit MarkovinKetju-luokalle
 - Refaktoroitu koodia useasti.
 
 ## Mitä seuraavaksi?

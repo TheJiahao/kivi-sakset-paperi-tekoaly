@@ -1,5 +1,4 @@
 import unittest
-from collections import deque
 
 from entities.markovin_ketju import MarkovinKetju, muodosta_jonot
 
@@ -69,6 +68,16 @@ class TestMarkovKetju(unittest.TestCase):
     def test_frekvenssit_nollia_alussa(self):
         for vaihtoehto in self.markov.vaihtoehdot:
             self.assertEqual(set(self.markov.frekvenssit[vaihtoehto].values()), {0})
+
+    def test_frekvenssia_ei_voi_muuttaa_ulkopuolelta(self):
+        self.markov.frekvenssit["a"][("a", "b", "c")] = 1
+
+        self.assertEqual(self.markov.frekvenssit["a"][("a", "b", "c")], 0)
+
+    def test_vaihtoehtoja_ei_voi_muuttaa_ulkopuolelta(self):
+        self.markov.vaihtoehdot.add("d")
+
+        self.assertEqual(self.markov.vaihtoehdot, {"a", "b", "c"})
 
     def test_lisaa_aiheuttaa_virheen_kun_syote_ei_kelpaa(self):
         with self.assertRaises(ValueError):

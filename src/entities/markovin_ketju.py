@@ -1,3 +1,4 @@
+import copy
 from collections import deque
 from typing import Any, Hashable
 
@@ -73,8 +74,7 @@ class MarkovinKetju:
 
     @property
     def muisti(self) -> tuple:
-        """Palauttaa muistin tuplena.
-        Tuple helpottaa käsittelyä.
+        """Palauttaa muistin tuplena, mikä helpottaa käsittelyä.
 
         Returns:
             tuple: Muisti tuplena.
@@ -88,11 +88,11 @@ class MarkovinKetju:
 
     @property
     def vaihtoehdot(self) -> set[Hashable]:
-        return self.__vaihtoehdot
+        return copy.deepcopy(self.__vaihtoehdot)
 
     @property
     def frekvenssit(self) -> dict[Hashable, dict[tuple, int]]:
-        return self.__frekvenssit
+        return copy.deepcopy(self.__frekvenssit)
 
     def lisaa(self, syote: Hashable) -> None:
         """Lisää Markovin ketjuun alkion ja päivittää todennäköisyyden.
@@ -139,7 +139,7 @@ class MarkovinKetju:
             ValueError: Syote ei kelpaa.
         """
 
-        if syote not in self.vaihtoehdot:
+        if syote not in self.__vaihtoehdot:
             raise ValueError(f"Syote '{syote}' ei kelpaa.")
 
         if len(self.muisti) < self.n:
@@ -154,7 +154,7 @@ class MarkovinKetju:
             int: Muistissa olevan jonon frekvenssi.
         """
 
-        return sum(self.hae_frekvenssi(vaihtoehto) for vaihtoehto in self.vaihtoehdot)
+        return sum(self.hae_frekvenssi(vaihtoehto) for vaihtoehto in self.__vaihtoehdot)
 
     def hae_todennakoisyys(self, syote: Hashable) -> float:
         """Palauttaa todennäköisyyden, että annettu syote on seuraava ennuste.
@@ -171,7 +171,7 @@ class MarkovinKetju:
             ValueError: Syote ei kelpaa.
         """
 
-        if syote not in self.vaihtoehdot:
+        if syote not in self.__vaihtoehdot:
             raise ValueError(f"Syote '{syote}' ei kelpaa.")
 
         if len(self.muisti) < self.n or self.__hae_jonon_frekvenssi() == 0:
@@ -189,5 +189,5 @@ class MarkovinKetju:
 
         return {
             vaihtoehto: self.hae_todennakoisyys(vaihtoehto)
-            for vaihtoehto in self.vaihtoehdot
+            for vaihtoehto in self.__vaihtoehdot
         }
