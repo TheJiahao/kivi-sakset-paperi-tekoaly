@@ -65,7 +65,7 @@ class MarkovinKetju:
         self.__alusta_laskurit()
 
     def __alusta_laskurit(self) -> None:
-        """Alustaa frekvenssit nolliksi O(m^n) ajassa,
+        """Alustaa m*m^n-kokoisen frekvenssimatriisin nolliksi O(m^(n+1)) ajassa,
         missä m on muistin vaihtoehtojen määrä ja n muistin pituus."""
 
         for vaihtoehto in self.__vaihtoehdot:
