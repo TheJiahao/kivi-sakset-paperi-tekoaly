@@ -3,38 +3,6 @@ from collections import deque
 from typing import Any, Hashable
 
 
-def muodosta_jonot(
-    vaihtoehdot: set, n: int, osajonot: set[tuple] | None = None, k: int = 1
-) -> set[tuple]:
-    """Muodostaa annetuista vaihtoehdoista kaikki n-pituiset jonot O(m^n) ajassa,
-    missä m on osajonon alkioiden vaihtoehtojen määrä.
-
-    Args:
-        vaihtoehdot (set): Osajonon alkioiden vaihtoehtojen joukko.
-        n (int): Haluttu osajonojen pituus.
-        osajonot (set[tuple] | None, optional): k-pituisten osajonojen joukko. Oletukseltaan None.
-        k (int, optional): osajonot-joukon pituus. Oletukseltaan 1.
-
-    Returns:
-        set[tuple]: n-pituisten jonojen joukko.
-    """
-
-    if osajonot is None:
-        osajonot = {(vaihtoehto,) for vaihtoehto in vaihtoehdot}
-
-    if k == n:
-        return osajonot
-
-    uudet_osajonot = set()
-
-    for jono in osajonot:
-        for vaihtoehto in vaihtoehdot:
-            uusi_jono = jono + (vaihtoehto,)
-            uudet_osajonot.add(uusi_jono)
-
-    return muodosta_jonot(vaihtoehdot, n, uudet_osajonot, k + 1)
-
-
 class MarkovinKetju:
     """Luokka, joka kuvaa Markovin ketjua."""
 
