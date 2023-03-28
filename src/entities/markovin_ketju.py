@@ -1,6 +1,6 @@
 import copy
 from collections import deque
-from typing import Any, Hashable
+from typing import Hashable
 
 
 class MarkovinKetju:
@@ -70,13 +70,13 @@ class MarkovinKetju:
 
         self.__muisti.append(syote)
 
-    def ennusta(self) -> Any:
+    def ennusta(self) -> Hashable:
         """Palauttaa todennäköisimmän seuraavan vaihtoehdon.
         Alussa kaikkien vaihtoehtojen frekvenssi on nolla,
         jolloin palautetaan satunnaisesti jokin vaihtoehto.
 
         Returns:
-            Any: Todennäköisin seuraava vaihtoehto.
+            Hashable: Todennäköisin seuraava vaihtoehto.
         """
 
         return max(
