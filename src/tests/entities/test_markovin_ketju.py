@@ -59,20 +59,22 @@ class TestMarkovKetju(unittest.TestCase):
     def test_muisti_on_alussa_tyhja(self):
         self.assertEqual(self.markov.muisti, tuple())
 
-    def test_alustettu_vaihtoehdot_oikein(self):
+    def test_vaihtoehdot_alustettu_oikein(self):
         self.assertEqual(self.markov.vaihtoehdot, {"a", "b", "c"})
 
-    def test_alustettu_n_oikein(self):
+    def test_n_alustettu_oikein(self):
         self.assertEqual(self.markov.n, 3)
 
-    def test_frekvenssit_nollia_alussa(self):
+    def test_frekvenssit_alustettu_oikein(self):
         for vaihtoehto in self.markov.vaihtoehdot:
-            self.assertEqual(set(self.markov.frekvenssit[vaihtoehto].values()), {0})
+            self.assertEqual(self.markov.frekvenssit[vaihtoehto], {})
 
     def test_frekvenssia_ei_voi_muuttaa_ulkopuolelta(self):
-        self.markov.frekvenssit["a"][("a", "b", "c")] = 1
+        self.tayta_muisti()
+        self.tayta_muisti()
+        self.markov.frekvenssit["a"][("a", "b", "c")] = 10
 
-        self.assertEqual(self.markov.frekvenssit["a"][("a", "b", "c")], 0)
+        self.assertEqual(self.markov.frekvenssit["a"][("a", "b", "c")], 1)
 
     def test_vaihtoehtoja_ei_voi_muuttaa_ulkopuolelta(self):
         self.markov.vaihtoehdot.add("d")
@@ -91,13 +93,13 @@ class TestMarkovKetju(unittest.TestCase):
 
     def test_lisaa_ei_muuta_frekvensseja_kun_muisti_ei_ole_taynna(self):
         self.markov.lisaa("c")
-        self.assertEqual(set(self.markov.frekvenssit["c"].values()), {0})
+        self.assertEqual(self.markov.frekvenssit["c"], {})
 
         self.markov.lisaa("b")
-        self.assertEqual(set(self.markov.frekvenssit["b"].values()), {0})
+        self.assertEqual(self.markov.frekvenssit["b"], {})
 
         self.markov.lisaa("a")
-        self.assertEqual(set(self.markov.frekvenssit["a"].values()), {0})
+        self.assertEqual(self.markov.frekvenssit["a"], {})
 
     def test_lisaa_kasvattaa_frekvensseja_kun_muisti_on_taynna(self):
         self.tayta_muisti()
@@ -191,16 +193,6 @@ class TestMarkovKetju(unittest.TestCase):
         self.assertEqual(self.markov.hae_frekvenssi("a"), 0)
         self.assertEqual(self.markov.hae_frekvenssi("b"), 0)
         self.assertEqual(self.markov.hae_frekvenssi("c"), 0)
-
-    def test_hae_todennakoisyys_aiheuttaa_virheen_kun_syote_ei_kelpaa(self):
-        with self.assertRaises(ValueError):
-            self.markov.hae_todennakoisyys("x")
-
-        with self.assertRaises(ValueError):
-            self.markov.hae_todennakoisyys(1)
-
-        with self.assertRaises(ValueError):
-            self.markov.hae_todennakoisyys((2,))
 
     def test_hae_todennakoisyys_palauttaa_nolla_kun_muisti_ei_ole_taynna(self):
         self.markov.lisaa("a")

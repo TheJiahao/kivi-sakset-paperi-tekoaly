@@ -60,17 +60,9 @@ class MarkovinKetju:
         self.__muisti: deque[Hashable] = deque(maxlen=n)
         self.__n: int = n
         self.__vaihtoehdot: set[Hashable] = vaihtoehdot
-        self.__frekvenssit: dict[Hashable, dict[tuple, int]] = frekvenssit or {}
-
-        self.__alusta_laskurit()
-
-    def __alusta_laskurit(self) -> None:
-        """Alustaa m*m^n-kokoisen frekvenssimatriisin nolliksi O(m^(n+1)) ajassa,
-        missä m on muistin vaihtoehtojen määrä ja n muistin pituus."""
-
-        for vaihtoehto in self.__vaihtoehdot:
-            jonot = muodosta_jonot(self.__vaihtoehdot, self.__n)
-            self.__frekvenssit[vaihtoehto] = {jono: 0 for jono in jonot}
+        self.__frekvenssit: dict[Hashable, dict[tuple, int]] = frekvenssit or {
+            vaihtoehto: {} for vaihtoehto in vaihtoehdot
+        }
 
     @property
     def muisti(self) -> tuple:
@@ -142,10 +134,7 @@ class MarkovinKetju:
         if syote not in self.__vaihtoehdot:
             raise ValueError(f"Syote '{syote}' ei kelpaa.")
 
-        if len(self.muisti) < self.n:
-            return 0
-
-        return self.frekvenssit[syote][self.muisti]
+        return self.frekvenssit[syote].get(self.muisti, 0)
 
     def __hae_jonon_frekvenssi(self) -> int:
         """Palauttaa kuinka monta kertaa muistissa oleva jono on havaittu edeltävänä jonona.
@@ -166,18 +155,12 @@ class MarkovinKetju:
 
         Returns:
             float: Todennäköisyys, että annettu syote on seuraava ennuste.
-
-        Raises:
-            ValueError: Syote ei kelpaa.
         """
-
-        if syote not in self.__vaihtoehdot:
-            raise ValueError(f"Syote '{syote}' ei kelpaa.")
 
         if len(self.muisti) < self.n or self.__hae_jonon_frekvenssi() == 0:
             return 0
 
-        return self.frekvenssit[syote][self.muisti] / self.__hae_jonon_frekvenssi()
+        return self.hae_frekvenssi(syote) / self.__hae_jonon_frekvenssi()
 
     def hae_todennakoisyydet(self) -> dict[Hashable, float]:
         """Palauttaa tilastolliset todennäköisyydet seuraavalle ennusteelle.
