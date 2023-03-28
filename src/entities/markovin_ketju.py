@@ -86,6 +86,7 @@ class MarkovinKetju:
 
     def hae_frekvenssi(self, syote: Hashable) -> int:
         """Palauttaa syotteen frekvenssin, kun edeltävä jono on muistissa oleva jono.
+        Palauttaa nollan myös, kun muisti ei ole täynnä, mikä helpottaa todennäköisyyksien laskua.
 
         Args:
             syote (Hashable): Syote, jonka frekvenssiä haetaan.
@@ -109,12 +110,10 @@ class MarkovinKetju:
             int: Muistissa olevan jonon frekvenssi.
         """
 
-        return sum(self.hae_frekvenssi(vaihtoehto) for vaihtoehto in self.__vaihtoehdot)
+        return sum(self.hae_frekvenssi(vaihtoehto) for vaihtoehto in self.vaihtoehdot)
 
     def hae_todennakoisyys(self, syote: Hashable) -> float:
         """Palauttaa todennäköisyyden, että annettu syote on seuraava ennuste.
-        Jos muisti ei ole täynnä tai tämänhetkinen jono on ensimmäistä kertaa havaittu,
-        niin palauttaa 0.
 
         Args:
             syote (Hashable): Syote, jonka todennäköisyyttä haetaan.
@@ -123,8 +122,8 @@ class MarkovinKetju:
             float: Todennäköisyys, että annettu syote on seuraava ennuste.
         """
 
-        if len(self.muisti) < self.n or self.__hae_jonon_frekvenssi() == 0:
-            return 0
+        if self.__hae_jonon_frekvenssi() == 0:
+            return 1 / len(self.vaihtoehdot)
 
         return self.hae_frekvenssi(syote) / self.__hae_jonon_frekvenssi()
 

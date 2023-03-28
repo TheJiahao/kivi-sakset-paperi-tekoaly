@@ -157,18 +157,18 @@ class TestMarkovKetju(unittest.TestCase):
         self.assertEqual(self.markov.hae_frekvenssi("b"), 0)
         self.assertEqual(self.markov.hae_frekvenssi("c"), 0)
 
-    def test_hae_todennakoisyys_palauttaa_nolla_kun_muisti_ei_ole_taynna(self):
+    def test_hae_todennakoisyys_on_symmetrinen_kun_muisti_ei_ole_taynna(self):
         self.markov.lisaa("a")
-        self.assertEqual(self.markov.hae_todennakoisyys("a"), 0)
-        self.assertEqual(self.markov.hae_todennakoisyys("b"), 0)
-        self.assertEqual(self.markov.hae_todennakoisyys("c"), 0)
+        self.assertAlmostEqual(self.markov.hae_todennakoisyys("a"), 1 / 3, places=2)
+        self.assertAlmostEqual(self.markov.hae_todennakoisyys("b"), 1 / 3, places=2)
+        self.assertAlmostEqual(self.markov.hae_todennakoisyys("c"), 1 / 3, places=2)
 
         self.markov.lisaa("c")
-        self.assertEqual(self.markov.hae_todennakoisyys("a"), 0)
-        self.assertEqual(self.markov.hae_todennakoisyys("b"), 0)
-        self.assertEqual(self.markov.hae_todennakoisyys("c"), 0)
+        self.assertAlmostEqual(self.markov.hae_todennakoisyys("a"), 1 / 3, places=2)
+        self.assertAlmostEqual(self.markov.hae_todennakoisyys("b"), 1 / 3, places=2)
+        self.assertAlmostEqual(self.markov.hae_todennakoisyys("c"), 1 / 3, places=2)
 
         self.markov.lisaa("b")
-        self.assertEqual(self.markov.hae_todennakoisyys("a"), 0)
-        self.assertEqual(self.markov.hae_todennakoisyys("b"), 0)
-        self.assertEqual(self.markov.hae_todennakoisyys("c"), 0)
+        self.assertAlmostEqual(self.markov.hae_todennakoisyys("a"), 1 / 3, places=2)
+        self.assertAlmostEqual(self.markov.hae_todennakoisyys("b"), 1 / 3, places=2)
+        self.assertAlmostEqual(self.markov.hae_todennakoisyys("c"), 1 / 3, places=2)
