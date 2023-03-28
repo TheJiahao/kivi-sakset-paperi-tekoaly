@@ -20,9 +20,7 @@ class MarkovinKetju:
             vaihtoehdot (set[Hashable]):
                 Joukko, joka sisältää sallitut syötteet.
             frekvenssit (dict[Hashable, dict[tuple, int]] | None, optional):
-                Matriisi, joka sisältää jokaisen syötteen vastaavalla jonolla.
-                Esimerkiksi __frekvenssit["a"][("a", "b", "c")] kuvaa,
-                montako kertaa "a" on havaittu suoraan jonon ("a", "b", "c") jälkeen.
+                Matriisi, joka sisältää jokaisen syötteen frekvenssin jonkin jonon perässä.
                 Oletusarvoltaan None.
         """
         self.__muisti: deque[Hashable] = deque(maxlen=n)
