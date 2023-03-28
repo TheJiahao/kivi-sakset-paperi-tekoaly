@@ -6,11 +6,11 @@
 
 Yksikkötestauksen kattavuusraportti on nähtävissä Codecovissa klikkaamalla yllä olevaa kuvaketta.
 
-## Tietorakenteet
+### Tietorakenteet
 
 Markovin ketjua kuvaava `MarkovinKetju`-luokka on testattu yksikkötesteillä.
 
-## Sovelluslogiikka
+### Sovelluslogiikka
 
 Pelin toimintaa kuvaava `Peli`-luokka on testattu yksikkötesteillä oletus- eli kivi-sakset-paperi-peliä vastaavilla parametreilla.
 
