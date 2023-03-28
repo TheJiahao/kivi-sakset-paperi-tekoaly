@@ -6,6 +6,7 @@
 
 ## Dokumentaatio
 
+- [Käyttöohje](dokumentaatio/kayttoohje.md)
 - [Vaatimusmäärittely](dokumentaatio/vaatimusmaarittely.md)
 
 ## Viikkoraportit
