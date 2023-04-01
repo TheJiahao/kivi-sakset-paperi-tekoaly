@@ -1,3 +1,6 @@
+from copy import copy
+
+
 class Peli:
     """Luokka, joka kuvaa kivi-sakset-paperi-peliä.
 
@@ -23,6 +26,10 @@ class Peli:
             "p": "k",
         }
         self.__syotteet: set[str] = set(self.__voittavat_siirrot.keys())
+
+    @property
+    def voittavat_siirrot(self) -> dict[str, str]:
+        return copy(self.__voittavat_siirrot)
 
     def paata_voittaja(self, pelaaja1: str, pelaaja2: str) -> int:
         """Päättää kivi-sakset-paperi-pelin voittajan.
