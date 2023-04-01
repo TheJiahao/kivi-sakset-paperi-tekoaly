@@ -6,20 +6,23 @@ class Peli:
     """
 
     def __init__(
-        self, syotteet: set[str] | None = None, voittotapaukset: set[str] | None = None
+        self,
+        voittavat_siirrot: dict[str, str] | None = None,
     ) -> None:
         """Luokan konstruktori.
 
         Args:
-            syotteet (set[str] | None, optional):
-                Kuvaa merkkijonosyötteitä vastaavia lukuja.
-                Oletusarvoltaan None.
-            voittotapaukset (set[str] | None, optional):
-                Joukko, joka sisältää voittoa vastaavat tapaukset merkkijonoina.
+            voittavat_siirrot (dict[str, str] | None, optional):
+                Sanakirja, joka sisältää jokaista syotteelle voittavan tapauksen.
                 Oletusarvoltaan None.
         """
-        self.__syotteet: set[str] = syotteet or {"k", "s", "p"}
-        self.__voittotapaukset = voittotapaukset or {"ks", "sp", "pk"}
+
+        self.__voittavat_siirrot: dict[str, str] = voittavat_siirrot or {
+            "k": "s",
+            "s": "p",
+            "p": "k",
+        }
+        self.__syotteet: set[str] = set(self.__voittavat_siirrot.keys())
 
     def paata_voittaja(self, pelaaja1: str, pelaaja2: str) -> int:
         """Päättää kivi-sakset-paperi-pelin voittajan.
@@ -43,7 +46,7 @@ class Peli:
         if pelaaja1 != pelaaja2:
             tulos = -1
 
-            if pelaaja1 + pelaaja2 in self.__voittotapaukset:
+            if self.__voittavat_siirrot[pelaaja1] == pelaaja2:
                 tulos = 1
 
         return tulos
