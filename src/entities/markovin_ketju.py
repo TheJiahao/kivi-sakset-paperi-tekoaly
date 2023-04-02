@@ -38,6 +38,9 @@ class MarkovinKetju:
             and self.frekvenssit == toinen.frekvenssit
         )
 
+    def __hash__(self) -> int:
+        return hash(self.n + hash(tuple(self.vaihtoehdot)))
+
     @property
     def muisti(self) -> tuple:
         """Palauttaa muistin tuplena, mikä helpottaa käsittelyä.

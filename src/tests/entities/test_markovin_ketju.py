@@ -82,6 +82,12 @@ class TestMarkovKetju(unittest.TestCase):
 
         self.assertNotEqual(ketju1, ketju2)
 
+    def test_samoilla_ketjuilla_on_samat_hajautusarvot(self):
+        ketju1 = MarkovinKetju(2, {2, 4, 6})
+        ketju2 = MarkovinKetju(2, {2, 4, 6})
+
+        self.assertEqual(ketju1, ketju2)
+
     def test_frekvenssia_ei_voi_muuttaa_ulkopuolelta(self):
         self.tayta_muisti()
         self.tayta_muisti()
@@ -126,6 +132,17 @@ class TestMarkovKetju(unittest.TestCase):
         self.tayta_muisti()
         self.markov.lisaa("c")
         self.assertEqual(self.markov.frekvenssit["c"][("a", "b", "c")], 2)
+
+    def test_lisaa_ei_muuta_hajautusarvoa(self):
+        hajautusarvo_alussa = hash(self.markov)
+
+        self.markov.lisaa("a")
+
+        self.assertEqual(hash(self.markov), hajautusarvo_alussa)
+
+        self.tayta_muisti()
+
+        self.assertEqual(hash(self.markov), hajautusarvo_alussa)
 
     def test_muistista_poistetaan_ylimaarainen_alkio_oikein(self):
         self.tayta_muisti()
