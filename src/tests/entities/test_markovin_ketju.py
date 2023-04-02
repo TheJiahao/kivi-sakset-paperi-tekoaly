@@ -5,12 +5,12 @@ from entities.markovin_ketju import MarkovinKetju
 
 class TestMarkovKetju(unittest.TestCase):
     def setUp(self):
-        self.markov = MarkovinKetju(3, {"a", "b", "c"})
+        self.ketju = MarkovinKetju(3, {"a", "b", "c"})
 
     def tayta_muisti(self):
-        self.markov.lisaa("a")
-        self.markov.lisaa("b")
-        self.markov.lisaa("c")
+        self.ketju.lisaa("a")
+        self.ketju.lisaa("b")
+        self.ketju.lisaa("c")
 
     def test_markovin_ketjun_luominen_onnistuu(self):
         MarkovinKetju(3, {"a", "b", "c"})
@@ -20,17 +20,17 @@ class TestMarkovKetju(unittest.TestCase):
         MarkovinKetju(1, {(1,)})
 
     def test_muisti_on_alussa_tyhja(self):
-        self.assertEqual(self.markov.muisti, tuple())
+        self.assertEqual(self.ketju.muisti, tuple())
 
     def test_vaihtoehdot_alustettu_oikein(self):
-        self.assertEqual(self.markov.vaihtoehdot, {"a", "b", "c"})
+        self.assertEqual(self.ketju.vaihtoehdot, {"a", "b", "c"})
 
     def test_n_alustettu_oikein(self):
-        self.assertEqual(self.markov.n, 3)
+        self.assertEqual(self.ketju.n, 3)
 
     def test_frekvenssit_alustettu_oikein(self):
-        for vaihtoehto in self.markov.vaihtoehdot:
-            self.assertEqual(self.markov.frekvenssit[vaihtoehto], {})
+        for vaihtoehto in self.ketju.vaihtoehdot:
+            self.assertEqual(self.ketju.frekvenssit[vaihtoehto], {})
 
     def test_ketju_on_sama_itsensa_kanssa(self):
         ketju1 = MarkovinKetju(2, {1, 2, 3}, {1: {(1, 2): 1}})
@@ -91,151 +91,151 @@ class TestMarkovKetju(unittest.TestCase):
     def test_frekvenssia_ei_voi_muuttaa_ulkopuolelta(self):
         self.tayta_muisti()
         self.tayta_muisti()
-        self.markov.frekvenssit["a"][("a", "b", "c")] = 10
+        self.ketju.frekvenssit["a"][("a", "b", "c")] = 10
 
-        self.assertEqual(self.markov.frekvenssit["a"][("a", "b", "c")], 1)
+        self.assertEqual(self.ketju.frekvenssit["a"][("a", "b", "c")], 1)
 
     def test_vaihtoehtoja_ei_voi_muuttaa_ulkopuolelta(self):
-        self.markov.vaihtoehdot.add("d")
+        self.ketju.vaihtoehdot.add("d")
 
-        self.assertEqual(self.markov.vaihtoehdot, {"a", "b", "c"})
+        self.assertEqual(self.ketju.vaihtoehdot, {"a", "b", "c"})
 
     def test_lisaa_aiheuttaa_virheen_kun_syote_ei_kelpaa(self):
         with self.assertRaises(ValueError):
-            self.markov.lisaa("x")
+            self.ketju.lisaa("x")
 
         with self.assertRaises(ValueError):
-            self.markov.lisaa(1)
+            self.ketju.lisaa(1)
 
         with self.assertRaises(ValueError):
-            self.markov.lisaa((2,))
+            self.ketju.lisaa((2,))
 
     def test_lisaa_ei_muuta_frekvensseja_kun_muisti_ei_ole_taynna(self):
-        self.markov.lisaa("c")
-        self.assertEqual(self.markov.frekvenssit["c"], {})
+        self.ketju.lisaa("c")
+        self.assertEqual(self.ketju.frekvenssit["c"], {})
 
-        self.markov.lisaa("b")
-        self.assertEqual(self.markov.frekvenssit["b"], {})
+        self.ketju.lisaa("b")
+        self.assertEqual(self.ketju.frekvenssit["b"], {})
 
-        self.markov.lisaa("a")
-        self.assertEqual(self.markov.frekvenssit["a"], {})
+        self.ketju.lisaa("a")
+        self.assertEqual(self.ketju.frekvenssit["a"], {})
 
     def test_lisaa_kasvattaa_frekvensseja_kun_muisti_on_taynna(self):
         self.tayta_muisti()
 
-        self.markov.lisaa("c")
-        self.assertEqual(self.markov.frekvenssit["c"][("a", "b", "c")], 1)
+        self.ketju.lisaa("c")
+        self.assertEqual(self.ketju.frekvenssit["c"][("a", "b", "c")], 1)
 
-        self.markov.lisaa("c")
-        self.assertEqual(self.markov.frekvenssit["c"][("b", "c", "c")], 1)
+        self.ketju.lisaa("c")
+        self.assertEqual(self.ketju.frekvenssit["c"][("b", "c", "c")], 1)
 
         self.tayta_muisti()
-        self.markov.lisaa("c")
-        self.assertEqual(self.markov.frekvenssit["c"][("a", "b", "c")], 2)
+        self.ketju.lisaa("c")
+        self.assertEqual(self.ketju.frekvenssit["c"][("a", "b", "c")], 2)
 
     def test_lisaa_ei_muuta_hajautusarvoa(self):
-        hajautusarvo_alussa = hash(self.markov)
+        hajautusarvo_alussa = hash(self.ketju)
 
-        self.markov.lisaa("a")
+        self.ketju.lisaa("a")
 
-        self.assertEqual(hash(self.markov), hajautusarvo_alussa)
+        self.assertEqual(hash(self.ketju), hajautusarvo_alussa)
 
         self.tayta_muisti()
 
-        self.assertEqual(hash(self.markov), hajautusarvo_alussa)
+        self.assertEqual(hash(self.ketju), hajautusarvo_alussa)
 
     def test_muistista_poistetaan_ylimaarainen_alkio_oikein(self):
         self.tayta_muisti()
 
-        self.markov.lisaa("a")
-        self.assertEqual(self.markov.muisti, ("b", "c", "a"))
+        self.ketju.lisaa("a")
+        self.assertEqual(self.ketju.muisti, ("b", "c", "a"))
 
-        self.markov.lisaa("b")
-        self.assertEqual(self.markov.muisti, ("c", "a", "b"))
+        self.ketju.lisaa("b")
+        self.assertEqual(self.ketju.muisti, ("c", "a", "b"))
 
-        self.markov.lisaa("a")
-        self.assertEqual(self.markov.muisti, ("a", "b", "a"))
+        self.ketju.lisaa("a")
+        self.assertEqual(self.ketju.muisti, ("a", "b", "a"))
 
     def test_todennakoisyydet_paivittyvat_oikein(self):
         self.tayta_muisti()
-        self.markov.lisaa("a")
+        self.ketju.lisaa("a")
         self.tayta_muisti()
 
-        self.assertAlmostEqual(self.markov.hae_todennakoisyydet()["a"], 1)
-        self.assertAlmostEqual(self.markov.hae_todennakoisyydet()["b"], 0)
-        self.assertAlmostEqual(self.markov.hae_todennakoisyydet()["c"], 0)
+        self.assertAlmostEqual(self.ketju.hae_todennakoisyydet()["a"], 1)
+        self.assertAlmostEqual(self.ketju.hae_todennakoisyydet()["b"], 0)
+        self.assertAlmostEqual(self.ketju.hae_todennakoisyydet()["c"], 0)
 
-        self.markov.lisaa("b")
+        self.ketju.lisaa("b")
         self.tayta_muisti()
 
-        self.assertAlmostEqual(self.markov.hae_todennakoisyydet()["a"], 0.5)
-        self.assertAlmostEqual(self.markov.hae_todennakoisyydet()["b"], 0.5)
-        self.assertAlmostEqual(self.markov.hae_todennakoisyydet()["c"], 0)
+        self.assertAlmostEqual(self.ketju.hae_todennakoisyydet()["a"], 0.5)
+        self.assertAlmostEqual(self.ketju.hae_todennakoisyydet()["b"], 0.5)
+        self.assertAlmostEqual(self.ketju.hae_todennakoisyydet()["c"], 0)
 
-        self.markov.lisaa("c")
+        self.ketju.lisaa("c")
         self.tayta_muisti()
 
-        self.assertAlmostEqual(self.markov.hae_todennakoisyydet()["a"], 0.33, places=2)
-        self.assertAlmostEqual(self.markov.hae_todennakoisyydet()["b"], 0.33, places=2)
-        self.assertAlmostEqual(self.markov.hae_todennakoisyydet()["c"], 0.33, places=2)
+        self.assertAlmostEqual(self.ketju.hae_todennakoisyydet()["a"], 0.33, places=2)
+        self.assertAlmostEqual(self.ketju.hae_todennakoisyydet()["b"], 0.33, places=2)
+        self.assertAlmostEqual(self.ketju.hae_todennakoisyydet()["c"], 0.33, places=2)
 
     def test_ennusta_valitsee_todennakoisimman_vaihtoehdon_kun_muisti_on_taynna(self):
         self.tayta_muisti()
-        self.markov.lisaa("a")
+        self.ketju.lisaa("a")
         self.tayta_muisti()
 
         # a:n todennäköisyys on 1 eli todennäköisin
-        self.assertEqual(self.markov.ennusta(), "a")
+        self.assertEqual(self.ketju.ennusta(), "a")
 
         self.tayta_muisti()
-        self.markov.lisaa("b")
+        self.ketju.lisaa("b")
         self.tayta_muisti()
-        self.markov.lisaa("b")
+        self.ketju.lisaa("b")
         self.tayta_muisti()
-        self.markov.lisaa("b")
+        self.ketju.lisaa("b")
         self.tayta_muisti()
 
         # Nyt b:n todennäköisyys on 3/5 eli todennäköisin
-        self.assertEqual(self.markov.ennusta(), "b")
+        self.assertEqual(self.ketju.ennusta(), "b")
 
     def test_hae_frekvenssi_aiheuttaa_virheen_kun_syote_ei_kelpaa(self):
         with self.assertRaises(ValueError):
-            self.markov.hae_frekvenssi("x")
+            self.ketju.hae_frekvenssi("x")
 
         with self.assertRaises(ValueError):
-            self.markov.hae_frekvenssi(1)
+            self.ketju.hae_frekvenssi(1)
 
         with self.assertRaises(ValueError):
-            self.markov.hae_frekvenssi((2,))
+            self.ketju.hae_frekvenssi((2,))
 
     def test_hae_frekvenssi_palauttaa_nolla_kun_muisti_ei_ole_taynna(self):
-        self.markov.lisaa("a")
-        self.assertEqual(self.markov.hae_frekvenssi("a"), 0)
-        self.assertEqual(self.markov.hae_frekvenssi("b"), 0)
-        self.assertEqual(self.markov.hae_frekvenssi("c"), 0)
+        self.ketju.lisaa("a")
+        self.assertEqual(self.ketju.hae_frekvenssi("a"), 0)
+        self.assertEqual(self.ketju.hae_frekvenssi("b"), 0)
+        self.assertEqual(self.ketju.hae_frekvenssi("c"), 0)
 
-        self.markov.lisaa("c")
-        self.assertEqual(self.markov.hae_frekvenssi("a"), 0)
-        self.assertEqual(self.markov.hae_frekvenssi("b"), 0)
-        self.assertEqual(self.markov.hae_frekvenssi("c"), 0)
+        self.ketju.lisaa("c")
+        self.assertEqual(self.ketju.hae_frekvenssi("a"), 0)
+        self.assertEqual(self.ketju.hae_frekvenssi("b"), 0)
+        self.assertEqual(self.ketju.hae_frekvenssi("c"), 0)
 
-        self.markov.lisaa("b")
-        self.assertEqual(self.markov.hae_frekvenssi("a"), 0)
-        self.assertEqual(self.markov.hae_frekvenssi("b"), 0)
-        self.assertEqual(self.markov.hae_frekvenssi("c"), 0)
+        self.ketju.lisaa("b")
+        self.assertEqual(self.ketju.hae_frekvenssi("a"), 0)
+        self.assertEqual(self.ketju.hae_frekvenssi("b"), 0)
+        self.assertEqual(self.ketju.hae_frekvenssi("c"), 0)
 
     def test_hae_todennakoisyys_on_symmetrinen_kun_muisti_ei_ole_taynna(self):
-        self.markov.lisaa("a")
-        self.assertAlmostEqual(self.markov.hae_todennakoisyys("a"), 1 / 3, places=2)
-        self.assertAlmostEqual(self.markov.hae_todennakoisyys("b"), 1 / 3, places=2)
-        self.assertAlmostEqual(self.markov.hae_todennakoisyys("c"), 1 / 3, places=2)
+        self.ketju.lisaa("a")
+        self.assertAlmostEqual(self.ketju.hae_todennakoisyys("a"), 1 / 3, places=2)
+        self.assertAlmostEqual(self.ketju.hae_todennakoisyys("b"), 1 / 3, places=2)
+        self.assertAlmostEqual(self.ketju.hae_todennakoisyys("c"), 1 / 3, places=2)
 
-        self.markov.lisaa("c")
-        self.assertAlmostEqual(self.markov.hae_todennakoisyys("a"), 1 / 3, places=2)
-        self.assertAlmostEqual(self.markov.hae_todennakoisyys("b"), 1 / 3, places=2)
-        self.assertAlmostEqual(self.markov.hae_todennakoisyys("c"), 1 / 3, places=2)
+        self.ketju.lisaa("c")
+        self.assertAlmostEqual(self.ketju.hae_todennakoisyys("a"), 1 / 3, places=2)
+        self.assertAlmostEqual(self.ketju.hae_todennakoisyys("b"), 1 / 3, places=2)
+        self.assertAlmostEqual(self.ketju.hae_todennakoisyys("c"), 1 / 3, places=2)
 
-        self.markov.lisaa("b")
-        self.assertAlmostEqual(self.markov.hae_todennakoisyys("a"), 1 / 3, places=2)
-        self.assertAlmostEqual(self.markov.hae_todennakoisyys("b"), 1 / 3, places=2)
-        self.assertAlmostEqual(self.markov.hae_todennakoisyys("c"), 1 / 3, places=2)
+        self.ketju.lisaa("b")
+        self.assertAlmostEqual(self.ketju.hae_todennakoisyys("a"), 1 / 3, places=2)
+        self.assertAlmostEqual(self.ketju.hae_todennakoisyys("b"), 1 / 3, places=2)
+        self.assertAlmostEqual(self.ketju.hae_todennakoisyys("c"), 1 / 3, places=2)
