@@ -4,11 +4,20 @@
 
 ## Yksikkö- ja integraatiotestaus
 
-Yksikkötestauksen kattavuusraportti on nähtävissä Codecovissa klikkaamalla yllä olevaa kuvaketta.
+![Kattavuusraportti](kuvat/kattavuusraportti.png)
+
+Yksikkötestauksen tarkka kattavuusraportti on nähtävissä Codecovissa klikkaamalla yllä olevaa kuvaketta.
 
 ### Tietorakenteet
 
 Markovin ketjua kuvaava `MarkovinKetju`-luokka on testattu yksikkötesteillä.
+
+## Tekoälyt
+
+Markovin ketjun perustuvaa tekoälyä kuvaava `MarkovTekoaly`-luokka on testattu yksikkötesteillä yksinkertaisissa tapauksissa.
+
+Yhdistelmätekoälyä kuvaava `YhdistelmaTekoaly`-luokan yksinkertaiset metodit on testattu yksikkötesteillä.
+Tekoälyihin liittyvien satunnaisuuden vuoksi `lisaa`- ja `pelaa`-metodit ovat vielä testaamatta.
 
 ### Sovelluslogiikka
 
@@ -18,4 +27,7 @@ Pelin toimintaa kuvaava `Peli`-luokka on testattu yksikkötesteillä oletus- eli
 
 Asenna projekti [käyttöohjeen](kayttoohje.md) mukaan.
 Yksikkötestien suorittaminen onnistuu komennolla:
-```poetry run invoke test```
+
+```shell
+poetry run invoke test
+```
