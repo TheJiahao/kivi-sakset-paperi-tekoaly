@@ -19,7 +19,7 @@ class MarkovTekoaly(Tekoaly):
         self.voittavat_siirrot: dict[str, str] = voittavat_siirrot
 
     def pelaa(self) -> str:
-        """Pelaa yhden kierroksen.
+        """Pelaa yhden kierroksen. Ei muuta luokan sisäistä tilaa.
 
         Returns:
             str: Tekoälyn pelaama siirto.

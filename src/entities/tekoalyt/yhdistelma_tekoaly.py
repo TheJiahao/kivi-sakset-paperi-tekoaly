@@ -36,7 +36,14 @@ class YhdistelmaTekoaly(Tekoaly):
         siirto = self.__pelaava_tekoaly.pelaa(syote)
 
         for tekoaly in self.__tekoalyt:
-            pelattu = None
+    def pelaa(self) -> str:
+        """Pelaa kierroksen. Ei muuta luokan sisäistä tilaa.
+
+        Returns:
+            str: Tällä hetkellä pelaavan tekoälyn pelaama siirto.
+        """
+
+        return self.__pelaava_tekoaly.pelaa()
 
             if tekoaly == self.__pelaava_tekoaly:
                 pelattu = siirto

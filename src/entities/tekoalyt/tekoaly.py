@@ -4,7 +4,7 @@ from abc import ABC, abstractmethod
 class Tekoaly(ABC):
     @abstractmethod
     def pelaa(self) -> str:
-        """Pelaa yhden kierroksen.
+        """Pelaa yhden kierroksen. Ei muuta luokan sisäistä tilaa.
 
         Returns:
             str: Tekoälyn pelaama siirto.
