@@ -1,17 +1,16 @@
 from collections import deque
 from copy import deepcopy
 
+from entities.peli import Peli
 from entities.tekoalyt.markov_tekoaly import MarkovTekoaly
 from entities.tekoalyt.tekoaly import Tekoaly
-from entities.peli import Peli
 
 
 class YhdistelmaTekoaly(Tekoaly):
     def __init__(self, fokus_pituus: int, peli: Peli) -> None:
         self.__fokus_pituus: int = fokus_pituus
         self.__tekoalyt: list[Tekoaly] = []
-        self.__peli = peli
-        self.__voittavat_siirrot: dict[str, str] = peli.voittavat_siirrot
+        self.__peli: Peli = peli
 
         self.__alusta_tekoalyt()
 
@@ -36,19 +35,35 @@ class YhdistelmaTekoaly(Tekoaly):
 
     def __alusta_tekoalyt(self) -> None:
         for i in range(1, self.__fokus_pituus + 1):
-            self.__tekoalyt.append(MarkovTekoaly(i, self.__voittavat_siirrot))
+            self.__tekoalyt.append(MarkovTekoaly(i, self.__peli.voittavat_siirrot))
 
     def __vaihda_tekoaly(self) -> None:
-        self.__pelaava_tekoaly = max(
-            self.__tekoalyt, key=lambda x: sum(self.__pisteet[x])
-        )
+        self.__pelaava_tekoaly = max(self.__tekoalyt, key=self.hae_pisteet)
 
         self.__siirtoja_jaljella = self.__fokus_pituus
 
-    def pelaa(self, syote: str) -> str:
-        siirto = self.__pelaava_tekoaly.pelaa(syote)
-
+    def __lisaa_pelitulos(self, syote: str) -> None:
         for tekoaly in self.__tekoalyt:
+            tulos = self.__peli.paata_voittaja(tekoaly.pelaa(), syote)
+            self.__pisteet[tekoaly].append(tulos)
+
+    def hae_pisteet(self, tekoaly: Tekoaly) -> int:
+        """Hakee annetun tekoälyn pistemäärän.
+
+        Args:
+            tekoaly (Tekoaly): Haettava tekoäly.
+
+        Raises:
+            ValueError: Tekoäly ei kuulu joukkoon.
+
+        Returns:
+            int: Tekoälyn pistemäärä.
+        """
+        if tekoaly not in self.__tekoalyt:
+            raise ValueError("Tekoäly ei kuulu joukkoon.")
+
+        return sum(self.__pisteet[tekoaly])
+
     def pelaa(self) -> str:
         """Pelaa kierroksen. Ei muuta luokan sisäistä tilaa.
 
@@ -58,19 +73,19 @@ class YhdistelmaTekoaly(Tekoaly):
 
         return self.__pelaava_tekoaly.pelaa()
 
-            if tekoaly == self.__pelaava_tekoaly:
-                pelattu = siirto
-            else:
-                pelattu = tekoaly.pelaa(syote)
+    def lisaa(self, syote: str) -> None:
+        """Lisää pelaajan syötteen ja päivittää tekoälyjen pisteytystä.
 
-            tulos = self.__peli.paata_voittaja(pelattu, syote)
+        Args:
+            syote (str): Pelaajan syöte.
+        """
 
-            self.__pisteet[tekoaly].append(tulos)
+        self.__siirtoja_jaljella -= 1
 
         if self.__siirtoja_jaljella == 0:
             self.__vaihda_tekoaly()
 
-        return siirto
+        self.__lisaa_pelitulos(syote)
 
-    def pisteyta(self) -> None:
-        pass
+        for tekoaly in self.__tekoalyt:
+            tekoaly.lisaa(syote)
