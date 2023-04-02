@@ -21,6 +21,13 @@ class YhdistelmaTekoaly(Tekoaly):
         self.__pelaava_tekoaly = self.__tekoalyt[0]
         self.__siirtoja_jaljella = fokus_pituus
 
+    def __hash__(self) -> int:
+        return hash(
+            (sum(hash(tekoaly) for tekoaly in self.__tekoalyt))
+            + self.__fokus_pituus
+            + hash(self.__peli)
+        )
+
     @property
     def pelaava_tekoaly(self) -> Tekoaly:
         return deepcopy(self.__pelaava_tekoaly)
