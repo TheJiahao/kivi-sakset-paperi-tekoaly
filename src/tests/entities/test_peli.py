@@ -26,3 +26,8 @@ class TestPeli(unittest.TestCase):
             self.peli.paata_voittaja("a", "p")
             self.peli.paata_voittaja("a", "b")
             self.peli.paata_voittaja("k", "b")
+
+    def test_voittavat_siirrot_ei_voi_muokata_ulkopuolelta(self):
+        self.peli.voittavat_siirrot["x"] = "y"
+
+        self.assertNotIn("x", self.peli.voittavat_siirrot.keys())
