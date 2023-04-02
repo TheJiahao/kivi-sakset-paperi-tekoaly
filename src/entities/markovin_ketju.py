@@ -30,6 +30,14 @@ class MarkovinKetju:
             vaihtoehto: {} for vaihtoehto in vaihtoehdot
         }
 
+    def __eq__(self, toinen: "MarkovinKetju") -> bool:
+        return (
+            self.muisti == toinen.muisti
+            and self.n == toinen.n
+            and self.vaihtoehdot == toinen.vaihtoehdot
+            and self.frekvenssit == toinen.frekvenssit
+        )
+
     @property
     def muisti(self) -> tuple:
         """Palauttaa muistin tuplena, mikä helpottaa käsittelyä.
