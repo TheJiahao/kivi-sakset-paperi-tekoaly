@@ -1,3 +1,5 @@
+from copy import copy, deepcopy
+
 from entities.markovin_ketju import MarkovinKetju
 from entities.tekoalyt.tekoaly import Tekoaly
 
@@ -16,7 +18,21 @@ class MarkovTekoaly(Tekoaly):
         self.__markovin_ketju: MarkovinKetju = MarkovinKetju(
             n, set(voittavat_siirrot.keys())
         )
-        self.voittavat_siirrot: dict[str, str] = voittavat_siirrot
+        self.__voittavat_siirrot: dict[str, str] = voittavat_siirrot
+
+    def __eq__(self, toinen: "MarkovTekoaly") -> bool:
+        return (
+            self.markovin_ketju == toinen.markovin_ketju
+            and self.__voittavat_siirrot == toinen.voittavat_siirrot
+        )
+
+    @property
+    def markovin_ketju(self) -> MarkovinKetju:
+        return deepcopy(self.__markovin_ketju)
+
+    @property
+    def voittavat_siirrot(self) -> dict[str, str]:
+        return copy(self.__voittavat_siirrot)
 
     def pelaa(self) -> str:
         """Pelaa yhden kierroksen. Ei muuta luokan sisäistä tilaa.
@@ -26,7 +42,7 @@ class MarkovTekoaly(Tekoaly):
         """
 
         ennuste = str(self.__markovin_ketju.ennusta())
-        return self.voittavat_siirrot[ennuste]
+        return self.__voittavat_siirrot[ennuste]
 
     def lisaa(self, syote: str) -> None:
         """Lisää pelaajan syötteen.
