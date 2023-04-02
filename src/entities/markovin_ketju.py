@@ -30,16 +30,19 @@ class MarkovinKetju:
             vaihtoehto: {} for vaihtoehto in vaihtoehdot
         }
 
-    def __eq__(self, toinen: "MarkovinKetju") -> bool:
-        return (
-            self.muisti == toinen.muisti
-            and self.n == toinen.n
-            and self.vaihtoehdot == toinen.vaihtoehdot
-            and self.frekvenssit == toinen.frekvenssit
-        )
+    def __eq__(self, toinen: object) -> bool:
+        if isinstance(toinen, MarkovinKetju):
+            return (
+                self.muisti == toinen.muisti
+                and self.n == toinen.n
+                and self.vaihtoehdot == toinen.vaihtoehdot
+                and self.frekvenssit == toinen.frekvenssit
+            )
+
+        return False
 
     def __hash__(self) -> int:
-        return hash(self.n + hash(tuple(self.vaihtoehdot)))
+        return self.n * hash(tuple(self.vaihtoehdot))
 
     @property
     def muisti(self) -> tuple:

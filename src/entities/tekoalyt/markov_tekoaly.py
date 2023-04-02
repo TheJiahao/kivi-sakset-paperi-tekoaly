@@ -20,15 +20,18 @@ class MarkovTekoaly(Tekoaly):
         )
         self.__voittavat_siirrot: dict[str, str] = voittavat_siirrot
 
-    def __eq__(self, toinen: "MarkovTekoaly") -> bool:
-        return (
-            self.markovin_ketju == toinen.markovin_ketju
-            and self.__voittavat_siirrot == toinen.voittavat_siirrot
-        )
+    def __eq__(self, toinen: object) -> bool:
+        if isinstance(toinen, MarkovTekoaly):
+            return (
+                self.markovin_ketju == toinen.markovin_ketju
+                and self.__voittavat_siirrot == toinen.voittavat_siirrot
+            )
+
+        return False
 
     def __hash__(self) -> int:
-        return hash(
-            hash(self.markovin_ketju) + hash(frozenset(self.voittavat_siirrot.items()))
+        return hash(self.markovin_ketju) * hash(
+            frozenset(self.voittavat_siirrot.items())
         )
 
     @property
