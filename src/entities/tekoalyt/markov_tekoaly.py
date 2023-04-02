@@ -18,16 +18,21 @@ class MarkovTekoaly(Tekoaly):
         )
         self.voittavat_siirrot: dict[str, str] = voittavat_siirrot
 
-    def pelaa(self, syote: str) -> str:
+    def pelaa(self) -> str:
         """Pelaa yhden kierroksen.
-
-        Args:
-            syote (str): Pelaajan syöte.
 
         Returns:
             str: Tekoälyn pelaama siirto.
         """
 
-        self.__markovin_ketju.lisaa(syote)
         ennuste = str(self.__markovin_ketju.ennusta())
         return self.voittavat_siirrot[ennuste]
+
+    def lisaa(self, syote: str) -> None:
+        """Lisää pelaajan syötteen.
+
+        Args:
+            syote (str): Pelaajan syöte.
+        """
+
+        self.__markovin_ketju.lisaa(syote)
