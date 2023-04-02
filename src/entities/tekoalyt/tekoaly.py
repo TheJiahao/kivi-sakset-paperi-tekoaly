@@ -2,9 +2,18 @@ from abc import ABC, abstractmethod
 
 
 class Tekoaly(ABC):
-    def __init__(self) -> None:
-        pass
+    @abstractmethod
+    def pelaa(self) -> str:
+        """Pelaa yhden kierroksen.
+
+        Returns:
+            str: Tekoälyn pelaama siirto.
+        """
 
     @abstractmethod
-    def pelaa(self, syote: str) -> str:
-        pass
+    def lisaa(self, syote: str) -> str:
+        """Lisää pelaajan syötteen.
+
+        Args:
+            syote (str): Pelaajan syöte.
+        """
