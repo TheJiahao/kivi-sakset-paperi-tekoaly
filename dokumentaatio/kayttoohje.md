@@ -2,7 +2,7 @@
 
 ## Asennus
 
-1. Asenna Python `3.11.x`.
+1. Asenna Python `3.11.x` ja [Poetry](https://python-poetry.org/).
 2. Klonaa repositorio.
 3. Asenna riippuvuudet:
 
@@ -12,7 +12,7 @@
 
 ## Invoke-tehtävät
 
-Ohjelman suorittaminen
+Seuraavat Invoke-tehtävät toimivat projektin juurihakemistossa.
 
 Kattavuusraportin luominen:
 
