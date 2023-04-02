@@ -26,6 +26,11 @@ class MarkovTekoaly(Tekoaly):
             and self.__voittavat_siirrot == toinen.voittavat_siirrot
         )
 
+    def __hash__(self) -> int:
+        return hash(
+            hash(self.markovin_ketju) + hash(frozenset(self.voittavat_siirrot.items()))
+        )
+
     @property
     def markovin_ketju(self) -> MarkovinKetju:
         return deepcopy(self.__markovin_ketju)
