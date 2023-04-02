@@ -1,4 +1,5 @@
 from collections import deque
+from copy import deepcopy
 
 from entities.tekoalyt.markov_tekoaly import MarkovTekoaly
 from entities.tekoalyt.tekoaly import Tekoaly
@@ -20,6 +21,18 @@ class YhdistelmaTekoaly(Tekoaly):
 
         self.__pelaava_tekoaly = self.__tekoalyt[0]
         self.__siirtoja_jaljella = fokus_pituus
+
+    @property
+    def pelaava_tekoaly(self) -> Tekoaly:
+        return deepcopy(self.__pelaava_tekoaly)
+
+    @property
+    def siirtoja_jaljella(self) -> int:
+        return self.__siirtoja_jaljella
+
+    @property
+    def pisteet(self) -> dict[Tekoaly, deque[int]]:
+        return deepcopy(self.__pisteet)
 
     def __alusta_tekoalyt(self) -> None:
         for i in range(1, self.__fokus_pituus + 1):
