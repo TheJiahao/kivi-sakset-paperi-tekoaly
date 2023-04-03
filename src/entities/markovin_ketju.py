@@ -41,9 +41,6 @@ class MarkovinKetju:
 
         return False
 
-    def __hash__(self) -> int:
-        return self.n * hash(tuple(self.vaihtoehdot))
-
     @property
     def muisti(self) -> tuple:
         """Palauttaa muistin tuplena, mikä helpottaa käsittelyä.

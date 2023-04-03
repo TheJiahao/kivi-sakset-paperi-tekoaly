@@ -51,12 +51,6 @@ class TestMarkovTekoaly(unittest.TestCase):
 
         self.assertNotEqual(markov1, markov2)
 
-    def test_samoilla_tekoalyilla_on_samat_hajautusarvot(self):
-        markov1 = MarkovTekoaly(2, {"a": "b", "x": "y"})
-        markov2 = MarkovTekoaly(2, {"a": "b", "x": "y"})
-
-        self.assertEqual(hash(markov1), hash(markov2))
-
     def test_pelaa_lyhyella_ketjulla(self):
         markov = MarkovTekoaly(1, self.voittavat_vaihtoehdot)
 
@@ -106,14 +100,3 @@ class TestMarkovTekoaly(unittest.TestCase):
         self.markov.voittavat_siirrot["d"] = "e"
 
         self.assertEqual(self.markov.voittavat_siirrot, {"k": "p", "s": "k", "p": "s"})
-
-    def test_lisaa_ei_muuta_hajautusarvoa(self):
-        hajautusarvo_alussa = hash(self.markov)
-
-        self.markov.lisaa("k")
-
-        self.assertEqual(hash(self.markov), hajautusarvo_alussa)
-
-        self.markov.lisaa("p")
-
-        self.assertEqual(hash(self.markov), hajautusarvo_alussa)

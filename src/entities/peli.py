@@ -27,9 +27,6 @@ class Peli:
         }
         self.__syotteet: set[str] = set(self.__voittavat_siirrot.keys())
 
-    def __hash__(self) -> int:
-        return hash(frozenset(self.__voittavat_siirrot))
-
     @property
     def voittavat_siirrot(self) -> dict[str, str]:
         return copy(self.__voittavat_siirrot)

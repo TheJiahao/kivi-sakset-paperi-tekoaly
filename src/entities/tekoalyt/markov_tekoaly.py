@@ -29,11 +29,6 @@ class MarkovTekoaly(Tekoaly):
 
         return False
 
-    def __hash__(self) -> int:
-        return hash(self.markovin_ketju) * hash(
-            frozenset(self.voittavat_siirrot.items())
-        )
-
     @property
     def markovin_ketju(self) -> MarkovinKetju:
         return deepcopy(self.__markovin_ketju)

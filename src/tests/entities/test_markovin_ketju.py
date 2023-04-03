@@ -133,17 +133,6 @@ class TestMarkovKetju(unittest.TestCase):
         self.ketju.lisaa("c")
         self.assertEqual(self.ketju.frekvenssit["c"][("a", "b", "c")], 2)
 
-    def test_lisaa_ei_muuta_hajautusarvoa(self):
-        hajautusarvo_alussa = hash(self.ketju)
-
-        self.ketju.lisaa("a")
-
-        self.assertEqual(hash(self.ketju), hajautusarvo_alussa)
-
-        self.tayta_muisti()
-
-        self.assertEqual(hash(self.ketju), hajautusarvo_alussa)
-
     def test_muistista_poistetaan_ylimaarainen_alkio_oikein(self):
         self.tayta_muisti()
 

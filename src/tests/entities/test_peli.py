@@ -32,5 +32,3 @@ class TestPeli(unittest.TestCase):
 
         self.assertNotIn("x", self.peli.voittavat_siirrot.keys())
 
-    def test_hajautusarvon_lasku_onnistuu(self):
-        hash(self.peli)
