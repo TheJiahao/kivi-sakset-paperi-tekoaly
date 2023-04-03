@@ -51,6 +51,11 @@ class TestMarkovTekoaly(unittest.TestCase):
 
         self.assertNotEqual(markov1, markov2)
 
+    def test_tekoaly_ei_ole_sama_toisen_tyyppisen_olion_kanssa(self):
+        self.assertNotEqual(self.markov, 1)
+        self.assertNotEqual(self.markov, "x")
+        self.assertNotEqual(self.markov, [])
+
     def test_pelaa_lyhyella_ketjulla(self):
         markov = MarkovTekoaly(1, self.voittavat_vaihtoehdot)
 

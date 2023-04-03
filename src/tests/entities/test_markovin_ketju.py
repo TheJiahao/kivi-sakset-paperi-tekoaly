@@ -82,11 +82,10 @@ class TestMarkovKetju(unittest.TestCase):
 
         self.assertNotEqual(ketju1, ketju2)
 
-    def test_samoilla_ketjuilla_on_samat_hajautusarvot(self):
-        ketju1 = MarkovinKetju(2, {2, 4, 6})
-        ketju2 = MarkovinKetju(2, {2, 4, 6})
-
-        self.assertEqual(ketju1, ketju2)
+    def test_ketju_ei_ole_sama_toisen_tyyppisen_olion_kanssa(self):
+        self.assertNotEqual(self.ketju, 1)
+        self.assertNotEqual(self.ketju, "x")
+        self.assertNotEqual(self.ketju, [])
 
     def test_frekvenssia_ei_voi_muuttaa_ulkopuolelta(self):
         self.tayta_muisti()
