@@ -64,7 +64,7 @@ class MarkovKetju:
         return copy.deepcopy(self.__frekvenssit)
 
     def lisaa(self, syote: Hashable) -> None:
-        """Lisää Markovin ketjuun alkion ja päivittää todennäköisyyden.
+        """Lisää Markovin ketjuun alkion ja päivittää frekvenssin.
 
         Args:
             syote (Hashable): Lisättävä alkio.
