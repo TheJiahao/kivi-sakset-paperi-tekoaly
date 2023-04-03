@@ -26,24 +26,16 @@ class YhdistelmaTekoaly(Tekoaly):
 
         self.__fokus_pituus: int = fokus_pituus
         self.__peli: Peli = peli or Peli()
-        self.__pisteet: dict[Tekoaly, deque[int]] = {}
-
-        self.__alusta_pisteet()
+        self.__tekoalyt: list[Tekoaly] = [
+            MarkovTekoaly(i, self.__peli.voittavat_siirrot)
+            for i in range(1, fokus_pituus + 1)
+        ]
+        self.__pisteet: list[deque[int]] = [
+            deque(maxlen=self.__fokus_pituus) for i in range(fokus_pituus)
+        ]
 
         self.__pelaava_tekoaly: Tekoaly = self.hae_paras_tekoaly()
         self.__siirtoja_jaljella: int = fokus_pituus
-
-    def __hash__(self) -> int:
-        return (
-            (sum(hash(tekoaly) for tekoaly in self.hae_tekoalyt()))
-            + self.__fokus_pituus
-            + hash(self.__peli)
-        )
-
-    def __alusta_pisteet(self) -> None:
-        for i in range(1, self.__fokus_pituus + 1):
-            tekoaly = MarkovTekoaly(i, self.__peli.voittavat_siirrot)
-            self.__pisteet[tekoaly] = deque(maxlen=self.__fokus_pituus)
 
     @property
     def pelaava_tekoaly(self) -> Tekoaly:
@@ -53,10 +45,6 @@ class YhdistelmaTekoaly(Tekoaly):
     def siirtoja_jaljella(self) -> int:
         return self.__siirtoja_jaljella
 
-    @property
-    def pisteet(self) -> dict[Tekoaly, deque[int]]:
-        return deepcopy(self.__pisteet)
-
     def __paivita_pisteet(self, syote: str) -> None:
         """Päivittää tekoälyjen pisteet.
 
@@ -64,18 +52,22 @@ class YhdistelmaTekoaly(Tekoaly):
             syote (str): Pelaajan syöte viime kierroksella.
         """
 
-        for tekoaly in self.hae_tekoalyt():
+        for i, tekoaly in enumerate(self.__tekoalyt):
             tulos = self.__peli.paata_voittaja(tekoaly.pelaa(), syote)
-            self.__pisteet[tekoaly].append(tulos)
+            self.__pisteet[i].append(tulos)
 
-    def hae_tekoalyt(self) -> list[Tekoaly]:
-        """Palauttaa kaikki tekoälyt.
+    def hae_tekoalyt_ja_pisteet(self) -> list[tuple[Tekoaly, tuple[int]]]:
+        """Palauttaa tekoälyt ja vastaavat pistetilanteet.
 
         Returns:
-            list[Tekoaly]: Lista, joka sisältää kaikki tekoälyt.
+            list[tuple[Tekoaly, tuple[int]]]:
+                Lista, joka sisältää tekoälyt ja niiden pistetilanteen tuplena.
         """
 
-        return deepcopy(list(self.pisteet.keys()))
+        return [
+            (tekoaly, tuple(self.__pisteet[i]))
+            for i, tekoaly in enumerate(self.__tekoalyt)
+        ]
 
     def hae_paras_tekoaly(self) -> Tekoaly:
         """Palauttaa parhaiten pelanneen tekoälyn.
@@ -84,25 +76,14 @@ class YhdistelmaTekoaly(Tekoaly):
             Tekoaly: Tekoäly, jolla on korkein pistemäärä.
         """
 
-        return max(self.hae_tekoalyt(), key=self.hae_pisteet)
+        paras_tekoaly = self.__tekoalyt[0]
+        paras_pisteet = self.__pisteet[0]
 
-    def hae_pisteet(self, tekoaly: Tekoaly) -> int:
-        """Hakee annetun tekoälyn pistemäärän.
+        for i, tekoaly in enumerate(self.__tekoalyt):
+            if self.__pisteet[i] > paras_pisteet:
+                paras_tekoaly = tekoaly
 
-        Args:
-            tekoaly (Tekoaly): Haettava tekoäly.
-
-        Raises:
-            ValueError: Tekoäly ei kuulu joukkoon.
-
-        Returns:
-            int: Tekoälyn pistemäärä.
-        """
-
-        if tekoaly not in self.hae_tekoalyt():
-            raise ValueError("Tekoäly ei kuulu joukkoon.")
-
-        return sum(self.__pisteet[tekoaly])
+        return paras_tekoaly
 
     def pelaa(self) -> str:
         """Pelaa kierroksen. Ei muuta luokan sisäistä tilaa.
@@ -128,5 +109,5 @@ class YhdistelmaTekoaly(Tekoaly):
 
         self.__paivita_pisteet(syote)
 
-        for tekoaly in self.hae_tekoalyt():
+        for tekoaly in self.__tekoalyt:
             tekoaly.lisaa(syote)
