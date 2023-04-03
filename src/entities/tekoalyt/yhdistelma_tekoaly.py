@@ -84,11 +84,14 @@ class YhdistelmaTekoaly(Tekoaly):
         """
 
         paras_tekoaly = self.__tekoalyt[0]
-        paras_pisteet = self.__pisteet[0]
+        paras_pisteet = sum(self.__pisteet[0])
 
         for i, tekoaly in enumerate(self.__tekoalyt):
-            if self.__pisteet[i] > paras_pisteet:
+            pisteet = sum(self.__pisteet[i])
+
+            if pisteet > paras_pisteet:
                 paras_tekoaly = tekoaly
+                paras_pisteet = pisteet
 
         return paras_tekoaly
 
@@ -108,13 +111,12 @@ class YhdistelmaTekoaly(Tekoaly):
             syote (str): Pelaajan syöte.
         """
 
+        self.__paivita_pisteet(syote)
         self.__siirtoja_jaljella -= 1
 
         if self.__siirtoja_jaljella == 0:
             self.__pelaava_tekoaly = self.hae_paras_tekoaly()
             self.__siirtoja_jaljella = self.__fokus_pituus
-
-        self.__paivita_pisteet(syote)
 
         for tekoaly in self.__tekoalyt:
             tekoaly.lisaa(syote)
