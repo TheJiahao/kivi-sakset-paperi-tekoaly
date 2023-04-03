@@ -9,7 +9,12 @@ from entities.tekoalyt.tekoaly import Tekoaly
 class YhdistelmaTekoaly(Tekoaly):
     """Luokka, joka kuvaa usean tekoälyn yhdistelmätekoälyä."""
 
-    def __init__(self, fokus_pituus: int, peli: Peli | None = None) -> None:
+    def __init__(
+        self,
+        fokus_pituus: int,
+        peli: Peli | None = None,
+        tekoalyt: list[Tekoaly] | None = None,
+    ) -> None:
         """Luokan konstruktori.
 
         Args:
@@ -17,6 +22,8 @@ class YhdistelmaTekoaly(Tekoaly):
                 Kuvaa monenko viimeisimmän kierroksen tuloksen perusteella tekoälyt pisteytetään.
             peli (Peli | None, optional):
                 Pelin tuloksista vastaava olio. Oletukseltaan None.
+            tekoalyt (list[Tekoaly] | None, optional):
+                Tekoälyt, joita YhdistelmäTekoaly käyttää sisäisesti. Oletukseltaan None.
 
         Raises:
             ValueError: Ei-positiivinen fokus_pituus.
@@ -26,7 +33,7 @@ class YhdistelmaTekoaly(Tekoaly):
 
         self.__fokus_pituus: int = fokus_pituus
         self.__peli: Peli = peli or Peli()
-        self.__tekoalyt: list[Tekoaly] = [
+        self.__tekoalyt: list[Tekoaly] = tekoalyt or [
             MarkovTekoaly(i, self.__peli.voittavat_siirrot)
             for i in range(1, fokus_pituus + 1)
         ]
