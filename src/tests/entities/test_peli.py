@@ -31,4 +31,3 @@ class TestPeli(unittest.TestCase):
         self.peli.voittavat_siirrot["x"] = "y"
 
         self.assertNotIn("x", self.peli.voittavat_siirrot.keys())
-
