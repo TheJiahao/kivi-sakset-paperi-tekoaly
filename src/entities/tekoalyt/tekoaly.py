@@ -1,8 +1,7 @@
 from abc import ABC, abstractmethod
-from typing import Hashable
 
 
-class Tekoaly(ABC, Hashable):
+class Tekoaly(ABC):
     @abstractmethod
     def pelaa(self) -> str:
         """Pelaa yhden kierroksen. Ei muuta luokan sisäistä tilaa.
