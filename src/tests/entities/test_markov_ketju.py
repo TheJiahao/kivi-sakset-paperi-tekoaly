@@ -1,11 +1,11 @@
 import unittest
 
-from entities.markovin_ketju import MarkovinKetju
+from entities.markov_ketju import MarkovKetju
 
 
 class TestMarkovKetju(unittest.TestCase):
     def setUp(self):
-        self.ketju = MarkovinKetju(3, {"a", "b", "c"})
+        self.ketju = MarkovKetju(3, {"a", "b", "c"})
 
     def tayta_muisti(self):
         self.ketju.lisaa("a")
@@ -13,11 +13,11 @@ class TestMarkovKetju(unittest.TestCase):
         self.ketju.lisaa("c")
 
     def test_markovin_ketjun_luominen_onnistuu(self):
-        MarkovinKetju(3, {"a", "b", "c"})
-        MarkovinKetju(5, {"a", "b", "c"})
-        MarkovinKetju(3, {1, 2})
-        MarkovinKetju(1, {"a"})
-        MarkovinKetju(1, {(1,)})
+        MarkovKetju(3, {"a", "b", "c"})
+        MarkovKetju(5, {"a", "b", "c"})
+        MarkovKetju(3, {1, 2})
+        MarkovKetju(1, {"a"})
+        MarkovKetju(1, {(1,)})
 
     def test_muisti_on_alussa_tyhja(self):
         self.assertEqual(self.ketju.muisti, tuple())
@@ -33,22 +33,22 @@ class TestMarkovKetju(unittest.TestCase):
             self.assertEqual(self.ketju.frekvenssit[vaihtoehto], {})
 
     def test_ketju_on_sama_itsensa_kanssa(self):
-        ketju1 = MarkovinKetju(2, {1, 2, 3}, {1: {(1, 2): 1}})
-        ketju2 = MarkovinKetju(2, {1, 2, 3, 4})
+        ketju1 = MarkovKetju(2, {1, 2, 3}, {1: {(1, 2): 1}})
+        ketju2 = MarkovKetju(2, {1, 2, 3, 4})
 
         self.assertEqual(ketju1, ketju1)
         self.assertEqual(ketju2, ketju2)
 
     def test_ketjut_samoilla_parametreilla_ovat_samat(self):
-        ketju1 = MarkovinKetju(2, {1, 2, 3}, {1: {(1, 2): 1}})
-        ketju2 = MarkovinKetju(2, {1, 2, 3}, {1: {(1, 2): 1}})
+        ketju1 = MarkovKetju(2, {1, 2, 3}, {1: {(1, 2): 1}})
+        ketju2 = MarkovKetju(2, {1, 2, 3}, {1: {(1, 2): 1}})
 
         self.assertEqual(ketju1, ketju1)
         self.assertEqual(ketju1, ketju2)
 
     def test_ketjut_ovat_samat_samojen_muutoksien_jalkeen(self):
-        ketju1 = MarkovinKetju(2, {1, 2, 3})
-        ketju2 = MarkovinKetju(2, {1, 2, 3})
+        ketju1 = MarkovKetju(2, {1, 2, 3})
+        ketju2 = MarkovKetju(2, {1, 2, 3})
 
         ketju1.lisaa(1)
         ketju1.lisaa(2)
@@ -61,18 +61,18 @@ class TestMarkovKetju(unittest.TestCase):
         self.assertEqual(ketju1, ketju2)
 
     def test_ketjut_eri_parametreilla_ovat_eri(self):
-        ketju1 = MarkovinKetju(2, {1, 2, 3})
-        ketju2 = MarkovinKetju(10, {1, 2})
-        ketju3 = MarkovinKetju(2, {1, 2})
-        ketju4 = MarkovinKetju(2, {1, 2}, {1: {(2, 1): 20}})
+        ketju1 = MarkovKetju(2, {1, 2, 3})
+        ketju2 = MarkovKetju(10, {1, 2})
+        ketju3 = MarkovKetju(2, {1, 2})
+        ketju4 = MarkovKetju(2, {1, 2}, {1: {(2, 1): 20}})
 
         self.assertNotEqual(ketju1, ketju2)
         self.assertNotEqual(ketju2, ketju3)
         self.assertNotEqual(ketju3, ketju4)
 
     def test_samat_ketjut_ovat_eri_muutoksien_jalkeen_eri(self):
-        ketju1 = MarkovinKetju(2, {1, 2, 3})
-        ketju2 = MarkovinKetju(2, {1, 2, 3})
+        ketju1 = MarkovKetju(2, {1, 2, 3})
+        ketju2 = MarkovKetju(2, {1, 2, 3})
 
         ketju1.lisaa(2)
         ketju1.lisaa(2)

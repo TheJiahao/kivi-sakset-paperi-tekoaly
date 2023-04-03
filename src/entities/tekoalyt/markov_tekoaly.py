@@ -1,6 +1,6 @@
 from copy import copy, deepcopy
 
-from entities.markovin_ketju import MarkovinKetju
+from entities.markov_ketju import MarkovKetju
 from entities.tekoalyt.tekoaly import Tekoaly
 
 
@@ -15,7 +15,7 @@ class MarkovTekoaly(Tekoaly):
             voittavat_siirrot (dict[str, str]): Syötteitä vastaavat voittavat siirrot.
         """
 
-        self.__markovin_ketju: MarkovinKetju = MarkovinKetju(
+        self.__markovin_ketju: MarkovKetju = MarkovKetju(
             n, set(voittavat_siirrot.keys())
         )
         self.__voittavat_siirrot: dict[str, str] = voittavat_siirrot
@@ -30,7 +30,7 @@ class MarkovTekoaly(Tekoaly):
         return False
 
     @property
-    def markovin_ketju(self) -> MarkovinKetju:
+    def markovin_ketju(self) -> MarkovKetju:
         return deepcopy(self.__markovin_ketju)
 
     @property

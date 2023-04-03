@@ -3,7 +3,7 @@ from collections import deque
 from typing import Hashable
 
 
-class MarkovinKetju:
+class MarkovKetju:
     """Luokka, joka kuvaa Markovin ketjua."""
 
     def __init__(
@@ -31,7 +31,7 @@ class MarkovinKetju:
         }
 
     def __eq__(self, toinen: object) -> bool:
-        if isinstance(toinen, MarkovinKetju):
+        if isinstance(toinen, MarkovKetju):
             return (
                 self.muisti == toinen.muisti
                 and self.n == toinen.n
