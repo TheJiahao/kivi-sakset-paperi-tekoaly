@@ -101,11 +101,11 @@ class YhdistelmaTekoaly(Tekoaly):
             syote (str): Pelaajan syöte.
         """
 
+        self.__siirtoja_jaljella -= 1
+
         if self.__siirtoja_jaljella == 0:
             self.__pelaava_tekoaly = self.hae_paras_tekoaly()
             self.__siirtoja_jaljella = self.__fokus_pituus
-
-        self.__siirtoja_jaljella -= 1
 
         self.__paivita_pisteet(syote)
 
