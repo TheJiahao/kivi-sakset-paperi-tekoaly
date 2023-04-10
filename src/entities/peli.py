@@ -16,14 +16,15 @@ class Peli:
 
         Args:
             voittavat_siirrot (dict[str, str] | None, optional):
-                Sanakirja, joka sisältää jokaista syotteelle voittavan tapauksen.
+                Syötteitä vastaavat voittavat siirrot.
+                Esimerkiksi syötettä "k" (kiveä) vastaa syöte "p" (paperi).
                 Oletusarvoltaan None.
         """
 
         self.__voittavat_siirrot: dict[str, str] = voittavat_siirrot or {
-            "k": "s",
-            "s": "p",
-            "p": "k",
+            "k": "p",
+            "s": "k",
+            "p": "s",
         }
         self.__syotteet: set[str] = set(self.__voittavat_siirrot.keys())
 
@@ -53,7 +54,7 @@ class Peli:
         if pelaaja1 != pelaaja2:
             tulos = -1
 
-            if self.__voittavat_siirrot[pelaaja1] == pelaaja2:
+            if self.__voittavat_siirrot[pelaaja2] == pelaaja1:
                 tulos = 1
 
         return tulos
