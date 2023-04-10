@@ -12,7 +12,7 @@ Yksikkötestauksen tarkka kattavuusraportti on nähtävissä Codecovissa klikkaa
 
 Markovin ketjua kuvaava `MarkovinKetju`-luokka on testattu yksikkötesteillä.
 
-## Tekoälyt
+### Tekoälyt
 
 Markovin ketjun perustuvaa tekoälyä kuvaava `MarkovTekoaly`-luokka on testattu yksikkötesteillä yksinkertaisissa tapauksissa.
 
@@ -22,6 +22,10 @@ Tekoälyihin liittyvien satunnaisuuden vuoksi `lisaa`- ja `pelaa`-metodit ovat v
 ### Sovelluslogiikka
 
 Pelin toimintaa kuvaava `Peli`-luokka on testattu yksikkötesteillä oletus- eli kivi-sakset-paperi-peliä vastaavilla parametreilla.
+
+### Käyttöliittymä
+
+Käyttöliittymää kuvaava `UI`-luokka on testattu käsin.
 
 ## Testien toistaminen
 
