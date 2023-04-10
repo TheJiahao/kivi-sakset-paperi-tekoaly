@@ -10,6 +10,14 @@
     poetry install
     ```
 
+## Käynnistys
+
+Sovellus käynnistyy komennolla:
+
+```shell
+poetry run invoke start
+```
+
 ## Invoke-tehtävät
 
 Seuraavat Invoke-tehtävät toimivat projektin juurihakemistossa.

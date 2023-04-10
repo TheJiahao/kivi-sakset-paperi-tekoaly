@@ -5,7 +5,7 @@
 |Päivämäärä|Aika|
 |----------|----|
 |3.4.|3 tuntia 10 min|
-|10.4.|1 tunti 40 min|
+|10.4.|2 tunti 40 min|
 
 ## Mitä tehty?
 
