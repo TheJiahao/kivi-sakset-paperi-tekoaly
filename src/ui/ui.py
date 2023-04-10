@@ -1,9 +1,15 @@
 from services.peli_logiikka import PeliLogiikka
+from entities.tekoalyt.yhdistelma_tekoaly import YhdistelmaTekoaly
 
 
 class UI:
-    def __init__(self) -> None:
-        self.__logiikka: PeliLogiikka = PeliLogiikka()
+    def __init__(self, logiikka: PeliLogiikka) -> None:
+        self.__logiikka: PeliLogiikka = logiikka
+        self.__selitykset: dict[int, str] = {
+            -1: "Hävisit.",
+            0: "Tasapeli.",
+            1: "Voitit!",
+        }
 
     def kaynnista(self) -> None:
         print("Kivi-sakset-paperi-peli")
@@ -28,49 +34,48 @@ x: Lopeta
         )
 
     def __aloita_kivi_sakset_paperi_peli(self) -> None:
+        self.__alusta_kivi_sakset_paperi_peli()
+
+        print('"k" = kivi, "s" = sakset, "p" = paperi')
+
+        while True:
+            try:
+                syote = input("Pelaa (x lopettaa): ").lower()
+
+                if syote == "x":
+                    self.__tulosta_tilasto()
+                    return
+
+                pelitulos = self.__logiikka.pelaa(syote)
+
+                print(f"Tekoäly pelasi {pelitulos[0]}")
+                print(self.__selitykset[pelitulos[1]])
+
+            except ValueError:
+                print("Syöte ei kelpaa, kokeile uudestaan.")
+
+    def __alusta_kivi_sakset_paperi_peli(self) -> None:
         while True:
             try:
                 syote = input("Syötä muistin pituus (oletus 5): ")
 
                 if syote == "":
                     self.__logiikka = PeliLogiikka()
-                else:
-                    muistin_pituus = int(syote)
-                    self.__logiikka = PeliLogiikka(n=muistin_pituus)
-                break
+                    return
+
+                muistin_pituus = int(syote)
+                self.__logiikka = PeliLogiikka(n=muistin_pituus)
 
             except ValueError:
                 print("Virheellinen syöte, syötä kokonaisluku.")
 
-        print('"k" = kivi, "s" = sakset, "p" = paperi')
-
-        while True:
-            syote = input("Pelaa (x lopettaa): ").lower()
-
-            if syote == "x":
-                self.__tulosta_tilasto()
+            else:
                 return
-
-            if syote not in {"k", "s", "p"}:
-                print("Syöte ei kelpaa, kokeile uudestaan.")
-                continue
-
-            pelitulos = self.__logiikka.pelaa(syote)
-
-            print(f"Tekoäly pelasi {pelitulos[0]}")
-
-            match pelitulos[1]:
-                case -1:
-                    print("Hävisit.")
-                case 0:
-                    print("Tasapeli.")
-                case 1:
-                    print("Voitit!")
 
     def __tulosta_tilasto(self) -> None:
         tilasto = self.__logiikka.hae_tilasto()
 
-        print("Tilastosi")
+        print("Tilasto")
         print(f"Voitot: {100*tilasto[0]:.0f} %")
         print(f"Tasapelit: {100*tilasto[1]:.0f} %")
         print(f"Häviöt: {100*tilasto[2]:.0f} %")
