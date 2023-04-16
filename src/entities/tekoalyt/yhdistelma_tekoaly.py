@@ -12,7 +12,7 @@ class YhdistelmaTekoaly(Tekoaly):
     def __init__(
         self,
         fokus_pituus: int,
-        peli: Peli | None = None,
+        peli: Peli,
         tekoalyt: list[Tekoaly] | None = None,
     ) -> None:
         """Luokan konstruktori.
@@ -20,8 +20,8 @@ class YhdistelmaTekoaly(Tekoaly):
         Args:
             fokus_pituus (int):
                 Kuvaa monenko viimeisimmän kierroksen tuloksen perusteella tekoälyt pisteytetään.
-            peli (Peli | None, optional):
-                Pelin tuloksista vastaava olio. Oletukseltaan None.
+            peli (Peli):
+                Pelin tuloksista vastaava olio.
             tekoalyt (list[Tekoaly] | None, optional):
                 Tekoälyt, joita YhdistelmäTekoaly käyttää sisäisesti. Oletukseltaan None.
 
@@ -32,13 +32,13 @@ class YhdistelmaTekoaly(Tekoaly):
             raise ValueError("Ei-positiivinen fokus_pituus ei kelpaa.")
 
         self.__fokus_pituus: int = fokus_pituus
-        self.__peli: Peli = peli or Peli()
+        self.__peli: Peli = peli
         self.__tekoalyt: list[Tekoaly] = tekoalyt or [
             MarkovTekoaly(i, self.__peli.voittavat_siirrot)
             for i in range(1, fokus_pituus + 1)
         ]
         self.__pisteet: list[deque[int]] = [
-            deque(maxlen=self.__fokus_pituus) for i in range(fokus_pituus)
+            deque(maxlen=fokus_pituus) for i in range(fokus_pituus)
         ]
 
         self.__pelaava_tekoaly: Tekoaly = self.hae_paras_tekoaly()
