@@ -6,7 +6,7 @@
 |----------|----|
 |3.4.|3 tuntia 10 min|
 |10.4.|2 tunti 40 min|
-|16.4.|3 tuntia 40 min|
+|16.4.|5 tuntia 40 min|
 
 ## Mitä tehty?
 
