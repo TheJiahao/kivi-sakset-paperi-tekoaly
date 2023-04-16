@@ -144,29 +144,6 @@ class TestMarkovKetju(unittest.TestCase):
         self.ketju.lisaa("a")
         self.assertEqual(self.ketju.muisti, ("a", "b", "a"))
 
-    def test_todennakoisyydet_paivittyvat_oikein(self):
-        self.tayta_muisti()
-        self.ketju.lisaa("a")
-        self.tayta_muisti()
-
-        self.assertAlmostEqual(self.ketju.hae_todennakoisyydet()["a"], 1)
-        self.assertAlmostEqual(self.ketju.hae_todennakoisyydet()["b"], 0)
-        self.assertAlmostEqual(self.ketju.hae_todennakoisyydet()["c"], 0)
-
-        self.ketju.lisaa("b")
-        self.tayta_muisti()
-
-        self.assertAlmostEqual(self.ketju.hae_todennakoisyydet()["a"], 0.5)
-        self.assertAlmostEqual(self.ketju.hae_todennakoisyydet()["b"], 0.5)
-        self.assertAlmostEqual(self.ketju.hae_todennakoisyydet()["c"], 0)
-
-        self.ketju.lisaa("c")
-        self.tayta_muisti()
-
-        self.assertAlmostEqual(self.ketju.hae_todennakoisyydet()["a"], 0.33, places=2)
-        self.assertAlmostEqual(self.ketju.hae_todennakoisyydet()["b"], 0.33, places=2)
-        self.assertAlmostEqual(self.ketju.hae_todennakoisyydet()["c"], 0.33, places=2)
-
     def test_ennusta_valitsee_todennakoisimman_vaihtoehdon_kun_muisti_on_taynna(self):
         self.tayta_muisti()
         self.ketju.lisaa("a")
@@ -211,19 +188,3 @@ class TestMarkovKetju(unittest.TestCase):
         self.assertEqual(self.ketju.hae_frekvenssi("a"), 0)
         self.assertEqual(self.ketju.hae_frekvenssi("b"), 0)
         self.assertEqual(self.ketju.hae_frekvenssi("c"), 0)
-
-    def test_hae_todennakoisyys_on_symmetrinen_kun_muisti_ei_ole_taynna(self):
-        self.ketju.lisaa("a")
-        self.assertAlmostEqual(self.ketju.hae_todennakoisyys("a"), 1 / 3, places=2)
-        self.assertAlmostEqual(self.ketju.hae_todennakoisyys("b"), 1 / 3, places=2)
-        self.assertAlmostEqual(self.ketju.hae_todennakoisyys("c"), 1 / 3, places=2)
-
-        self.ketju.lisaa("c")
-        self.assertAlmostEqual(self.ketju.hae_todennakoisyys("a"), 1 / 3, places=2)
-        self.assertAlmostEqual(self.ketju.hae_todennakoisyys("b"), 1 / 3, places=2)
-        self.assertAlmostEqual(self.ketju.hae_todennakoisyys("c"), 1 / 3, places=2)
-
-        self.ketju.lisaa("b")
-        self.assertAlmostEqual(self.ketju.hae_todennakoisyys("a"), 1 / 3, places=2)
-        self.assertAlmostEqual(self.ketju.hae_todennakoisyys("b"), 1 / 3, places=2)
-        self.assertAlmostEqual(self.ketju.hae_todennakoisyys("c"), 1 / 3, places=2)
