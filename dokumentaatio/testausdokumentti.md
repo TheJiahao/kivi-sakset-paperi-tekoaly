@@ -17,7 +17,7 @@ Markovin ketjua kuvaava `MarkovinKetju`-luokka on testattu yksikkötesteillä.
 Markovin ketjun perustuvaa tekoälyä kuvaava `MarkovTekoaly`-luokka on testattu yksikkötesteillä yksinkertaisissa tapauksissa.
 
 Yhdistelmätekoälyä kuvaava `YhdistelmaTekoaly`-luokan yksinkertaiset metodit on testattu yksikkötesteillä.
-Lisäksi toimintaa on testattu sännöllisellä syötteillä sekä pidemmällä syötteellä, jotka on tuotettu räpläämällä näppäimistöä ja tutkimalla eri pituisten osajonojen frekvenssejä seuraavalla koodilla:
+Lisäksi toimintaa on testattu sännöllisillä syötteillä sekä pidemmällä syötteellä, joka on tuotettu räpläämällä näppäimistöä ja tutkimalla eri pituisten osajonojen frekvenssejä seuraavalla koodilla:
 
 ```python
 jono = input("Syöte: ")
