@@ -18,6 +18,15 @@ class TestYhdistelmaTekoaly(unittest.TestCase):
 
         return pisteet
 
+    def pelaa_useampi_kierros(self, tekoaly: YhdistelmaTekoaly, syotteet: str) -> str:
+        tuloste = ""
+
+        for syote in syotteet:
+            tuloste += tekoaly.pelaa()
+            tekoaly.lisaa(syote)
+
+        return tuloste
+
     def test_ei_positiivinen_fokus_pituus_aiheuttaa_virheen(self):
         with self.assertRaises(ValueError):
             YhdistelmaTekoaly(-10, Peli())
@@ -67,3 +76,26 @@ class TestYhdistelmaTekoaly(unittest.TestCase):
             self.hae_tekoalyn_pisteet(self.tekoaly.pelaava_tekoaly),
             self.hae_tekoalyn_pisteet(self.tekoaly.hae_paras_tekoaly()),
         )
+
+    def test_pelaa_saannollisella_syotteella_kun_tekoalyn_vaihto_fokus_pituuden_valein(
+        self,
+    ):
+        # Voittojärjestys: a <- b <- c <- a eli esim. b voittaa a:n.
+        peli = Peli({"a": "b", "b": "c", "c": "a"})
+
+        tekoaly1 = YhdistelmaTekoaly(3, peli)
+        tekoaly2 = YhdistelmaTekoaly(3, peli)
+
+        self.pelaa_useampi_kierros(tekoaly1, "aaaaaaaaa")
+        self.pelaa_useampi_kierros(tekoaly2, "abcabcabc")
+
+        self.assertEqual(self.pelaa_useampi_kierros(tekoaly1, "aaaaaa"), "bbbbbb")
+        self.assertEqual(self.pelaa_useampi_kierros(tekoaly2, "abcabc"), "bcabca")
+
+    def test_pelaa_pidemmalla_syotteella(self):
+        peli = Peli({"a": "b", "b": "c", "c": "a"})
+        tekoaly = YhdistelmaTekoaly(3, peli)
+
+        self.pelaa_useampi_kierros(tekoaly, "abcbabcabcbabbababcaabbabcabbcabbcab")
+
+        self.assertEqual(self.pelaa_useampi_kierros(tekoaly, "cba"), "aba")
