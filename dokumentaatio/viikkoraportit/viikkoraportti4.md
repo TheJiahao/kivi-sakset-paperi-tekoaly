@@ -6,6 +6,7 @@
 |----------|----|
 |3.4.|3 tuntia 10 min|
 |10.4.|2 tunti 40 min|
+|16.4.|3 tuntia 40 min|
 
 ## Mitä tehty?
 
@@ -15,5 +16,12 @@
 - Lisätty testejä `YhdistelmaTekoaly`-luokalle
 - Lisätty `PeliLogiikka`-luokka, joka vastaa nimenomaan pelin logiikasta
 - Lisätty alustava käyttöliittymä
+- Lisätty alustava toteutusdokumentti
+- Päivitetty testausdokumenttia
 
 ## Mitä seuraavaksi?
+
+- Käyttöliittymän hienosäätöä
+- `YhdistelmaTekoaly`-luokalle ominaisuus, että jokaisen pelin jälkeen vaihdetaan muutaman edellisen kierroksen tuloksien perusteella
+- Dokumentaation kirjoittamista
+- Muiden koodien vertaisarviointi
