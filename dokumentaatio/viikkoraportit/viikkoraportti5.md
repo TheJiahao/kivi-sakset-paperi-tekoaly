@@ -14,7 +14,7 @@
 ## Idea, jolla `MarkovKetju` toimisi $O(1)$-ajassa
 
 Merkitään $n$-kokoisen muistin jonoa $m=m_0,m_1,\dots,m_{n-1}$.
-Muodostetaan sanakirjana bijektio $f\colon A\to\\{0,1,\dots,n-1\\}$, missä $A$ on kaikkien vaihtoehtojen joukko.
+Muodostetaan sanakirjana bijektio $f\colon A\to\\{0,1,\dots,l-1\\}$, missä $A$ on kaikkien vaihtoehtojen joukko.
 Merkitään joukon $A$ kokoa $l$.
 
 Muodostetaan toinen funktio $g\colon B\to\mathbb{N}$, missä
