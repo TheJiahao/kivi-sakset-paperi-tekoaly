@@ -34,7 +34,7 @@ class MarkovKetju:
         self.__n: int = n
         self.__k: int = len(vaihtoehdot)
         self.__hajautusarvo: int = 0
-        self.__potenssit: list[int] = [self.__k**i for i in range(n + 1)]
+        self.__k_potenssiin_n: int = self.__k**n
 
     def __eq__(self, toinen: object) -> bool:
         if isinstance(toinen, MarkovKetju):
@@ -141,6 +141,6 @@ class MarkovKetju:
         uusi = self.__hajautusarvo
         uusi *= self.__k
         uusi += oikea
-        uusi -= vasen * self.__potenssit[self.__n]
+        uusi -= vasen * self.__k_potenssiin_n
 
         self.__hajautusarvo = uusi
