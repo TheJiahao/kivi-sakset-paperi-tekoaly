@@ -10,7 +10,7 @@ class MarkovKetju:
         self,
         n: int,
         vaihtoehdot: set[Hashable],
-        frekvenssit: dict[Hashable, dict[tuple, int]] | None = None,
+        frekvenssit: dict[Hashable, dict[int, int]] | None = None,
     ) -> None:
         """Luokan konstruktori. Luo Markovin ketjun.
 
@@ -24,11 +24,17 @@ class MarkovKetju:
                 Oletusarvoltaan None.
         """
         self.__muisti: deque[Hashable] = deque(maxlen=n)
-        self.__n: int = n
-        self.__vaihtoehdot: set[Hashable] = vaihtoehdot
-        self.__frekvenssit: dict[Hashable, dict[tuple, int]] = frekvenssit or {
+        self.__vaihtoehdot: dict[Hashable, int] = {
+            vaihtoehto: i for i, vaihtoehto in enumerate(vaihtoehdot)
+        }
+        self.__frekvenssit: dict[Hashable, dict[int, int]] = frekvenssit or {
             vaihtoehto: {} for vaihtoehto in vaihtoehdot
         }
+
+        self.__n: int = n
+        self.__k: int = len(vaihtoehdot)
+        self.__hajautusarvo: int = 0
+        self.__potenssit: list[int] = [self.__k**i for i in range(n + 1)]
 
     def __eq__(self, toinen: object) -> bool:
         if isinstance(toinen, MarkovKetju):
@@ -40,6 +46,11 @@ class MarkovKetju:
             )
 
         return False
+
+    def __repr__(self) -> str:
+        vaihtoehdot = set(self.__vaihtoehdot.keys())
+
+        return f"MarkovKetju({self.__n}, {vaihtoehdot})"
 
     @property
     def muisti(self) -> tuple:
@@ -56,11 +67,15 @@ class MarkovKetju:
         return self.__n
 
     @property
-    def vaihtoehdot(self) -> set[Hashable]:
+    def k(self) -> int:
+        return self.__k
+
+    @property
+    def vaihtoehdot(self) -> dict[Hashable, int]:
         return copy.deepcopy(self.__vaihtoehdot)
 
     @property
-    def frekvenssit(self) -> dict[Hashable, dict[tuple, int]]:
+    def frekvenssit(self) -> dict[Hashable, dict[int, int]]:
         return copy.deepcopy(self.__frekvenssit)
 
     def lisaa(self, syote: Hashable) -> None:
@@ -76,10 +91,18 @@ class MarkovKetju:
         if syote not in self.__vaihtoehdot:
             raise ValueError(f"Syote '{syote}' ei kelpaa.")
 
-        if len(self.muisti) == self.n:
-            self.__frekvenssit[syote][self.muisti] = self.hae_frekvenssi(syote) + 1
+        oikea_numero = self.__vaihtoehdot[syote]
+        vasen_numero = 0
+
+        if len(self.__muisti) == self.__n:
+            self.__frekvenssit[syote][self.__hajautusarvo] = (
+                self.hae_frekvenssi(syote) + 1
+            )
+
+            vasen_numero = self.__vaihtoehdot[self.__muisti[0]]
 
         self.__muisti.append(syote)
+        self.paivita_hajautusarvo(vasen_numero, oikea_numero)
 
     def ennusta(self) -> Hashable:
         """Palauttaa todennäköisimmän seuraavan vaihtoehdon.
@@ -112,4 +135,12 @@ class MarkovKetju:
         if syote not in self.__vaihtoehdot:
             raise ValueError(f"Syote '{syote}' ei kelpaa.")
 
-        return self.frekvenssit[syote].get(self.muisti, 0)
+        return self.__frekvenssit[syote].get(self.__hajautusarvo, 0)
+
+    def paivita_hajautusarvo(self, vasen: int, oikea: int) -> None:
+        uusi = self.__hajautusarvo
+        uusi *= self.__k
+        uusi += oikea
+        uusi -= vasen * self.__potenssit[self.__n]
+
+        self.__hajautusarvo = uusi
