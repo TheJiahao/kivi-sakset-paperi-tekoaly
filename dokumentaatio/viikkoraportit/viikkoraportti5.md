@@ -13,17 +13,17 @@
 
 ## Idea, jolla `MarkovKetju` toimisi $O(1)$-ajassa
 
-Merkitään $n$-kokoisen muistin jonoa $m=m_1,m_2,\dots,m_n$.
-Muodostetaan sanakirjana injektio $f\colon A\to \mathbb{N_0}$, missä $A$ on kaikkien vaihtoehtojen joukko.
+Merkitään $n$-kokoisen muistin jonoa $m=m_0,m_1,\dots,m_{n-1}$.
+Muodostetaan sanakirjana bijektio $f\colon A\to\\{0,1,\dots,n-1\\}$, missä $A$ on kaikkien vaihtoehtojen joukko.
 Merkitään joukon $A$ kokoa $l$.
 
-Muodostetaan toinen funktio $g\colon B\to\mathbb{N_0}$, missä
+Muodostetaan toinen funktio $g\colon B\to\mathbb{N}$, missä
 $$g(m)=\sum_{k=0}^{n-1}f(m_i)\cdot l^k$$
 ja $B$ on kaikkien erilaisten jonojen joukko.
 Esimerkiksi jono, jonka jäsenet kuvautuu jonoksi $0,1,2$, vastaa 3-lukujärjestelmän luku $012$.
 Nähdään myös, että $g$ on injektio.
 
-Kun muutetaan jonoa $m$, niin muutetaan luvun reunimmaisia numeroita yhteenlaskulla $O(1)$-ajassa, jos tallenetaan luvun $n$ potenssit $l^1,\dots,l^n$ erikseen.
+Kun muutetaan jonoa $m$, niin muutetaan luvun reunimmaisia numeroita yhteenlaskulla ja kertolaskulla $O(1)$-ajassa, jos tallenetaan luvun $n$ potenssit $l^1,\dots,l^n$ erikseen.
 Tähän tarvitaan vain $O(n)$-tilaa.
 
 Käyttämällä tätä jonolle laskettua arvoa voidaan välttää jonon tupleksi muuttaminen/tuplen hajautusarvon laskeminen, joka vie aikaa $O(n)$.
