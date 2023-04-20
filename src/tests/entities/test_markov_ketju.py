@@ -1,4 +1,5 @@
 import unittest
+from collections import deque
 
 from entities.markov_ketju import MarkovKetju
 
@@ -29,7 +30,7 @@ class TestMarkovKetju(unittest.TestCase):
         MarkovKetju(1, {(1,)})
 
     def test_muisti_on_alussa_tyhja(self):
-        self.assertEqual(self.ketju.muisti, tuple())
+        self.assertEqual(len(self.ketju.muisti), 0)
 
     def test_n_alustettu_oikein(self):
         self.assertEqual(self.ketju.n, 3)
@@ -153,13 +154,13 @@ class TestMarkovKetju(unittest.TestCase):
         self.tayta_muisti()
 
         self.ketju.lisaa("a")
-        self.assertEqual(self.ketju.muisti, ("b", "c", "a"))
+        self.assertEqual(self.ketju.muisti, deque(["b", "c", "a"]))
 
         self.ketju.lisaa("b")
-        self.assertEqual(self.ketju.muisti, ("c", "a", "b"))
+        self.assertEqual(self.ketju.muisti, deque(["c", "a", "b"]))
 
         self.ketju.lisaa("a")
-        self.assertEqual(self.ketju.muisti, ("a", "b", "a"))
+        self.assertEqual(self.ketju.muisti, deque(["a", "b", "a"]))
 
     def test_ennusta_valitsee_todennakoisimman_vaihtoehdon_kun_muisti_on_taynna(self):
         self.tayta_muisti()

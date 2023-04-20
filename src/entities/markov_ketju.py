@@ -1,5 +1,5 @@
-import copy
 from collections import deque
+from copy import deepcopy
 from typing import Hashable
 
 
@@ -53,14 +53,8 @@ class MarkovKetju:
         return f"MarkovKetju({self.__n}, {vaihtoehdot})"
 
     @property
-    def muisti(self) -> tuple:
-        """Palauttaa muistin tuplena, mikä helpottaa käsittelyä.
-
-        Returns:
-            tuple: Muisti tuplena.
-        """
-
-        return tuple(self.__muisti)
+    def muisti(self) -> deque:
+        return deepcopy(self.__muisti)
 
     @property
     def n(self) -> int:
@@ -72,11 +66,11 @@ class MarkovKetju:
 
     @property
     def vaihtoehdot(self) -> dict[Hashable, int]:
-        return copy.deepcopy(self.__vaihtoehdot)
+        return deepcopy(self.__vaihtoehdot)
 
     @property
     def frekvenssit(self) -> dict[Hashable, dict[int, int]]:
-        return copy.deepcopy(self.__frekvenssit)
+        return deepcopy(self.__frekvenssit)
 
     def lisaa(self, syote: Hashable) -> None:
         """Lisää Markovin ketjuun alkion ja päivittää frekvenssin.
