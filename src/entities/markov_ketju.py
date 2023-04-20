@@ -19,7 +19,7 @@ class MarkovKetju:
                 Muistin maksimipituus.
             vaihtoehdot (set[Hashable]):
                 Joukko, joka sisältää sallitut syötteet.
-            frekvenssit (dict[Hashable, dict[tuple, int]] | None, optional):
+            frekvenssit (dict[Hashable, dict[int, int]] | None, optional):
                 Matriisi, joka sisältää jokaisen syötteen frekvenssin jonkin jonon perässä.
                 Oletusarvoltaan None.
         """

@@ -37,11 +37,14 @@ classDiagram
 
 #### `MarkovKetju`
 
-Luokan tilavaativuudet ovat seuraavat:
+Merkitään vaihtoehtojen määrää $k$ ja muistin kokoa $n$.
 
-- $O(n)$-kokoinen jonona toteutettu muisti
-- $O(k)$-kokoinen vaihtoehtojen joukko
+Tällöin luokan tilavaativuudet ovat seuraavat:
+
+- $O(n)$, muisti (jono)
+- $O(k)$, kuvaus (sanakirja) vaihtoehdoista luvuiksi $\\{0,\dots,k-1\\}$
 - $O(k\cdot k^n)$ eli $O(k^{n+1})$-kokoinen siirtymämatriisi (2-ulotteinen hajautustaulu) [^stochasticMatrix]
+- $O(1)$, tämän hetkisen jonon hajautusarvo
 
 Koska kyseessä on kivi-sakset-paperi-peli, niin $k=3$.
 Huomataan myös, että $k\le k^{n+1}$ kaikilla $n, k\in\mathbb{N}$. Lisäksi koska $k\mapsto k^{n+1}$ kasvaa eksponentiaalisesti, niin voidaan pitää $O(k^{n+1})$ suurempana kuin $O(n)$.
@@ -49,45 +52,84 @@ Siis `MarkovKetju`-luokan tilavaativuus on $O(k^{n+1})$.
 
 Keskeisten metodien aikavaativuudet ovat seuraavat:
 
-- `hae_frekvenssi`: $O(n)$, missä $n$ on muistin pituus.
-    Pseudokoodi:
+- `hae_frekvenssi`: $O(1)$
 
     ```python
-    # noin O(1), jos hajautusarvon tapahtuu ajassa O(1)
+    # O(1), hajautustaulu
     if syote not in joukko:
         raise Error
     
-    # O(n)
-    muisti = muunna_tupleksi(muisti) 
     # O(1)
-    tulos = frekvenssit[muisti] 
+    tulos = siirtymamatriisi[syote][hajautusarvo]
     
-    return frekvenssit[muisti]
+    return siirtymamatriisi[hajautusarvo]
     ```
 
-- `lisaa`: $O(n)$
-    Pseudokoodi:
+- `lisaa`: $O(1)$
 
     ```python
     # O(1)
     if syote not in vaihtoehdot:
         raise ValueError
 
-    # O(n)
-    muisti_tuplena = muunna_tupleksi(muisti)
+    # O(1), hajautustaulu
+    oikea_numero = kuvaa_numeroksi(syote)
+    vasen_numero = 0
 
     if len(muisti) == n: # O(1), olettaen, että pituus on erikseen tallennettu
-        # Haku O(n), arvon päivittäminen O(1)
-        frekvenssit[syote][muisti_tuplena] = hae_frekvenssi(syote) + 1
+        # O(1), hajautustaulu
+        kasvata_frekvenssia(hajautusarvo)
 
-        # O(1), koska jono
+        vasen_numero = muisti[0]
+
+        # O(1), jono
         muisti.lisaa_peraan(syote)
-    ```
-  
-- `ennusta`: $O(nk)$
+        muisti.poista_alusta()
 
-    Käy läpi $k$-kpl vaihtoehtoja sekä hakee ja vertailee niiden frekvenssiä $O(n)$ ajassa.
-    Täten kokonaisuudessaan $O(nk)$-aikavaativuus.
+        # O(1)
+        hajautusarvo *= k
+        hajautusarvo += oikea_numero
+        hajautusarvo -= vasen_numero * k^n # k^n muistissa O(1)
+    ```
+
+- `ennusta`: $O(k)$
+
+    ```python
+    seuraava = joku_vaihtoehto
+    seuraavan_frekvenssi = joku_frekvenssi
+
+    # O(k)
+    for vaihtoehto in vaihtoehdot:
+        # O(1)
+        if hae_frekvenssi(vaihtoehto) > seuraava:
+            seuraava = vaihtoehto
+    
+    return seuraava
+    ```
+
+Luokan toiminta perustuu ideaan, että kuvataan jokainen $n$-pituinen jono $k$-lukujärjestelmän luvuksi.
+Alla on tarkempi selitys.
+
+Olkoot $k$-kokoinen vaihtoehtojen joukko $V$ sekä jonojen (muistien) joukko
+$$J=\\{(m_1,m_2,\dots,m_n):m_i\in V\quad\text{kaikilla $1\le i\le n$}\\}$$
+Joukossa $J$ on tuloperiaatteen nojalla $k^n$ alkiota.
+
+Muodostetaan bijektio (sanakirja) $f\colon V\to\\{0,1,\dots,k-1\\}$.
+
+Muodostetaan toinen funktio $g\colon J\to\\{0,1,\dots,k^n-1\\}$, missä
+$$g(m)=\sum_{l=1}^{n}f(m_i)\cdot k^{n-l}=f(m_1)k^{n-1}+f(m_2)k^{n-2}+\dots+f(m_n)k^0$$
+Jos esimerkiksi jono $m=a,b,c$, jolle $f(a),f(b),f(c)=0,1,2$
+ $0,1,2$, niin $g(m)=012_3$ 3-lukujärjestelmässä.
+Nähdään, että myös $g$ on bijektio.
+
+Nyt voidaan esittää algoritmin toiminta.
+Olkoon muisti (jono) $m=m_1,m_2,\dots,m_n$.
+Kun lisätään muistin $m$ perään uusi jäsen $v\in V$, niin aiempi hajautusarvo $h$ voidaan päivittää $O(1)$-ajassa seuraavalla idealla:
+
+1. Siirretään hajautusarvoa yhden numeron verran vasemmalle eli kerrotaan luvulla $k$, jolloin kohtaa $k^0$ vastaa numero $0$.
+2. Korvataan oikeimmainen numero numerolla $f(v)\in\\{0,1,\dots,k-1\\}$, lisäämällä se hajautusarvoon.
+3. Poistetaan vasemmainen numero eli kohtaa $k^n$ vastaava numero $f(m_1)$ vähentämällä $f(m_1)\cdot k^n$, jolloin $k^n$ kohdalla on $0$.
+4. Nyt hajautusarvo vastaa uutta jonoa $m_2,m_3,\dots,m_n,v$.
 
 ### Tekoälyt
 
