@@ -141,8 +141,8 @@ Siis tilavaativuus on sama kuin `MarkovKetju`-luokalla eli $O(k^{n+1})$.
 
 Lisäksi keskeisten metodien aikavaativuudet ovat seuraavat:
 
-- `lisaa`: $O(n)$, perustuu `MarkovKetju`-luokan `lisaa`-metodiin
-- `pelaa`: $O(nk)$, perustuu `MarkovKetju`-luokan `ennusta`-metodiin
+- `lisaa`: $O(1)$, perustuu `MarkovKetju`-luokan `lisaa`-metodiin
+- `pelaa`: $O(k)$, perustuu `MarkovKetju`-luokan `ennusta`-metodiin
 
 #### `YhdistelmaTekoaly`
 
@@ -162,7 +162,7 @@ Arvioidaan, että $m\le k^{m+1}$, jolloin `tekoalyt`-taulukko vie eniten tilaa j
 Oletetaan, että kaikki tekoälyt ovat `MarkovTekoaly`-tyyppisiä.
 Tällöin keskeisten metodien aikavaativuudet ovat seuraavat:
 
-- `paivita_pisteet`: $O(m^2 k)$
+- `paivita_pisteet`: $O(mk)$
     Pseudokoodi:
 
     ```python
@@ -171,7 +171,7 @@ Tällöin keskeisten metodien aikavaativuudet ovat seuraavat:
         # O(1)
         tekoaly = tekoalyt[i]
         
-        # O(mk), arvioidaan ylös päin tekoälyjen muistit m-kokoisiksi
+        # O(k), oletetaan, että on MarkovTekoaly
         tekoalyn_siirto = tekoaly.pelaa()
 
         # O(1)
@@ -205,14 +205,14 @@ Tällöin keskeisten metodien aikavaativuudet ovat seuraavat:
     return paras_tekoaly
     ```
 
-- `pelaa`: $O(mk)$, koska käytännössä kutsuu tällä hetkellä pelaavan tekoälyn `pelaa`-metodia.
-  Jos on `MarkovTekoaly`, niin $O(mk)$-aikaa kuluu.
+- `pelaa`: $O(k)$, koska käytännössä kutsuu tällä hetkellä pelaavan tekoälyn `pelaa`-metodia.
+  Jos on `MarkovTekoaly`, niin $O(k)$-aikaa kuluu.
 
-- `lisaa`: $O(m^2 k)$
-    Pseudokoodi
+- `lisaa`: $O(m^2)$
+    Oletetaan, että $3=k\le m$.
 
     ```python
-    # O(m^2*k)
+    # O(mk)
     paivita_pisteet(syote)
     siirtoja_jaljella -= 1
 
@@ -221,9 +221,9 @@ Tällöin keskeisten metodien aikavaativuudet ovat seuraavat:
         pelaava_tekoaly = hae_paras_tekoaly()
         siirtoja_jaljella = m
 
-    # m kpl tekoälyjä oletukseltaan
+    # O(m), m kpl tekoälyjä oletukseltaan
     for tekoaly in tekoalyt:
-        # O(m)
+        # O(1)
         tekoaly.lisaa(syote)
     ```
 
@@ -256,7 +256,6 @@ return tulos
 ## Puutteet ja parannusehdotukset
 
 - `YhdistelmaTekoalyssa` voidaan $O(m)$-tilan kustannuksella tallentaa tekoälyjen pisteiden summat ja täten saada `hae_paras_tekoaly`-metodin aikavaativuudeksi $O(m)$.
-- `MarkovKetju`-luokassa voisi tehdä jotain muutoksia välttääkseen jonon muuttaminen tupleksi ja yrittää saada se toimimaan $O(1)$-ajassa.
 
 ## Lähteet
 
