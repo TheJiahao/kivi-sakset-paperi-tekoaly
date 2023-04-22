@@ -145,15 +145,18 @@ Lisäksi keskeisten metodien aikavaativuudet ovat seuraavat:
 
 #### `YhdistelmaTekoaly`
 
-Luokan keskeisten muuttujien tilavaativuudet ovat seuraavat:
+Luokka toteuttaa artikkelissa *Multi-AI competing and winning against humans in iterated Rock-Paper-Scissors game* esitetyn tekoälyn [^multiAi].
+Keskeisten muuttujien tilavaativuudet ovat seuraavat:
 
 - `peli`: `Peli`-olio, $O(k)$
 - `tekoalyt`: taulukko, joka sisältää tekoälyjä.
   Oletukseltaan sisältää $m$ kpl `MarkovTekoaly`-olioita (muistien pituuksilla $1$, ..., $m$), missä $m$ kuvaa monenko aiemman pelin perusteella tekoälyt pisteytetään.
   Arvioimalla jokaisen `MarkovTekoaly`-olion tilavaativuutta ylöspäin $O(k^{m+1})$-kokoiseksi saadaan taulukon tilavaativuudeksi $O(mk^{m+1})$.
-- `pisteet`: taulukko, joka sisältää tekoälyjen $m$-aikaisemman pelin pisteet $m$-pituisina jonoina.
+- `pistejonot`: taulukko, joka sisältää tekoälyjen $m$-aikaisemman pelin pisteet $m$-pituisina jonoina.
   Indeksit ovat samat kuin vastaavan tekoälyn indeksi `tekoalyt`-taulukossa.
   Oletukseltaan $O(m^2)$-kokoinen.
+- `pisteet`: taulukko tekoälyjen pisteistä, indeksöinti sama kuin `tekoalyt`-taulukossa.
+  Oletukseltaan $O(m)$-kokoinen.
 - `pelaava_tekoaly`: $O(k^{m+1})$, olettaen, että käytetään vain `MarkovTekoaly`-olioita
 
 Arvioidaan, että $m\le k^{m+1}$, jolloin `tekoalyt`-taulukko vie eniten tilaa ja tilavaativuus kokonaisuudessaan on $O(mk^{m+1})$.
@@ -182,33 +185,28 @@ Tällöin keskeisten metodien aikavaativuudet ovat seuraavat:
         pistejono.append(tulos)
     ```
 
-- `hae_paras_tekoaly`: $O(m^2)$
+- `hae_paras_tekoaly`: $O(m)$
     Pseudokoodi:
 
     ```python
     # O(1)
-    paras_tekoaly = tekoalyt[0]
-    # O(m)
-    paras_pisteet = sum(pisteet[0])
+    paras_pisteet = pisteet[0]
+    paras_indeksi = 0
 
-    # m kpl tekoälyja oletukseltaan
+    # O(m) oletukseltaan
     for i in range(0, len(tekoalyt)):
-        # O(m)
-        pisteet = sum(pisteet[i])
-
         # O(1)
-        if pisteet > paras_pisteet:
-            paras_tekoaly = tekoalyt[i]
+        if pisteet[i] > paras_pisteet:
             paras_pisteet = pisteet
+            paras_indeksi = i
 
-    return paras_tekoaly
+    return tekoalyt[i]
     ```
 
 - `pelaa`: $O(k)$, koska käytännössä kutsuu tällä hetkellä pelaavan tekoälyn `pelaa`-metodia.
   Jos on `MarkovTekoaly`, niin $O(k)$-aikaa kuluu.
 
-- `lisaa`: $O(m^2)$
-    Oletetaan, että $3=k\le m$.
+- `lisaa`: $O(mk)$
 
     ```python
     # O(mk)
@@ -216,11 +214,11 @@ Tällöin keskeisten metodien aikavaativuudet ovat seuraavat:
     siirtoja_jaljella -= 1
 
     if siirtoja_jaljella == 0:
-        # O(m^2)
+        # O(m)
         pelaava_tekoaly = hae_paras_tekoaly()
         siirtoja_jaljella = m
 
-    # O(m), m kpl tekoälyjä oletukseltaan
+    # O(m) oletukseltaan
     for tekoaly in tekoalyt:
         # O(1)
         tekoaly.lisaa(syote)
@@ -254,8 +252,11 @@ return tulos
 
 ## Puutteet ja parannusehdotukset
 
-- `YhdistelmaTekoalyssa` voidaan $O(m)$-tilan kustannuksella tallentaa tekoälyjen pisteiden summat ja täten saada `hae_paras_tekoaly`-metodin aikavaativuudeksi $O(m)$.
+- [x] `YhdistelmaTekoalyssa` voidaan $O(m)$-tilan kustannuksella tallentaa tekoälyjen pisteiden summat ja täten saada `hae_paras_tekoaly`-metodin aikavaativuudeksi $O(m)$.
+- [x] `MarkovKetju`-luokassa voisi tehdä jotain muutoksia välttääkseen jonon muuttaminen tupleksi ja yrittää saada se toimimaan $O(1)$-ajassa.
 
 ## Lähteet
 
 [^stochasticMatrix]: Wikipedia, Stochastic matrix, 2022, <https://en.wikipedia.org/wiki/Stochastic_matrix>, luettu 23.3.2023
+
+[^multiAi]: Wang, L., Huang, W., Li, Y. et al. Multi-AI competing and winning against humans in iterated Rock-Paper-Scissors game. Sci Rep 10, 13873 (2020). <https://doi.org/10.1038/s41598-020-70544-7>
