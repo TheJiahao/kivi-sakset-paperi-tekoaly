@@ -14,6 +14,7 @@ class YhdistelmaTekoaly(Tekoaly):
         fokus_pituus: int,
         peli: Peli,
         tekoalyt: list[Tekoaly] | None = None,
+        vaihto_kierroksittain: bool = False,
     ) -> None:
         """Luokan konstruktori.
 
@@ -37,12 +38,19 @@ class YhdistelmaTekoaly(Tekoaly):
             MarkovTekoaly(i, self.__peli.voittavat_siirrot)
             for i in range(1, fokus_pituus + 1)
         ]
-        self.__pisteet: list[deque[int]] = [
-            deque(maxlen=fokus_pituus) for i in range(fokus_pituus)
+        self.__pisteet: list[int] = [0] * len(self.__tekoalyt)
+        self.__pistejono: list[deque[int]] = [
+            deque([0] * fokus_pituus, maxlen=fokus_pituus) for i in range(fokus_pituus)
         ]
 
+        self.__vaihto_kierroksittain: bool = vaihto_kierroksittain
         self.__pelaava_tekoaly: Tekoaly = self.hae_paras_tekoaly()
         self.__siirtoja_jaljella: int = fokus_pituus
+
+    def __repr__(self) -> str:
+        return (
+            f"YhdistelmaTekoaly({self.__fokus_pituus}, {self.__vaihto_kierroksittain})"
+        )
 
     @property
     def pelaava_tekoaly(self) -> Tekoaly:
@@ -61,19 +69,22 @@ class YhdistelmaTekoaly(Tekoaly):
 
         for i, tekoaly in enumerate(self.__tekoalyt):
             tulos = self.__peli.paata_voittaja(tekoaly.pelaa(), syote)
-            self.__pisteet[i].append(tulos)
 
-    def hae_tekoalyt_ja_pisteet(self) -> list[tuple[Tekoaly, tuple[int]]]:
-        """Palauttaa tekoälyt ja vastaavat pistetilanteet.
+            self.__pisteet[i] -= self.__pistejono[i][0]
+            self.__pisteet[i] += tulos
+
+            self.__pistejono[i].append(tulos)
+
+    def hae_tekoalyt_ja_pisteet(self) -> list[tuple[Tekoaly, int]]:
+        """Palauttaa tekoälyt ja vastaavat pisteet.
 
         Returns:
             list[tuple[Tekoaly, tuple[int]]]:
-                Lista, joka sisältää tekoälyt ja niiden pistetilanteen tuplena.
+                Lista, joka sisältää tekoälyt ja vastaavat pisteet tuplena.
         """
 
         return [
-            (tekoaly, tuple(self.__pisteet[i]))
-            for i, tekoaly in enumerate(self.__tekoalyt)
+            (tekoaly, self.__pisteet[i]) for i, tekoaly in enumerate(self.__tekoalyt)
         ]
 
     def hae_paras_tekoaly(self) -> Tekoaly:
@@ -82,18 +93,11 @@ class YhdistelmaTekoaly(Tekoaly):
         Returns:
             Tekoaly: Tekoäly, jolla on korkein pistemäärä.
         """
+        paras_indeksi = max(
+            range(len(self.__tekoalyt)), key=lambda i: self.__pisteet[i]
+        )
 
-        paras_tekoaly = self.__tekoalyt[0]
-        paras_pisteet = sum(self.__pisteet[0])
-
-        for i, tekoaly in enumerate(self.__tekoalyt):
-            pisteet = sum(self.__pisteet[i])
-
-            if pisteet > paras_pisteet:
-                paras_tekoaly = tekoaly
-                paras_pisteet = pisteet
-
-        return paras_tekoaly
+        return self.__tekoalyt[paras_indeksi]
 
     def pelaa(self) -> str:
         """Pelaa kierroksen. Ei muuta luokan sisäistä tilaa.
@@ -114,7 +118,7 @@ class YhdistelmaTekoaly(Tekoaly):
         self.__paivita_pisteet(syote)
         self.__siirtoja_jaljella -= 1
 
-        if self.__siirtoja_jaljella == 0:
+        if self.__siirtoja_jaljella == 0 or self.__vaihto_kierroksittain:
             self.__pelaava_tekoaly = self.hae_paras_tekoaly()
             self.__siirtoja_jaljella = self.__fokus_pituus
 
