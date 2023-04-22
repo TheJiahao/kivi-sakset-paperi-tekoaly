@@ -29,6 +29,9 @@ class MarkovTekoaly(Tekoaly):
 
         return False
 
+    def __repr__(self) -> str:
+        return f"MarkovTekoaly({self.__markovin_ketju.n}, {self.__voittavat_siirrot})"
+
     @property
     def markovin_ketju(self) -> MarkovKetju:
         return deepcopy(self.__markovin_ketju)
