@@ -56,6 +56,14 @@ class TestMarkovTekoaly(unittest.TestCase):
         self.assertNotEqual(self.markov, "x")
         self.assertNotEqual(self.markov, [])
 
+    def test_repr(self):
+        self.assertEqual(
+            repr(MarkovTekoaly(5, {"a": "b"})), "MarkovTekoaly(5, {'a': 'b'})"
+        )
+        self.assertEqual(
+            repr(MarkovTekoaly(10, {"c": "d"})), "MarkovTekoaly(10, {'c': 'd'})"
+        )
+
     def test_pelaa_lyhyella_ketjulla(self):
         markov = MarkovTekoaly(1, self.voittavat_vaihtoehdot)
 
