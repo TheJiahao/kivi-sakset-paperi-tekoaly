@@ -21,6 +21,16 @@ class PeliLogiikka:
         self.__tekoaly: Tekoaly = tekoaly or YhdistelmaTekoaly(n, self.__peli)
         self.__tilasto: dict[int, int] = {-1: 0, 0: 0, 1: 0}
 
+    def alusta(self, n: int, tila: bool) -> None:
+        """Luo uuden tekoälyn ja nollaa tilaston.
+
+        Args:
+            n (int): Uuden tekoälyn muistin pituus.
+        """
+
+        self.__tekoaly = YhdistelmaTekoaly(n, self.__peli, vaihto_kierroksittain=tila)
+        self.__tilasto = {-1: 0, 0: 0, 1: 0}
+
     def pelaa(self, syote: str) -> tuple[str, int]:
         """Pelaa kierroksen ja palauttaa tekoälyn siirron sekä pelituloksen
         (-1: häviö, 0: tasapeli, 1: voitto).
