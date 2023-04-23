@@ -33,7 +33,6 @@ for i in range(0, len(jono) + 1 - pituus):
 print(len(jono))
 l = list(jakauma.items())
 print(sorted(l, key=lambda x: x[1], reverse=True))
-
 ```
 
 ### Sovelluslogiikka
