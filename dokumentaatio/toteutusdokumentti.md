@@ -146,6 +146,9 @@ Lisäksi keskeisten metodien aikavaativuudet ovat seuraavat:
 #### `YhdistelmaTekoaly`
 
 Luokka toteuttaa artikkelissa *Multi-AI competing and winning against humans in iterated Rock-Paper-Scissors game* esitetyn tekoälyn [^multiAi].
+`YhdistelmaTekoaly`:llä on parametri $m$ (fokus pituus), joka kuvaa monenko aiemman kierroksen perusteella sen sisältämät tekoälyt pisteytetään.
+Artikkelin tapaan tekoälyt pisteytetään (-1, 0, 1)-asteikolla: -1 pistettä häviöstä, 0 pistettä tasapelistä ja 1 piste voitosta.
+
 Keskeisten muuttujien tilavaativuudet ovat seuraavat:
 
 - `peli`: `Peli`-olio, $O(k)$

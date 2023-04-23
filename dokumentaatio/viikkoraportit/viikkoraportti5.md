@@ -7,7 +7,7 @@
 |19.4.|2 tuntia 30 min|
 |20.4.|3 tuntia|
 |22.4.|1 tunti 30 min|
-|23.4.|3 tuntia|
+|23.4.|4 tuntia|
 
 ## Mitä tehty?
 
@@ -23,5 +23,10 @@
 - Päivitetty toteutusdokumenttia vastaamaan refaktoroituja luokkia.
 - Refaktoroitu käyttöliittymää
 - Lisätty käyttöliittymään toiminnallisuus käsitellä pidempiä pelaajan syötteitä kerralla
+- Lisätty testausdokumenttiin empiirisen testauksen tulokset
 
 ## Mitä seuraavaksi?
+
+- Vertaisarviointi 2
+- Refaktorointia/hienosäätöä
+- Lisää testitapauksia

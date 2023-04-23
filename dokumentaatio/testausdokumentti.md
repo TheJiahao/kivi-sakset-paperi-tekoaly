@@ -2,17 +2,17 @@
 
 [![codecov](https://codecov.io/gh/TheJiahao/kivi-sakset-paperi-tekoaly/branch/main/graph/badge.svg?token=RBLETVT7VW)](https://codecov.io/gh/TheJiahao/kivi-sakset-paperi-tekoaly)
 
-## Yksikkö- ja integraatiotestaus
+## Yksikkötestaus
 
 ![Kattavuusraportti](kuvat/kattavuusraportti.png)
 
 Yksikkötestauksen tarkka kattavuusraportti on nähtävissä Codecovissa klikkaamalla yllä olevaa kuvaketta.
 
-### Tietorakenteet
+## Tietorakenteet
 
 Markovin ketjua kuvaava `MarkovinKetju`-luokka on testattu yksikkötesteillä.
 
-### Tekoälyt
+## Tekoälyt
 
 Markovin ketjun perustuvaa tekoälyä kuvaava `MarkovTekoaly`-luokka on testattu yksikkötesteillä yksinkertaisissa tapauksissa.
 
@@ -35,11 +35,18 @@ l = list(jakauma.items())
 print(sorted(l, key=lambda x: x[1], reverse=True))
 ```
 
-### Sovelluslogiikka
+Lisäksi `YhdistelmaTekoaly`-luokka on testattu käsin syötteellä (tuotettu räpläämällä näppäimistöä)
+`kspskspkspkpskkspkskspkspkspkskspkspkspskpskpskspkspkspkspskpskspkspskskpskpskpskpskpskspkspkspkspkspskpskpskspkspkspskskksksskpskpskpskspskpspkspkspkspkspkspkpkspkspkskskskkskspskpkskskpspkspkpskskpkskpskpsksp`
+Alla on tulokset eri asetuksilla
+![Kuvaaja, vaihto fokus pituuden välein](kuvat/vaihto_fokus_pituuden_valein_2023-04-23.png)
+![Kuvaaja, vaihto kierroksittain](kuvat/vaihto_kierroksittain_2023-04-23.png)
+Testauksen perusteella edellä mainitulla syötteellä tekoälyn voittojen osuus näyttäisi lähestyvän noin 60-70 %, tasapelien noin 10 % ja häviöiden noin 20-30 %.
+
+## Sovelluslogiikka
 
 Pelin toimintaa kuvaava `Peli`-luokka on testattu yksikkötesteillä oletus- eli kivi-sakset-paperi-peliä vastaavilla parametreilla.
 
-### Käyttöliittymä
+## Käyttöliittymä
 
 Käyttöliittymää kuvaava `UI`-luokka on testattu käsin.
 
