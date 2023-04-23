@@ -1,6 +1,7 @@
 import unittest
 
 from entities.peli import Peli
+from entities.tekoalyt.markov_tekoaly import MarkovTekoaly
 from entities.tekoalyt.tekoaly import Tekoaly
 from entities.tekoalyt.yhdistelma_tekoaly import YhdistelmaTekoaly
 
@@ -93,7 +94,7 @@ class TestYhdistelmaTekoaly(unittest.TestCase):
             self.hae_tekoalyn_pisteet(self.tekoaly.hae_paras_tekoaly()),
         )
 
-    def test_pelaa_saannollisella_syotteella_kun_tekoalyn_vaihto_fokus_pituuden_valein(
+    def test_pelaa_saannollisella_syotteella_kun_vaihto_fokus_pituuden_valein(
         self,
     ):
         # Voittojärjestys: a <- b <- c <- a eli esim. b voittaa a:n.
@@ -108,10 +109,49 @@ class TestYhdistelmaTekoaly(unittest.TestCase):
         self.assertEqual(self.pelaa_useampi_kierros(tekoaly1, "aaaaaa"), "bbbbbb")
         self.assertEqual(self.pelaa_useampi_kierros(tekoaly2, "abcabc"), "bcabca")
 
-    def test_pelaa_pidemmalla_syotteella(self):
+    def test_pelaa_saannollisella_syotteella_kun_vaihto_kierroksittain(self):
+        peli = Peli({"a": "b", "b": "c", "c": "a"})
+
+        tekoaly1 = YhdistelmaTekoaly(
+            10,
+            peli,
+            True,
+        )
+        tekoaly2 = YhdistelmaTekoaly(
+            6,
+            peli,
+            True,
+        )
+
+        self.pelaa_useampi_kierros(tekoaly1, "aaaaaaaaaaaaaaaaaaaa")
+        self.pelaa_useampi_kierros(tekoaly2, "abcabcabcabcabcabcabc")
+
+        self.assertEqual(self.pelaa_useampi_kierros(tekoaly1, "aaaaa"), "bbbbb")
+        self.assertEqual(self.pelaa_useampi_kierros(tekoaly2, "abcabc"), "bcabca")
+
+    def test_pelaa_pidemmalla_syotteella_kun_vaihto_fokus_pituuden_valein(
+        self,
+    ):
         peli = Peli({"a": "b", "b": "c", "c": "a"})
         tekoaly = YhdistelmaTekoaly(3, peli)
 
         self.pelaa_useampi_kierros(tekoaly, "abcbabcabcbabbababcaabbabcabbcabbcab")
 
         self.assertEqual(self.pelaa_useampi_kierros(tekoaly, "cba"), "aba")
+
+    def test_pelaa_pidemmalla_syotteella_kun_vaihto_kierroksittain(self):
+        peli = Peli({"a": "b", "b": "c", "c": "a"})
+        tekoaly = YhdistelmaTekoaly(
+            5,
+            peli,
+            True,
+            [MarkovTekoaly(i, peli.voittavat_siirrot) for i in range(1, 4)],
+        )
+
+        self.pelaa_useampi_kierros(
+            tekoaly,
+            "babbacbabcabbabcabcbabcbabcbabcbabcbabcbabcabbabcbabcbabcbabcabcbacbcbacbacacbacbacbabbabcbabcabcbabcabcbacbbcbcbcabcbabcbbcabcbbabbcacbacabcab",
+        )
+        self.pelaa_useampi_kierros(tekoaly, "cbabc")
+
+        self.assertEqual(self.pelaa_useampi_kierros(tekoaly, "bab"), "cbc")
