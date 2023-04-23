@@ -5,6 +5,20 @@ from entities.tekoalyt.tekoaly import Tekoaly
 from entities.tekoalyt.yhdistelma_tekoaly import YhdistelmaTekoaly
 
 
+class FakeTekoaly(Tekoaly):
+    def __init__(self) -> None:
+        pass
+
+    def pelaa(self) -> str:
+        return "test"
+
+    def lisaa(self, syote: str) -> None:
+        pass
+
+    def __repr__(self) -> str:
+        return "Tekoaly"
+
+
 class TestYhdistelmaTekoaly(unittest.TestCase):
     def setUp(self) -> None:
         self.tekoaly = YhdistelmaTekoaly(3, Peli())
@@ -38,6 +52,12 @@ class TestYhdistelmaTekoaly(unittest.TestCase):
     def test_pisteet_nollia_alussa(self):
         for pari in self.tekoaly.hae_tekoalyt_ja_pisteet():
             self.assertEqual(pari[1], 0)
+
+    def test_repr(self):
+        self.assertEqual(
+            repr(YhdistelmaTekoaly(5, Peli(), True, [FakeTekoaly()])),
+            "YhdistelmaTekoaly(5, True, [Tekoaly])",
+        )
 
     def test_hae_paras_tekoaly_antaa_parhaimman_tekoalyn(self):
         paras = self.tekoaly.hae_paras_tekoaly()

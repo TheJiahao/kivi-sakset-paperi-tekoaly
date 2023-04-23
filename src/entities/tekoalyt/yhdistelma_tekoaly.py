@@ -13,8 +13,8 @@ class YhdistelmaTekoaly(Tekoaly):
         self,
         fokus_pituus: int,
         peli: Peli,
-        tekoalyt: list[Tekoaly] | None = None,
         vaihto_kierroksittain: bool = False,
+        tekoalyt: list[Tekoaly] | None = None,
     ) -> None:
         """Luokan konstruktori.
 
@@ -23,6 +23,8 @@ class YhdistelmaTekoaly(Tekoaly):
                 Kuvaa monenko viimeisimmän kierroksen tuloksen perusteella tekoälyt pisteytetään.
             peli (Peli):
                 Pelin tuloksista vastaava olio.
+            vaihto_kierroksittain (bool):
+                Tämän perusteella päätetään joko vaihdetaan tai ei vaihdeta tekoälyä kierroksittain.
             tekoalyt (list[Tekoaly] | None, optional):
                 Tekoälyt, joita YhdistelmäTekoaly käyttää sisäisesti. Oletukseltaan None.
 
@@ -49,7 +51,10 @@ class YhdistelmaTekoaly(Tekoaly):
 
     def __repr__(self) -> str:
         return (
-            f"YhdistelmaTekoaly({self.__fokus_pituus}, {self.__vaihto_kierroksittain})"
+            f"YhdistelmaTekoaly({self.__fokus_pituus}, "
+            + f"{self.__vaihto_kierroksittain}, "
+            + f"{self.__tekoalyt}"
+            + ")"
         )
 
     @property
