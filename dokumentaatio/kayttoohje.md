@@ -18,6 +18,11 @@ Sovellus käynnistyy komennolla:
 poetry run invoke start
 ```
 
+Käynnistettyään ohjelma tulostaa ohjeet.
+Syöttämällä `1` ohjelma kysyy pelin asetuksia, minkä jälkeen peli alkaa.
+Pelin alettua pelaaja voi syöttää merkkejä `k` (kivi), `s` (sakset) ja `p` (paperi) tai näiden yhdistelmiä.
+Ohjelma käsittelee ne järjestyksessä ja tulostaa pelitulokset.
+
 ## Invoke-tehtävät
 
 Seuraavat Invoke-tehtävät toimivat projektin juurihakemistossa.
