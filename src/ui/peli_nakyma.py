@@ -16,23 +16,31 @@ class PeliNakyma:
         while True:
             try:
                 syote = input("Pelaa (x lopettaa): ").lower()
-
                 if syote == "x":
-                    self.tulosta_tilasto()
+                    self.__tulosta_tilasto()
                     return
 
-                pelitulos = self.__logiikka.pelaa(syote)
+                for merkki in syote:
+                    pelitulos = self.__logiikka.pelaa(merkki)
 
-                print(f"Tekoäly pelasi {pelitulos[0]}")
-                print(self.__selitykset[pelitulos[1]])
+                    print(
+                        f'(Sinä) "{merkki}" VS "{pelitulos[0]}" (Tekoäly)',
+                        self.__selitykset[pelitulos[1]],
+                    )
+
+                print()
 
             except ValueError:
                 print("Syöte ei kelpaa, kokeile uudestaan.")
 
-    def tulosta_tilasto(self) -> None:
+    def __tulosta_tilasto(self) -> None:
         tilasto = self.__logiikka.hae_tilasto()
 
-        print("Tilasto")
-        print(f"Voitot: {100*tilasto[0]:.0f} %")
-        print(f"Tasapelit: {100*tilasto[1]:.0f} %")
-        print(f"Häviöt: {100*tilasto[2]:.0f} %")
+        print(
+            "Tilasto",
+            f"Voitot: {100*tilasto[0]:.0f} %",
+            f"Tasapelit: {100*tilasto[1]:.0f} %",
+            f"Häviöt: {100*tilasto[2]:.0f} %",
+            sep="\n",
+        )
+        print()
