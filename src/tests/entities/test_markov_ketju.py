@@ -40,15 +40,15 @@ class TestMarkovKetju(unittest.TestCase):
             self.assertEqual(self.ketju.frekvenssit[vaihtoehto], {})
 
     def test_ketju_on_sama_itsensa_kanssa(self):
-        ketju1 = MarkovKetju(2, {1, 2, 3}, {1: {2: 1}})
+        ketju1 = MarkovKetju(2, {1, 2, 3})
         ketju2 = MarkovKetju(2, {1, 2, 3, 4})
 
         self.assertEqual(ketju1, ketju1)
         self.assertEqual(ketju2, ketju2)
 
     def test_ketjut_samoilla_parametreilla_ovat_samat(self):
-        ketju1 = MarkovKetju(2, {1, 2, 3}, {1: {10: 3}})
-        ketju2 = MarkovKetju(2, {1, 2, 3}, {1: {10: 3}})
+        ketju1 = MarkovKetju(2, {1, 2, 3})
+        ketju2 = MarkovKetju(2, {1, 2, 3})
 
         self.assertEqual(ketju1, ketju1)
         self.assertEqual(ketju1, ketju2)
@@ -71,11 +71,10 @@ class TestMarkovKetju(unittest.TestCase):
         ketju1 = MarkovKetju(2, {1, 2, 3})
         ketju2 = MarkovKetju(10, {1, 2})
         ketju3 = MarkovKetju(2, {1, 2})
-        ketju4 = MarkovKetju(2, {1, 2}, {1: {9: 20}})
 
         self.assertNotEqual(ketju1, ketju2)
+        self.assertNotEqual(ketju1, ketju3)
         self.assertNotEqual(ketju2, ketju3)
-        self.assertNotEqual(ketju3, ketju4)
 
     def test_samat_ketjut_ovat_eri_muutoksien_jalkeen_eri(self):
         ketju1 = MarkovKetju(2, {1, 2, 3})
@@ -93,6 +92,10 @@ class TestMarkovKetju(unittest.TestCase):
         self.assertNotEqual(self.ketju, 1)
         self.assertNotEqual(self.ketju, "x")
         self.assertNotEqual(self.ketju, [])
+
+    def test_repr(self):
+        self.assertEqual(repr(MarkovKetju(10, {1})), "MarkovKetju(10, {1})")
+        self.assertEqual(repr(MarkovKetju(4, {2})), "MarkovKetju(4, {2})")
 
     def test_frekvenssia_ei_voi_muuttaa_ulkopuolelta(self):
         self.tayta_muisti()

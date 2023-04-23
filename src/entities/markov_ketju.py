@@ -6,28 +6,18 @@ from typing import Hashable
 class MarkovKetju:
     """Luokka, joka kuvaa Markovin ketjua."""
 
-    def __init__(
-        self,
-        n: int,
-        vaihtoehdot: set[Hashable],
-        frekvenssit: dict[Hashable, dict[int, int]] | None = None,
-    ) -> None:
+    def __init__(self, n: int, vaihtoehdot: set[Hashable]) -> None:
         """Luokan konstruktori. Luo Markovin ketjun.
 
         Args:
-            n (int):
-                Muistin maksimipituus.
-            vaihtoehdot (set[Hashable]):
-                Joukko, joka sisältää sallitut syötteet.
-            frekvenssit (dict[Hashable, dict[int, int]] | None, optional):
-                Matriisi, joka sisältää jokaisen syötteen frekvenssin jonkin jonon perässä.
-                Oletusarvoltaan None.
+            n (int): Muistin maksimipituus.
+            vaihtoehdot (set[Hashable]): Joukko, joka sisältää sallitut syötteet.
         """
         self.__muisti: deque[Hashable] = deque(maxlen=n)
         self.__vaihtoehdot: dict[Hashable, int] = {
             vaihtoehto: i for i, vaihtoehto in enumerate(vaihtoehdot)
         }
-        self.__frekvenssit: dict[Hashable, dict[int, int]] = frekvenssit or {
+        self.__frekvenssit: dict[Hashable, dict[int, int]] = {
             vaihtoehto: {} for vaihtoehto in vaihtoehdot
         }
 
