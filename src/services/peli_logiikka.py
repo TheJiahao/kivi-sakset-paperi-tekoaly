@@ -26,6 +26,7 @@ class PeliLogiikka:
 
         Args:
             n (int): Uuden tekoälyn muistin pituus.
+            tila (bool): YhdistelmaTekoaly-olion tila.
         """
 
         self.__tekoaly = YhdistelmaTekoaly(n, self.__peli, vaihto_kierroksittain=tila)

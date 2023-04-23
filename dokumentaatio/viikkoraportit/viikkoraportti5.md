@@ -7,6 +7,7 @@
 |19.4.|2 tuntia 30 min|
 |20.4.|3 tuntia|
 |22.4.|1 tunti 30 min|
+|23.4.|1 tunti 30 min|
 
 ## Mitä tehty?
 
@@ -20,5 +21,6 @@
     Syynä se, että pitempiketjuisilla `MarkovTekoaly`:illä ei ole vielä havaintoja kaikista jonoista, vaikka ne valittaisiin muutaman aiemman kierroksen perusteella.
   - Pisteiden summasta pidetään erikseen kirjaa, minkä parantaa `hae_paras_tekoaly`-metodin aikavaativuutta $O(m^2)\to O(m)$.
 - Päivitetty toteutusdokumenttia vastaamaan refaktoroituja luokkia.
+- Refaktoroitu käyttöliittymä
 
 ## Mitä seuraavaksi?
