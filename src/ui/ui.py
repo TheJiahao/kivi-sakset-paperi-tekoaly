@@ -24,9 +24,9 @@ class UI:
 
     def __tulosta_ohje(self) -> None:
         print(
-            "1: Pelaa\n",
-            "x: Lopeta\n",
-            sep="",
+            "1: Pelaa",
+            "x: Lopeta",
+            sep="\n",
         )
 
     def __aloita_peli(self) -> None:
