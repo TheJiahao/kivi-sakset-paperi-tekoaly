@@ -117,7 +117,7 @@ Joukossa $J$ on tuloperiaatteen nojalla $k^n$ alkiota.
 Muodostetaan bijektio (sanakirja) $f\colon V\to\\{0,1,\dots,k-1\\}$.
 
 Muodostetaan toinen funktio $g\colon J\to\\{0,1,\dots,k^n-1\\}$, missä
-$$g(m)=\sum_{l=1}^{n}f(m_i)\cdot k^{n-l}=f(m_1)k^{n-1}+f(m_2)k^{n-2}+\dots+f(m_n)k^0$$
+$$g(m)=\sum_{i=1}^{n}f(m_i)\cdot k^{n-i}=f(m_1)k^{n-1}+f(m_2)k^{n-2}+\dots+f(m_n)k^0$$
 Jos esimerkiksi jono $m=a,b,c$, jolle $f(a),f(b),f(c)=0,1,2$, niin $g(m)=012_3$ 3-lukujärjestelmässä.
 Nähdään, että myös $g$ on bijektio.
 
