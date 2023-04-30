@@ -1,9 +1,10 @@
 from ui.alusta_peli_nakyma import AlustaPeliNakyma
+from ui.nakyma import Nakyma
 from ui.peli_nakyma import PeliNakyma
 from ui.tilasto_nakyma import TilastoNakyma
 
 
-class UI:
+class UI(Nakyma):
     """Luokka, joka vastaa aloitusnäkymästä."""
 
     def __init__(self) -> None:
