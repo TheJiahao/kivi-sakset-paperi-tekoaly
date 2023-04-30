@@ -25,6 +25,10 @@ Ohjelma käsittelee ne järjestyksessä ja tulostaa pelitulokset.
 
 ## Invoke-tehtävät
 
+Ilmeisesti Windows-koneilla invoke-tehtävät ei toimi.
+Saattaa korjaantua asettamalla `tasks.py` tiedostosta `ctx.run`-metodin parametriksi `pty=False`.
+Jos ei onnistu, niin alkuperäiset komennot löytyvät `tasks.py`-tiedostosta.
+
 Seuraavat Invoke-tehtävät toimivat projektin juurihakemistossa.
 
 Kattavuusraportin luominen:
