@@ -14,6 +14,7 @@ class TilastoNakyma(Nakyma):
         self.__tilasto = peli_logiikka.hae_tilasto()
 
         if self.__tilasto:
+            print("Tilasto")
             self.__asteikko = self._kysy_kokonaisluku(10, 1, "Kuvaajan asteikko")
             self.__riveja = self._kysy_kokonaisluku(10, 1, "Kuvaajan rivimäärä")
             print()
