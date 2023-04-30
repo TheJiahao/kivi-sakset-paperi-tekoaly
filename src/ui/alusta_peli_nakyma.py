@@ -2,6 +2,8 @@ from services.peli_logiikka import PeliLogiikka
 
 
 class AlustaPeliNakyma:
+    """Luokka, joka vastaa pelin alustamisnäkymästä."""
+
     def __init__(self, logiikka: PeliLogiikka) -> None:
         self.__logiikka: PeliLogiikka = logiikka
 
@@ -12,6 +14,12 @@ class AlustaPeliNakyma:
         self.__logiikka.alusta(n, tila=tila)
 
     def __lue_muistin_pituus(self) -> int:
+        """Kysyy käyttäjältä muistin pituuden.
+
+        Returns:
+            int: Muistin pituus.
+        """
+
         while True:
             try:
                 syote = input("Syötä muistin pituus (oletus 5): ")
@@ -27,10 +35,16 @@ class AlustaPeliNakyma:
                 print("Virheellinen syöte.")
 
     def __lue_tekoalyn_tila(self) -> bool:
+        """Kysyy käyttäjältä vaihdetaanko tekoäly kierroksittain.
+
+        Returns:
+            bool: Jos True, niin vaihdetaan tekoäly kierroksittain.
+        """
+
         while True:
             try:
                 syote = input(
-                    "Vaihdetaanko tekoäly kierroksittain (k: kyllä, e: ei, oletus kyllä): "
+                    "Nopeammin sopeutuva tekoäly? (k: kyllä, e: ei, oletus kyllä): "
                 )
 
                 match syote.lower():

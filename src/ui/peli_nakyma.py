@@ -2,6 +2,8 @@ from services.peli_logiikka import PeliLogiikka
 
 
 class PeliNakyma:
+    """Luokka, joka vastaa varsinaisesta pelinäkymästä."""
+
     def __init__(self, logiikka: PeliLogiikka) -> None:
         self.__logiikka = logiikka
         self.__selitykset: dict[int, str] = {

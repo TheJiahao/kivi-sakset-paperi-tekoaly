@@ -7,7 +7,7 @@ from entities.tekoalyt.tekoaly import Tekoaly
 
 
 class YhdistelmaTekoaly(Tekoaly):
-    """Luokka, joka kuvaa usean tekoälyn yhdistelmätekoälyä."""
+    """Luokka, joka kuvaa usean tekoälyn muodostamaa yhdistelmätekoälyä."""
 
     def __init__(
         self,
@@ -24,13 +24,14 @@ class YhdistelmaTekoaly(Tekoaly):
             peli (Peli):
                 Pelin tuloksista vastaava olio.
             vaihto_kierroksittain (bool):
-                Tämän perusteella päätetään joko vaihdetaan tai ei vaihdeta tekoälyä kierroksittain.
+                Jos True, niin tekoäly vaihdetaan kierroksittain.
             tekoalyt (list[Tekoaly] | None, optional):
                 Tekoälyt, joita YhdistelmäTekoaly käyttää sisäisesti. Oletukseltaan None.
 
         Raises:
             ValueError: Ei-positiivinen fokus_pituus.
         """
+
         if fokus_pituus <= 0:
             raise ValueError("Ei-positiivinen fokus_pituus ei kelpaa.")
 
@@ -84,7 +85,7 @@ class YhdistelmaTekoaly(Tekoaly):
         """Palauttaa tekoälyt ja vastaavat pisteet.
 
         Returns:
-            list[tuple[Tekoaly, tuple[int]]]:
+            list[tuple[Tekoaly, int]]:
                 Lista, joka sisältää tekoälyt ja vastaavat pisteet tuplena.
         """
 

@@ -9,3 +9,4 @@
 ## Mitä tehty?
 
 - Tehty [vertaisarviointi](https://github.com/KilpiV/TiraLabra2023/issues/1)
+- Korjattu dokumentaatiota

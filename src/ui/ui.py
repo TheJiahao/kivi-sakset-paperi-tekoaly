@@ -4,6 +4,8 @@ from ui.peli_nakyma import PeliNakyma
 
 
 class UI:
+    """Luokka, joka vastaa aloitusnäkymästä."""
+
     def __init__(self, logiikka: PeliLogiikka) -> None:
         self.__alusta_peli_nakyma = AlustaPeliNakyma(logiikka)
         self.__peli_nakyma = PeliNakyma(logiikka)

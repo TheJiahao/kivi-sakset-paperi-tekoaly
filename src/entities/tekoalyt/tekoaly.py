@@ -2,6 +2,8 @@ from abc import ABC, abstractmethod
 
 
 class Tekoaly(ABC):
+    """Luokka, joka kuvaa tekoälyä."""
+
     @abstractmethod
     def pelaa(self) -> str:
         """Pelaa yhden kierroksen. Ei muuta luokan sisäistä tilaa.
@@ -11,7 +13,7 @@ class Tekoaly(ABC):
         """
 
     @abstractmethod
-    def lisaa(self, syote: str) -> str:
+    def lisaa(self, syote: str) -> None:
         """Lisää pelaajan syötteen.
 
         Args:

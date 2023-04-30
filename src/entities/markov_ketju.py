@@ -7,11 +7,11 @@ class MarkovKetju:
     """Luokka, joka kuvaa Markovin ketjua."""
 
     def __init__(self, n: int, vaihtoehdot: set[Hashable]) -> None:
-        """Luokan konstruktori. Luo Markovin ketjun.
+        """Luokan konstruktori.
 
         Args:
             n (int): Muistin maksimipituus.
-            vaihtoehdot (set[Hashable]): Joukko, joka sisältää sallitut syötteet.
+            vaihtoehdot (set[Hashable]): Sallitut vaihtoehdot.
         """
         self.__muisti: deque[Hashable] = deque(maxlen=n)
         self.__vaihtoehdot: dict[Hashable, int] = {
@@ -69,7 +69,7 @@ class MarkovKetju:
             syote (Hashable): Lisättävä alkio.
 
         Raises:
-            ValueError: Syote ei kelpaa.
+            ValueError: Syöte ei kelpaa.
         """
 
         if syote not in self.__vaihtoehdot:
@@ -104,16 +104,16 @@ class MarkovKetju:
 
     def hae_frekvenssi(self, syote: Hashable) -> int:
         """Palauttaa syotteen frekvenssin, kun edeltävä jono on muistissa oleva jono.
-        Palauttaa nollan myös, kun muisti ei ole täynnä, mikä helpottaa todennäköisyyksien laskua.
+        Palauttaa nollan, kun muisti ei ole täynnä.
 
         Args:
-            syote (Hashable): Syote, jonka frekvenssiä haetaan.
+            syote (Hashable): Syöte, jonka frekvenssiä haetaan.
 
         Returns:
-            int: Haettavan syotteen frekvenssi.
+            int: Haettavan syötteen frekvenssi.
 
         Raises:
-            ValueError: Syote ei kelpaa.
+            ValueError: Syöte ei kelpaa.
         """
 
         if syote not in self.__vaihtoehdot:

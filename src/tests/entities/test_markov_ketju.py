@@ -98,6 +98,10 @@ class TestMarkovKetju(unittest.TestCase):
         self.assertEqual(repr(MarkovKetju(4, {2})), "MarkovKetju(4, {2})")
 
     def test_frekvenssia_ei_voi_muuttaa_ulkopuolelta(self):
+        # Ensimmäisen täytön jälkeen muistissa on jono a, b, c.
+        # Toisen täytön jälkeen ketju muistaa, että jonon a, b, c jälkeen on tullut merkki "a".
+        # Samalla muistissa on uudelleen jono a, b, c.
+
         self.tayta_muisti()
         self.tayta_muisti()
         self.ketju.frekvenssit["a"] = {1: 100}

@@ -2,11 +2,7 @@ from copy import copy
 
 
 class Peli:
-    """Luokka, joka kuvaa kivi-sakset-paperi-peliä.
-
-    Attributes:
-        __syotteet (set[str]): Joukko, joka sisältää kaikki sallitut syötteet.
-    """
+    """Luokka, joka kuvaa kivi-sakset-paperi-peliä."""
 
     def __init__(
         self,
