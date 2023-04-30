@@ -6,6 +6,8 @@ from services import peli_logiikka
 class TilastoNakyma:
     def __init__(self) -> None:
         self.__tilasto: list[tuple[float, float, float]] = []
+        self.__asteikko: int = 10
+        self.__riveja: int = 10
 
     def tulosta_tilasto(self) -> None:
         self.__tilasto = peli_logiikka.hae_tilasto()
@@ -23,6 +25,7 @@ class TilastoNakyma:
 
         print("Yhteenveto")
         print(
+            f"Kierroksia: {len(self.__tilasto)}",
             f"Voitot: {voitto_osuus:.0f} %",
             f"Tasapelit: {tasapeli_osuus:.0f} %",
             f"Häviöt: {havio_osuus:.0f} %",
@@ -33,42 +36,46 @@ class TilastoNakyma:
     def __tulosta_kuvaaja(self) -> None:
         kierroksia = len(self.__tilasto)
         indeksin_leveys = max(len(str(kierroksia)), 2)
-        asteikko = 20
 
-        print(
-            f'{" ":{indeksin_leveys}}',
-            f'{"Voitot":<{asteikko}}',
-            f'{"Tasapelit":<{asteikko}}',
-            f'{"Häviöt":<{asteikko}}',
-            sep="|",
-            end="|\n",
+        sarakkeiden_otsikot = "|".join(
+            [
+                f'{"i":<{indeksin_leveys}}',
+                f'{"Voitot":<{self.__asteikko}}',
+                f'{"Tasapelit":<{self.__asteikko}}',
+                f'{"Häviöt":<{self.__asteikko}}',
+            ]
         )
-        print(
-            f'{" ":{indeksin_leveys}}',
-            f'{"-"*asteikko}',
-            f'{"-"*asteikko}',
-            f'{"-"*asteikko}',
-            sep="|",
-            end="|\n",
+        erotin = "|".join(
+            [
+                f'{"-"*indeksin_leveys:>{indeksin_leveys}}',
+                f'{"-"*self.__asteikko}',
+                f'{"-"*self.__asteikko}',
+                f'{"-"*self.__asteikko}',
+            ]
         )
 
-        for i in range(0, max(kierroksia, 10), max(kierroksia // 10, 1)):
-            voitot = 0
-            tasapelit = 0
-            haviot = 0
+        print(f"|{sarakkeiden_otsikot}|")
+        print(f"|{erotin}|")
 
-            if i < kierroksia:
-                voitot = ceil(self.__tilasto[i][0] * asteikko)
-                tasapelit = ceil(self.__tilasto[i][1] * asteikko)
-                haviot = ceil(self.__tilasto[i][2] * asteikko)
+        for i in range(
+            0, max(kierroksia, self.__riveja), max(kierroksia // self.__riveja, 1)
+        ):
+            if i >= kierroksia:
+                break
 
-            print(
-                f"{i+1:<{indeksin_leveys}}",
-                f'{"#"*voitot:{asteikko}}',
-                f'{"#"*tasapelit:{asteikko}}',
-                f'{"#"*haviot:{asteikko}}',
-                sep="|",
-                end="|\n",
+            voitot = ceil(self.__tilasto[i][0] * self.__asteikko)
+            tasapelit = ceil(self.__tilasto[i][1] * self.__asteikko)
+            haviot = ceil(self.__tilasto[i][2] * self.__asteikko)
+
+            rivi = "|".join(
+                [
+                    f"{i+1:<{indeksin_leveys}}",
+                    f'{"#"*voitot:{self.__asteikko}}',
+                    f'{"#"*tasapelit:{self.__asteikko}}',
+                    f'{"#"*haviot:{self.__asteikko}}',
+                ]
             )
 
-        print(f"# = {100//asteikko} %")
+            print(f"|{rivi}|")
+
+        print(f"# = {100//self.__asteikko} %")
