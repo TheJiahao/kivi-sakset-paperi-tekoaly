@@ -46,6 +46,9 @@ Testauksen perusteella edellä mainitulla syötteellä tekoälyn voittojen osuus
 
 Pelin toimintaa kuvaava `Peli`-luokka on testattu yksikkötesteillä oletus- eli kivi-sakset-paperi-peliä vastaavilla parametreilla.
 
+Testejä varten on luotu `FakeTekoaly`-luokka.
+Luokka vastaa tekoälyä, joka pelaa vuorotellen `k`, `s` ja `p`.
+
 ## Käyttöliittymä
 
 Käyttöliittymää kuvaava `UI`-luokka on testattu käsin.
