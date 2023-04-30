@@ -19,7 +19,7 @@ class PeliLogiikka:
 
         self.__peli: Peli = peli or Peli()
         self.__tekoaly: Tekoaly = tekoaly or YhdistelmaTekoaly(n, self.__peli)
-        self.__tilasto: dict[int, int] = {-1: 0, 0: 0, 1: 0}
+        self.__tilasto: list[int] = []
 
     def alusta(self, n: int, tila: bool) -> None:
         """Luo uuden tekoälyn ja nollaa tilaston.
@@ -30,7 +30,7 @@ class PeliLogiikka:
         """
 
         self.__tekoaly = YhdistelmaTekoaly(n, self.__peli, vaihto_kierroksittain=tila)
-        self.__tilasto = {-1: 0, 0: 0, 1: 0}
+        self.__tilasto = []
 
     def pelaa(self, syote: str) -> tuple[str, int]:
         """Pelaa kierroksen ja palauttaa tekoälyn siirron sekä pelituloksen
@@ -47,26 +47,29 @@ class PeliLogiikka:
 
         pelitulos = self.__peli.paata_voittaja(syote, tekoalyn_siirto)
 
-        self.__tilasto[pelitulos] = self.__tilasto[pelitulos] + 1
         self.__tekoaly.lisaa(syote)
+        self.__tilasto.append(pelitulos)
 
         return (tekoalyn_siirto, pelitulos)
 
-    def hae_tilasto(self) -> tuple[float, float, float]:
-        """Palauttaa pelin tilaston eli voittojen, tasapelien ja häviöiden osuuden.
+    def hae_tilasto(self) -> list[tuple[float, float, float]]:
+        """Palauttaa tilaston.
 
         Returns:
-            tuple[float, float, float]:
-                Tuple, joka on muotoa (voittojen osuus, tasapelien osuus, häviöiden osuus)
+            list[tuple[float, float, float]]:
+                Kumulatiivinen tilasto voitto-, tasapeli- ja häviöprosenteista.
         """
 
-        kierroksia = self.__tilasto[-1] + self.__tilasto[0] + self.__tilasto[1]
+        tilasto = []
+        laskurit = {-1: 0, 0: 0, 1: 0}
 
-        if kierroksia == 0:
-            return (0, 0, 0)
+        for i, pelitulos in enumerate(self.__tilasto):
+            laskurit[pelitulos] += 1
 
-        voittojen_osuus = self.__tilasto[1] / kierroksia
-        tasapelien_osuus = self.__tilasto[0] / kierroksia
-        havioiden_osuus = self.__tilasto[-1] / kierroksia
+            voitto_osuus = laskurit[1] / (i + 1)
+            tasapeli_osuus = laskurit[0] / (i + 1)
+            havio_osuus = laskurit[-1] / (i + 1)
 
-        return (voittojen_osuus, tasapelien_osuus, havioiden_osuus)
+            tilasto.append((voitto_osuus, tasapeli_osuus, havio_osuus))
+
+        return tilasto

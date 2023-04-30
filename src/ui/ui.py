@@ -35,4 +35,6 @@ class UI:
     def __aloita_peli(self) -> None:
         self.__alusta_peli_nakyma.kaynnista()
         self.__peli_nakyma.kaynnista()
+
+        print()
         self.__tilasto_nakyma.tulosta_tilasto()
