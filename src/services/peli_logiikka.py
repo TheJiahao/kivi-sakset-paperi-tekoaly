@@ -21,7 +21,7 @@ class PeliLogiikka:
         self.__tekoaly: Tekoaly = tekoaly or YhdistelmaTekoaly(n, self.__peli)
         self.__tilasto: list[int] = []
 
-    def alusta(self, n: int, tila: bool) -> None:
+    def alusta(self, n: int, tila: bool, tekoaly: Tekoaly | None = None) -> None:
         """Luo uuden tekoälyn ja nollaa tilaston.
 
         Args:
@@ -29,7 +29,9 @@ class PeliLogiikka:
             tila (bool): YhdistelmaTekoaly-olion tila.
         """
 
-        self.__tekoaly = YhdistelmaTekoaly(n, self.__peli, vaihto_kierroksittain=tila)
+        self.__tekoaly = tekoaly or YhdistelmaTekoaly(
+            n, self.__peli, vaihto_kierroksittain=tila
+        )
         self.__tilasto = []
 
     def pelaa(self, syote: str) -> tuple[str, int]:
