@@ -1,17 +1,14 @@
-from services.peli_logiikka import PeliLogiikka
+from services import peli_logiikka
 
 
 class AlustaPeliNakyma:
     """Luokka, joka vastaa pelin alustamisnäkymästä."""
 
-    def __init__(self, logiikka: PeliLogiikka) -> None:
-        self.__logiikka: PeliLogiikka = logiikka
-
     def kaynnista(self) -> None:
         n = self.__lue_muistin_pituus()
         tila = self.__lue_tekoalyn_tila()
 
-        self.__logiikka.alusta(n, tila=tila)
+        peli_logiikka.alusta(n, tila=tila)
 
     def __lue_muistin_pituus(self) -> int:
         """Kysyy käyttäjältä muistin pituuden.

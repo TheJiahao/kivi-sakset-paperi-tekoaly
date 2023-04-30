@@ -1,11 +1,10 @@
-from services.peli_logiikka import PeliLogiikka
+from services import peli_logiikka
 
 
 class PeliNakyma:
     """Luokka, joka vastaa varsinaisesta pelinäkymästä."""
 
-    def __init__(self, logiikka: PeliLogiikka) -> None:
-        self.__logiikka = logiikka
+    def __init__(self) -> None:
         self.__selitykset: dict[int, str] = {
             -1: "Hävisit.",
             0: "Tasapeli.",
@@ -19,11 +18,10 @@ class PeliNakyma:
             try:
                 syote = input("Pelaa (x lopettaa): ").lower()
                 if syote == "x":
-                    self.__tulosta_tilasto()
                     return
 
                 for merkki in syote:
-                    pelitulos = self.__logiikka.pelaa(merkki)
+                    pelitulos = peli_logiikka.pelaa(merkki)
 
                     print(
                         f'(Sinä) "{merkki}" VS "{pelitulos[0]}" (Tekoäly)',
@@ -34,15 +32,3 @@ class PeliNakyma:
 
             except ValueError:
                 print("Syöte ei kelpaa, kokeile uudestaan.")
-
-    def __tulosta_tilasto(self) -> None:
-        tilasto = self.__logiikka.hae_tilasto()
-
-        print(
-            "Tilasto",
-            f"Voitot: {100*tilasto[0]:.0f} %",
-            f"Tasapelit: {100*tilasto[1]:.0f} %",
-            f"Häviöt: {100*tilasto[2]:.0f} %",
-            sep="\n",
-        )
-        print()

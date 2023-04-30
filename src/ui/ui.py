@@ -1,14 +1,15 @@
-from services.peli_logiikka import PeliLogiikka
 from ui.alusta_peli_nakyma import AlustaPeliNakyma
 from ui.peli_nakyma import PeliNakyma
+from ui.tilasto_nakyma import TilastoNakyma
 
 
 class UI:
     """Luokka, joka vastaa aloitusnäkymästä."""
 
-    def __init__(self, logiikka: PeliLogiikka) -> None:
-        self.__alusta_peli_nakyma = AlustaPeliNakyma(logiikka)
-        self.__peli_nakyma = PeliNakyma(logiikka)
+    def __init__(self) -> None:
+        self.__alusta_peli_nakyma = AlustaPeliNakyma()
+        self.__peli_nakyma = PeliNakyma()
+        self.__tilasto_nakyma = TilastoNakyma()
 
     def kaynnista(self) -> None:
         print("Kivi-sakset-paperi-peli")
@@ -34,3 +35,4 @@ class UI:
     def __aloita_peli(self) -> None:
         self.__alusta_peli_nakyma.kaynnista()
         self.__peli_nakyma.kaynnista()
+        self.__tilasto_nakyma.tulosta_tilasto()
