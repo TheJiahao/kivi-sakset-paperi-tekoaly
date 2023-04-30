@@ -5,7 +5,7 @@
 |Päivämäärä|Aika|
 |----------|----|
 |28.4.|2 tuntia 15 min|
-|30.4.|4 tuntia|
+|30.4.|4 tuntia 45 min|
 
 ## Mitä tehty?
 
@@ -13,3 +13,4 @@
 - Korjattu dokumentaatiota KilpiV:n [palautteen](https://github.com/TheJiahao/kivi-sakset-paperi-tekoaly/issues/2) pohjalta
 - Lisätty käyttöliittymään henryblu:n ehdottama [graafi](https://github.com/TheJiahao/kivi-sakset-paperi-tekoaly/issues/1)
 - Refaktoroitu käyttöliittymää
+- Refaktoroitu `PeliLogiikka`-luokan tilastointia
