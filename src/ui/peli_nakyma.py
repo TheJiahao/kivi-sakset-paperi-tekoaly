@@ -1,7 +1,8 @@
 from services import peli_logiikka
+from ui.nakyma import Nakyma
 
 
-class PeliNakyma:
+class PeliNakyma(Nakyma):
     """Luokka, joka vastaa varsinaisesta pelinäkymästä."""
 
     def __init__(self) -> None:
