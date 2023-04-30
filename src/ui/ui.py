@@ -24,6 +24,8 @@ class UI:
 
                 case "1":
                     self.__aloita_peli()
+                    print()
+                    self.__tilasto_nakyma.kaynnista()
 
     def __tulosta_ohje(self) -> None:
         print(
@@ -35,6 +37,3 @@ class UI:
     def __aloita_peli(self) -> None:
         self.__alusta_peli_nakyma.kaynnista()
         self.__peli_nakyma.kaynnista()
-
-        print()
-        self.__tilasto_nakyma.tulosta_tilasto()

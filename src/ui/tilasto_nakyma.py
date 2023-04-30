@@ -1,22 +1,29 @@
 from math import ceil
 
 from services import peli_logiikka
+from ui.nakyma import Nakyma
 
 
-class TilastoNakyma:
+class TilastoNakyma(Nakyma):
     def __init__(self) -> None:
         self.__tilasto: list[tuple[float, float, float]] = []
         self.__asteikko: int = 10
         self.__riveja: int = 10
 
-    def tulosta_tilasto(self) -> None:
+    def kaynnista(self) -> None:
         self.__tilasto = peli_logiikka.hae_tilasto()
 
         if self.__tilasto:
-            self.__tulosta_kuvaaja()
+            self.__asteikko = self._kysy_kokonaisluku(10, 1, "Kuvaajan asteikko")
+            self.__riveja = self._kysy_kokonaisluku(10, 1, "Kuvaajan rivimäärä")
             print()
 
-            self.__tulosta_yhteenveto()
+            self.__tulosta_tilasto()
+
+    def __tulosta_tilasto(self) -> None:
+        self.__tulosta_kuvaaja()
+        print()
+        self.__tulosta_yhteenveto()
 
     def __tulosta_yhteenveto(self) -> None:
         voitto_osuus = 100 * self.__tilasto[-1][0]
@@ -33,29 +40,38 @@ class TilastoNakyma:
         )
         print()
 
+    def __muodosta_rivi(
+        self,
+        i: int | str,
+        sarakkeet: list[str],
+        indeksin_leveys: int,
+        sarake_leveys: int,
+    ) -> str:
+        sisalto = [f"{sarake:<{sarake_leveys}}" for sarake in sarakkeet]
+        rivi = "|".join(sisalto)
+
+        return f"|{i:<{indeksin_leveys}}|{rivi}|"
+
     def __tulosta_kuvaaja(self) -> None:
         kierroksia = len(self.__tilasto)
         indeksin_leveys = max(len(str(kierroksia)), 2)
 
-        sarakkeiden_otsikot = "|".join(
-            [
-                f'{"i":<{indeksin_leveys}}',
-                f'{"Voitot":<{self.__asteikko}}',
-                f'{"Tasapelit":<{self.__asteikko}}',
-                f'{"Häviöt":<{self.__asteikko}}',
-            ]
+        sarakkeiden_otsikot = self.__muodosta_rivi(
+            "i",
+            ["Voitot", "Tasapelit", "Häviöt"],
+            indeksin_leveys,
+            self.__asteikko,
         )
-        erotin = "|".join(
-            [
-                f'{"-"*indeksin_leveys:>{indeksin_leveys}}',
-                f'{"-"*self.__asteikko}',
-                f'{"-"*self.__asteikko}',
-                f'{"-"*self.__asteikko}',
-            ]
+        erotin = self.__muodosta_rivi(
+            "-" * indeksin_leveys,
+            ["-" * self.__asteikko] * 3,
+            indeksin_leveys,
+            self.__asteikko,
         )
 
-        print(f"|{sarakkeiden_otsikot}|")
-        print(f"|{erotin}|")
+        print("Kuvaaja")
+        print(sarakkeiden_otsikot)
+        print(erotin)
 
         for i in range(
             0, max(kierroksia, self.__riveja), max(kierroksia // self.__riveja, 1)
@@ -67,15 +83,13 @@ class TilastoNakyma:
             tasapelit = ceil(self.__tilasto[i][1] * self.__asteikko)
             haviot = ceil(self.__tilasto[i][2] * self.__asteikko)
 
-            rivi = "|".join(
-                [
-                    f"{i+1:<{indeksin_leveys}}",
-                    f'{"#"*voitot:{self.__asteikko}}',
-                    f'{"#"*tasapelit:{self.__asteikko}}',
-                    f'{"#"*haviot:{self.__asteikko}}',
-                ]
+            rivi = self.__muodosta_rivi(
+                i + 1,
+                ["#" * voitot, "#" * tasapelit, "#" * haviot],
+                indeksin_leveys,
+                self.__asteikko,
             )
 
-            print(f"|{rivi}|")
+            print(rivi)
 
         print(f"# = {100//self.__asteikko} %")
