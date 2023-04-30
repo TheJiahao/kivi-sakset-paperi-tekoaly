@@ -14,14 +14,16 @@ class Nakyma(ABC):
             selite (str): Selite.
 
         Returns:
-            int: _description_
+            int: Käyttäjän syöttämä kokonaisluku.
         """
 
         ohje = f"{selite} (oletus {oletusarvo}): "
 
         while True:
             try:
-                syote = input(ohje)
+                if (syote := input(ohje)) == "":
+                    return oletusarvo
+
                 luku = int(syote)
 
                 if luku < alaraja:
