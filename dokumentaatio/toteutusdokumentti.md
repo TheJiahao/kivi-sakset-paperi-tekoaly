@@ -47,7 +47,7 @@ Tällöin luokan tilavaativuudet ovat seuraavat:
 - $O(1)$, tämän hetkisen jonon hajautusarvo
 
 Koska kyseessä on kivi-sakset-paperi-peli, niin $k=3$.
-Huomataan myös, että $k\le k^{n+1}$ kaikilla $n, k\in\mathbb{N}$. Lisäksi koska $k\mapsto k^{n+1}$ kasvaa eksponentiaalisesti, niin voidaan pitää $O(k^{n+1})$ suurempana kuin $O(n)$.
+Huomataan myös, että $k\le k^{n+1}$ ja kaikilla $n, k\in\mathbb{N}$. Lisäksi koska $k\mapsto k^{n+1}$ kasvaa eksponentiaalisesti, niin voidaan pitää $O(k^{n+1})$ suurempana kuin $O(n)$.
 Siis `MarkovKetju`-luokan tilavaativuus on $O(k^{n+1})$.
 
 Keskeisten metodien aikavaativuudet ovat seuraavat:

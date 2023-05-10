@@ -55,6 +55,7 @@ Käyttöliittymää kuvaava `UI`-luokka on testattu käsin.
 
 ## Testien toistaminen
 
+Testejä on kokeiltu Linux-ympäristössä.
 Asenna projekti [käyttöohjeen](kayttoohje.md) mukaan.
 Yksikkötestien suorittaminen onnistuu komennolla:
 

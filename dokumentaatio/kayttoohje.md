@@ -20,8 +20,12 @@ poetry run invoke start
 
 Käynnistettyään ohjelma tulostaa ohjeet.
 Syöttämällä `1` ohjelma kysyy pelin asetuksia, minkä jälkeen peli alkaa.
+
 Pelin alettua pelaaja voi syöttää merkkejä `k` (kivi), `s` (sakset) ja `p` (paperi) tai näiden yhdistelmiä.
 Ohjelma käsittelee ne järjestyksessä ja tulostaa pelitulokset.
+Syöttämällä `x` peli päättyy.
+
+Pelin päätyttyä ohjelma kysyy asetuksia tilaston graafista esitystä varten ja tulostaa tilaston.
 
 ## Invoke-tehtävät
 
