@@ -29,3 +29,8 @@ def format(ctx):
 @task
 def lint(ctx):
     ctx.run("pylint src", pty=True)
+
+
+@task
+def build(ctx):
+    ctx.run("pyinstaller src/index.py -n ksp_peli -y")
