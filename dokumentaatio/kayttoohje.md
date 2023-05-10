@@ -58,3 +58,13 @@ Testaus:
 ```shell
 poetry run invoke test
 ```
+
+Suoritettavan version tuottaminen:
+
+```shell
+poetry run invoke build
+```
+
+Suoritettava versio ilmestyy juurihakemiston polkuun `dist/ksp_peli/ksp_peli`.
+Jos ei onnistu, niin todennäköisesti käyttöjärjestelmästä puuttuu jokin riippuvuus.
+[Pyinstallerin](https://pyinstaller.org/en/stable/index.html) sivulta löytyy lisätietoa.

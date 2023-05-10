@@ -35,11 +35,13 @@ l = list(jakauma.items())
 print(sorted(l, key=lambda x: x[1], reverse=True))
 ```
 
-Lisäksi `YhdistelmaTekoaly`-luokka on testattu käsin syötteellä (tuotettu räpläämällä näppäimistöä)
+Lisäksi `YhdistelmaTekoaly`-luokka on testattu käsin syötteellä (tuotettu räpläämällä näppäimistöä, joten jokin verran säännöllinen)
 `kspskspkspkpskkspkskspkspkspkskspkspkspskpskpskspkspkspkspskpskspkspskskpskpskpskpskpskspkspkspkspkspskpskpskspkspkspskskksksskpskpskpskspskpspkspkspkspkspkspkpkspkspkskskskkskspskpkskskpspkspkpskskpkskpskpsksp`
-Alla on tulokset eri asetuksilla
+Alla on tulokset eri asetuksilla:
+
 ![Kuvaaja, vaihto fokus pituuden välein](kuvat/vaihto_fokus_pituuden_valein_2023-04-23.png)
 ![Kuvaaja, vaihto kierroksittain](kuvat/vaihto_kierroksittain_2023-04-23.png)
+
 Testauksen perusteella edellä mainitulla syötteellä tekoälyn voittojen osuus näyttäisi lähestyvän noin 60-70 %, tasapelien noin 10 % ja häviöiden noin 20-30 %.
 
 ## Sovelluslogiikka
