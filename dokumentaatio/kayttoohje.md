@@ -2,22 +2,11 @@
 
 ## Asennus
 
-1. Asenna Python `3.11.x` ja [Poetry](https://python-poetry.org/).
-2. Klonaa repositorio.
-3. Asenna riippuvuudet:
-
-    ```shell
-    poetry install
-    ```
+Lataama uusimmasta [releasesta](https://github.com/TheJiahao/kivi-sakset-paperi-tekoaly/releases/tag/loppupalautus) `ksp_peli_linux`-tiedosto.
 
 ## Käynnistys
 
-Sovellus käynnistyy komennolla:
-
-```shell
-poetry run invoke start
-```
-
+Suorita `ksp_peli_linux`-tiedosto (Linux-käyttöjärjestelmässä).
 Käynnistettyään ohjelma tulostaa ohjeet.
 Syöttämällä `1` ohjelma kysyy pelin asetuksia, minkä jälkeen peli alkaa.
 
@@ -27,7 +16,23 @@ Syöttämällä `x` peli päättyy.
 
 Pelin päätyttyä ohjelma kysyy asetuksia tilaston graafista esitystä varten ja tulostaa tilaston.
 
-## Invoke-tehtävät
+## Asennus ja käynnistäminen Poetryn avulla
+
+1. Asenna Python `3.11.x` ja [Poetry](https://python-poetry.org/).
+2. Klonaa repositorio.
+3. Asenna riippuvuudet:
+
+    ```shell
+    poetry install
+    ```
+
+4. Käynnistä ohjelma:
+
+    ```shell
+    poetry run invoke start
+    ```
+
+### Invoke-tehtävät
 
 Ilmeisesti Windows-koneilla invoke-tehtävät ei toimi.
 Saattaa korjaantua asettamalla `tasks.py` tiedostosta `ctx.run`-metodin parametriksi `pty=False`.
@@ -59,12 +64,13 @@ Testaus:
 poetry run invoke test
 ```
 
-Suoritettavan version tuottaminen:
+Suoritettavan ohjelman tuottaminen:
 
 ```shell
 poetry run invoke build
 ```
 
-Suoritettava versio ilmestyy juurihakemiston polkuun `dist/ksp_peli`.
-Jos ei onnistu, niin todennäköisesti käyttöjärjestelmästä puuttuu jokin riippuvuus.
+Suoritettava ohjelma ilmestyy juurihakemiston polkuun `dist/ksp_peli`.
+Jos ohjelmaa ei pysty suorittaa, niin tarkista, että tiedostolla on suoritusoikeudet.
+Jos `build` ei onnistu, niin todennäköisesti käyttöjärjestelmästä puuttuu jokin riippuvuus.
 [Pyinstallerin](https://pyinstaller.org/en/stable/index.html) sivulta löytyy lisätietoa.
