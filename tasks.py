@@ -33,4 +33,4 @@ def lint(ctx):
 
 @task
 def build(ctx):
-    ctx.run("pyinstaller src/index.py -n ksp_peli -y")
+    ctx.run("pyinstaller src/index.py -n ksp_peli -y --onefile")
